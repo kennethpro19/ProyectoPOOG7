@@ -13,4 +13,28 @@ public class ElementoAdicional {
     private double precio;
     private TipoElementoAdicional tipoElementoAdicional;
             
+    
+   public int getCantidad(){
+        return this.cantidad;
+    } 
+    public void  setCantidad(int cantidad){
+        this.cantidad=cantidad;
+    }
+      
+   public double getPrecio(){
+        return this.precio;
+    } 
+    public void  setPrecio(double precio){
+        this.precio=precio;
+    }
+      
+   public TipoElementoAdicional getTipoElementoAdicional(){
+        return this.tipoElementoAdicional;
+    } 
+    public void  setTipoElementoAdicional(TipoElementoAdicional tipoElementoAdicio){
+        this.tipoElementoAdicional=tipoElementoAdicional;
+    }
+    
+
+    
 }

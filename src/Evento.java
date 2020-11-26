@@ -12,13 +12,15 @@ import java.util.Random;
  * @author Kenneth
  */
 public class Evento {
-    private EstadoEvento estadoEvento;
+    private EstadoEvento estadoEvento=EstadoEvento.PENDIENTE;
     private ArrayList<ElementoAdicional> elementosAdicionales;
     private int capacidad;
     private Date horaDeInicio;
     private Date horaDeSalida;
     private int codigo;
-    //private char deseaAggEle;
+    
+    //private Cliente cliente;
+    //private Planificador planificador;
     private double valorTotal;
     private static ArrayList<Integer> numbers;    
         
@@ -63,6 +65,20 @@ public class Evento {
         return this.codigo;
     } 
    //Codigo no tiene un Set puesto que el codigo se genera automaticamente y no cambia
+    
+    /*  public Cliente getCliente(){
+        return this.cliente;
+    } 
+    public void  setCliente(Cliente cliente){
+        this.cliente=cliente;
+    }
+      public Planificador getPlanificador(){
+        return this.planificador;
+    } 
+    public void  setPlanificador(Planificador planificador){
+        this.planificador=planificador;
+    }
+    */
     
     public int generarCodigo(){
         

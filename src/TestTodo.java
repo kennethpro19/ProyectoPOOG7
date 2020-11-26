@@ -16,12 +16,26 @@ import java.util.List;
 public class TestTodo {
 
     public static void main(String args[]) {
-        Evento evento=new Evento();
-        Evento evento1=new Evento();
-        int a=evento.generarCodigo();
-        System.out.println(a);
-        System.out.println(evento.getCodigo());
-        System.out.println(evento1.getCodigo());
+       // Evento evento=new Evento();
+        //Evento evento1=new Evento();
+        //int a=evento.generarCodigo();
+       // System.out.println(a);
+       // System.out.println(evento.getCodigo());
+       // System.out.println(evento1.getCodigo());
+    TipoElementoAdicional a=TipoElementoAdicional.BEBIDA;
+    switch(a)
+            {
+        case BEBIDA:
+            
+        case COMIDA:
+            
+        case BOCADITO:
+            
+        case MUSICA:
+            
+        case FOTOGRAFIA:
+            
+        }
     }
     
 }
