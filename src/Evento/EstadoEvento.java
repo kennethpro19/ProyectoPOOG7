@@ -1,3 +1,5 @@
+package Evento;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,11 +10,7 @@
  *
  * @author Kenneth
  */
-public enum TipoElementoAdicional {
-    COMIDA,
-    BOCADITOS,
-    BEBIDA,
-    MUSICA,
-    FOTOGRAFIA
-
+public enum EstadoEvento {
+    PENDIENTE,CONFIRMADO
+    
 }

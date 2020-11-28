@@ -8,7 +8,6 @@
  *
  * @author Kenneth
  */
-public enum EstadoEvento {
-    PENDIENTE,CONFIRMADO
-    
+public enum EstadoSolicitud {
+    PENDIENTE,APROBADO
 }
