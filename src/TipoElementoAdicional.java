@@ -9,6 +9,10 @@
  * @author Kenneth
  */
 public enum TipoElementoAdicional {
-    COMIDA,BOCADITO,BEBIDA,MUSICA,FOTOGRAFIA
+    COMIDA,
+    BOCADITOS,
+    BEBIDA,
+    MUSICA,
+    FOTOGRAFIA
 
 }

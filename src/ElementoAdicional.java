@@ -14,7 +14,7 @@ public class ElementoAdicional {
     private TipoElementoAdicional tipoElementoAdicional;
             
     
-   public int getCantidad(){
+    public int getCantidad(){
         return this.cantidad;
     } 
     public void  setCantidad(int cantidad){
