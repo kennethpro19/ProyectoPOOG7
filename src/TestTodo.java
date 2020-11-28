@@ -337,6 +337,7 @@ public class TestTodo {
             System.out.println("Se ha generado su orden de pago.");
         }else{
             System.out.println("No se ha generado su orden de pago.");
+            
         }
     }
 }
