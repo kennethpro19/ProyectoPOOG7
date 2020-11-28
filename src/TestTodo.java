@@ -27,7 +27,9 @@ public class TestTodo {
         //REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
         
         Scanner sc = new Scanner(System.in);
-        
+        char elementoAd='S';
+
+        do{
         String entrada="";
         System.out.println("Las opciones son:\n"
                 + "1. Comida\n"
@@ -162,6 +164,10 @@ public class TestTodo {
                             System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
                         }
                         break;
+                    
+                    default :
+                            System.out.println("Opcion Inválida.\n");
+                            break;
                 }
                 break;
             case "4":
@@ -199,7 +205,8 @@ public class TestTodo {
                         + "3. Cerveza($3 c/u)\n"
                         + "4. Refrescos($1 c/u)\n"
                         + "¿Qué prefiere?");
-                String opcion5=sc.nextLine();
+                String opcion5=sc.next();
+                sc.nextLine();
                 int uno=0;
                 int dos=0;
                 int tres=0;
@@ -301,23 +308,40 @@ public class TestTodo {
                         } else {
                               System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
                         }
+                        
                         break;
+                    
+                    default :
+                             System.out.println("Opcion Inválida.\n");
+                             break;
                 
                 }
                 break;
             case "6":
-                System.out.println("Ha concluido el ingreso de los datos del evento.");
-                System.out.println("El costo total del evento sera de:"+"dólares.");
+                
                 break;
             default :
                 System.out.println("Opcion Inválida.\n"
                         + "Por favor digite otra opción.");
                 break;
-            }   
             }
+        System.out.println("¿Desea registrar elementos adicionales(S/N)?");
+        elementoAd=sc.next().charAt(0);
+        }while(elementoAd!='N');
+        System.out.println("Ha concluido el ingreso de los datos del evento.");
+        System.out.println("El costo total del evento sera de:"+"dólares.");
+        System.out.println("¿Desea generar orden de pago(S/N)?");
+        char generarOrden=sc.next().charAt(0);
+        if(generarOrden=='S'){
+            //solicitud.setEstadoSol(EstadoSol.APROBADA)
+            System.out.println("Se ha generado su orden de pago.");
+        }else{
+            System.out.println("No se ha generado su orden de pago.");
         }
-    
+    }
+}
 
+    
 
         
         
