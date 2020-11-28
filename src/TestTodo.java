@@ -343,14 +343,8 @@ public class TestTodo {
             System.out.println("No se ha generado su orden de pago.");
             
         }
-
-    Date date1=new Date();
-    System.out.println(date1);
-      // Instantiate a Date object
-      Date date = new Date();
-
-      // display time and date using toString()
-      System.out.println(date.toString());
+        //crearCodigos
+        
     }
         
 }
