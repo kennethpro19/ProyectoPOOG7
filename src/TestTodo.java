@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import Evento.Evento;
 import Evento.ElementoAdicional;
 import Evento.TipoElementoAdicional;
 import java.util.ArrayList;
@@ -18,15 +19,16 @@ import java.util.List;
 public class TestTodo {
 
     public static void main(String args[]) {
-        // Evento evento=new Evento();
-        //Evento evento1=new Evento();
-        //int a=evento.generarCodigo();
-        // System.out.println(a);
-        // System.out.println(evento.getCodigo());
-        // System.out.println(evento1.getCodigo());
+        ArrayList<Integer> numbers=new ArrayList<>(9999);    
+        for (int i = 1; i < 10000; i++) {
+            numbers.add(i);
+        }
         
+       
         
-        //REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
+       
+
+//REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
         
         Scanner sc = new Scanner(System.in);
         char elementoAd='S';
@@ -341,7 +343,16 @@ public class TestTodo {
             System.out.println("No se ha generado su orden de pago.");
             
         }
+
+    Date date1=new Date();
+    System.out.println(date1);
+      // Instantiate a Date object
+      Date date = new Date();
+
+      // display time and date using toString()
+      System.out.println(date.toString());
     }
+        
 }
 
     
