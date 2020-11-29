@@ -8,6 +8,8 @@ package Evento;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import Usuario.Cliente;
+import Usuario.Planificador;
 
 /**
  *
@@ -20,19 +22,13 @@ public class Evento {
     private Date horaDeInicio;
     private Date horaDeSalida;
     private int codigo;
-    
-    //private Cliente cliente;
-    //private Planificador planificador;
+    private Cliente cliente;
+    private Planificador planificador;
     private double valorTotal;
     
-    private static ArrayList<Integer> numbers;    
+    public Evento( ArrayList<Integer> numbers){
+        this.codigo=generarCodigo(numbers);
         
-    public Evento(){
-    this.numbers = new ArrayList<>(9999);
-        for (int i = 1; i < 10000; i++) {
-            numbers.add(i);
-        }
-    this.codigo=generarCodigo();    
     }
     public EstadoEvento getEstadoEvento(){
         return this.estadoEvento;
@@ -69,7 +65,7 @@ public class Evento {
     } 
    //Codigo no tiene un Set puesto que el codigo se genera automaticamente y no cambia
     
-    /*  public Cliente getCliente(){
+      public Cliente getCliente(){
         return this.cliente;
     } 
     public void  setCliente(Cliente cliente){
@@ -81,9 +77,9 @@ public class Evento {
     public void  setPlanificador(Planificador planificador){
         this.planificador=planificador;
     }
-    */
     
-    public int generarCodigo(){
+    
+    public int generarCodigo(ArrayList<Integer> numbers){
         
         Random r = new Random();
         int b = numbers.size() - 999;
