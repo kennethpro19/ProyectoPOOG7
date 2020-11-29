@@ -83,7 +83,10 @@ public class Interfaz {
         
     }
     public void registrarPagoEvento(OrdenPago ordenpago){
-        System.out.println("/****************");
+        System.out.println("/****************REGISTRO PAGO*****************/\n"
+                +          "/*                                            */\n"
+                +          "/**********************************************/");
+                
     }
 }
     
