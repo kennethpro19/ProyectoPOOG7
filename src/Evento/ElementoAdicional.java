@@ -17,7 +17,7 @@ public class ElementoAdicional {
     private int cantidad;
     private double precio;
     private TipoElementoAdicional tipoElementoAdicional;
-            
+    private double total;        
     
     public int getCantidad(){
         return this.cantidad;
@@ -32,7 +32,15 @@ public class ElementoAdicional {
     public void  setPrecio(double precio){
         this.precio=precio;
     }
-      
+     
+    
+   public double getTotal(){
+        return this.total;
+    } 
+    public void  setTotal(double total){
+        this.total=total;
+    }
+ 
    public TipoElementoAdicional getTipoElementoAdicional(){
         return this.tipoElementoAdicional;
     } 
@@ -40,6 +48,9 @@ public class ElementoAdicional {
         this.tipoElementoAdicional=tipoElementoAdicional;
     }
     
-
+    public void calcularCosto(){
+    this.total=precio*cantidad;
+	
+    }
     
 }
