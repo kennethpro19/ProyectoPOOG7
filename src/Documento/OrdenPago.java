@@ -34,6 +34,16 @@ public class OrdenPago {
 
         this.codigo=numeros.remove(a);
     }
+
+        public void setCodTrans(int codTrans){
+            this.codTrans=codTrans;
+        }
+        public Evento getEvento(){
+            return this.evento;
+        }
+        public int getCodigo(){
+            return this.codigo;
+        }
     }
 
         

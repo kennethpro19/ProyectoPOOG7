@@ -7,6 +7,7 @@ package Main;
 import java.util.ArrayList;
 import Usuario.*;
 import java.util.Scanner;
+import Documento.*;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -17,6 +18,7 @@ public class Sistema {
         ArrayList <Usuario> usuarios= new ArrayList <Usuario>();
         ArrayList <Integer> numerosEvento= new ArrayList <Integer>(9999);
         ArrayList <Integer> numerosOrdenpago=new ArrayList <Integer>(9999);
+        ArrayList <Solicitud> solicitudes = new ArrayList <Solicitud>();
         for (int i = 1; i < 10000; i++) {
             numerosEvento.add(i);
             numerosOrdenpago.add(i);
