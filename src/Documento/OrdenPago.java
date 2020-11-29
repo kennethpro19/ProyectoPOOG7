@@ -8,6 +8,7 @@ package Documento;
 import Evento.*;
 import Usuario.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 /**
  *
@@ -19,6 +20,10 @@ public class OrdenPago {
     private Evento evento;
     private int codigo;
     private int codTrans;
+    private Calendar fechaRegistro;
+    
+    
+  
     public OrdenPago(Evento evento,Cliente cliente,EstadoOrdenDePago estado,int codigo, int codTrans){
        this.evento=evento;
        this.cliente=cliente;
@@ -26,6 +31,47 @@ public class OrdenPago {
        this.codigo=codigo;
        this.codTrans=codTrans;
     }
+    
+    public void setCodTrans(int codTrans){
+            this.codTrans=codTrans;
+        }
+    public int getCodTrans(){
+        return this.codTrans;
+    }
+    public Evento getEvento(){
+        return this.evento;
+    }
+    public void setEvento(Evento evento){
+        this.evento=evento;
+    }
+    
+    public Cliente getCliente(){
+        return this.cliente;
+    }
+    public void setCliente(Cliente cliente){
+        this.cliente=cliente;
+    }
+    public int getCodigo(){
+        return this.codigo;
+    }
+    public void setCodigo(int codigo){
+        this.codigo=codigo;
+    }
+        
+    public EstadoOrdenDePago getEstadoOrdenDePago(){
+        return this.estado;
+    }
+    public void setEstadoOrdenDePago(EstadoOrdenDePago estado){
+        this.estado=estado;
+    }
+    
+    public Calendar getFechaRegistro(){
+        return this.fechaRegistro;
+    }
+    public void getFechaRegistro(Calendar fechaRegistro){
+        this.fechaRegistro=fechaRegistro;
+    }
+    
     public void crearCodigo(ArrayList<Integer> numeros){
         Random r = new Random();
         int b = numeros.size() - 999;
@@ -35,15 +81,8 @@ public class OrdenPago {
         this.codigo=numeros.remove(a);
     }
 
-        public void setCodTrans(int codTrans){
-            this.codTrans=codTrans;
-        }
-        public Evento getEvento(){
-            return this.evento;
-        }
-        public int getCodigo(){
-            return this.codigo;
-        }
+        
+        
     }
 
         
