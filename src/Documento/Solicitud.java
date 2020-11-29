@@ -1,3 +1,5 @@
+package Documento;
+
 
 import Usuario.*;
 import Evento.*;
@@ -15,16 +17,19 @@ import java.util.Date;
 public class Solicitud {
         //EstadoSol estado;
     static int codigo=1000;
-    Cliente cliente;
-    Planificador planificador;
-    Date fechaRegistro;
-    Evento evento;
+    private Cliente cliente;
+    private Planificador planificador;
+    private Date fechaRegistro;
+    private Evento evento;
     
     public void crearCodigo(){
         codigo=codigo+1;
         
     }
-    public Solicitud(){
-        
+    public Solicitud(Cliente cliente, Planificador planificador, Date fechaRegistro, Evento evento){
+        this.cliente=cliente;
+        this.planificador=planificador;
+        this.evento=evento;
+        this.fechaRegistro=fechaRegistro;
     }
 }
