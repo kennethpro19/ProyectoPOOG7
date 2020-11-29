@@ -32,4 +32,9 @@ public class Solicitud {
         this.evento=evento;
         this.fechaRegistro=fechaRegistro;
     }
+    public int getCod(){
+    return this.codigo;
+    }
+
+  
 }

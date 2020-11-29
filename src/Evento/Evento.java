@@ -89,5 +89,9 @@ public class Evento {
         return numbers.remove(a);
         
     }
+
+    public void setEstadoEvento(String confirmado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

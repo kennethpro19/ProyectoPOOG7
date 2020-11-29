@@ -6,13 +6,14 @@
 package Usuario;
 import java.util.Date;
 import Evento.*;
-
+import java.util.ArrayList;
+import Documento.*;
 /**
  *
  * @author stefano
  */
 public class Cliente extends Usuario{
-    //private OrdenPago ordenPago;
+    private ArrayList<OrdenPago> orden;
     private Date fecha;
     private String correo;
     private String telefono;
@@ -59,5 +60,10 @@ public class Cliente extends Usuario{
     
     public void setTelefono(String telefono){
         this.telefono = telefono;
+    }
+
+
+    public ArrayList<OrdenPago> getOrden() {
+        return this.orden; //To change body of generated methods, choose Tools | Templates.
     }
 }
