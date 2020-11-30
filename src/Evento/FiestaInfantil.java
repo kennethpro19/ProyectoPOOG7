@@ -38,7 +38,10 @@ public class FiestaInfantil extends Evento{
      public boolean getIncJuego(){
         return this.incJuego;
     } 
-     public void mostrarMensaje(){
-         System.out.println();
-     }
+
+    @Override
+    public void mostrarMensaje(){
+
+    System.out.println("Si realizan un próximo evento en las mismas instalaciones en un plazo de 6 meses se les otorgará en servicio de música gratuito.");
+    }
 }

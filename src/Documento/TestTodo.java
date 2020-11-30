@@ -27,16 +27,13 @@ public class TestTodo {
         }
         
        
-        
-       
-
 //REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
         
         Scanner sc = new Scanner(System.in);
         char elementoAd='S';
-
+        String entrada;
         do{
-        String entrada="";
+        entrada="";
         System.out.println("Las opciones son:\n"
                 + "1. Comida\n"
                 + "2. Bocaditos\n"
@@ -324,18 +321,23 @@ public class TestTodo {
                 }
                 break;
             case "6":
-                
                 break;
             default :
                 System.out.println("Opcion Inválida.\n"
                         + "Por favor digite otra opción.");
                 break;
             }
-        System.out.println("¿Desea registrar elementos adicionales(S/N)?");
-        elementoAd=sc.next().charAt(0);
+        if(!entrada.equals("6")){
+            System.out.println("¿Desea registrar elementos adicionales(S/N)?");
+            elementoAd=sc.next().charAt(0);
+        } else{
+            elementoAd='N';
+        
+        }
+        
         }while(elementoAd!='N');
         System.out.println("Ha concluido el ingreso de los datos del evento.");
-        System.out.println("El costo total del evento sera de:"+"dólares.");
+        System.out.println("El costo total del evento sera de:"+" dólares.");
         System.out.println("¿Desea generar orden de pago(S/N)?");
         char generarOrden=sc.next().charAt(0);
         if(generarOrden=='S'){
@@ -345,7 +347,9 @@ public class TestTodo {
             System.out.println("No se ha generado su orden de pago.");
             
         }
-        //crearCodigos
+        
+       
+
         
     }
         

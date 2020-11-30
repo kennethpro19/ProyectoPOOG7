@@ -19,17 +19,19 @@ public class Evento {
     private EstadoEvento estadoEvento=EstadoEvento.PENDIENTE;
     private ArrayList<ElementoAdicional> elementosAdicionales;
     private int capacidad;
-    private Date horaDeInicio;
-    private Date horaDeSalida;
+    private String horaDeInicio;
+    private String horaDeSalida;
     private int codigo;
     private Cliente cliente;
     private Planificador planificador;
     private double valorTotal;
     
+
     public void setCodigo(ArrayList<Integer> numbers){
         this.codigo=generarCodigo(numbers);
         
     }
+
     public EstadoEvento getEstadoEvento(){
         return this.estadoEvento;
     } 
@@ -48,16 +50,16 @@ public class Evento {
     public void  setCapacidad(int capacidad){
         this.capacidad=capacidad;
     }
-    public Date getHoraDeInicio(){
+    public String getHoraDeInicio(){
         return this.horaDeInicio;
     } 
-    public void  setHoraDeInicio(Date horaDeInicio){
+    public void  setHoraDeInicio(String horaDeInicio){
         this.horaDeInicio=horaDeInicio;
     }
-    public Date getHoraDeSalida(){
+    public String getHoraDeSalida(){
         return this.horaDeSalida;
     } 
-    public void  setHoraDeSalida(Date horaDeSalida){
+    public void  setHoraDeSalida(String horaDeSalida){
         this.horaDeSalida=horaDeSalida;
     }
     public int getCodigo(){
@@ -78,7 +80,9 @@ public class Evento {
         this.planificador=planificador;
     }
     
-    
+    public  void mostrarMensaje(){
+        
+    }
     public int generarCodigo(ArrayList<Integer> numbers){
         
         Random r = new Random();
@@ -89,9 +93,16 @@ public class Evento {
         return numbers.remove(a);
         
     }
-
-    public void setEstadoEvento(String confirmado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
+    public void agregarElementoAdicional(ElementoAdicional elementoAdicional){
+        this.elementosAdicionales.add(elementoAdicional);
+   
+    }
+   
+    public void calcularCostoTotal(){
+         for(ElementoAdicional elementoAdicional:elementosAdicionales){
+            this.valorTotal+=elementoAdicional.getTotal();
+         }
+ 
+    }     
 }

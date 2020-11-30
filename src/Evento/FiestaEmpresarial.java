@@ -33,5 +33,9 @@ public class FiestaEmpresarial extends Evento {
     public int getPersonas() {
         return this.personas;
     }
+    @Override
+    public void mostrarMensaje(){
 
+    System.out.println("El transporte al lugar del evento es gratuito en un próximo evento, si lo organizan con el mismo planificador.");
+    }
 }

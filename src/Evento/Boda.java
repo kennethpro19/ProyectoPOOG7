@@ -24,5 +24,9 @@ public class Boda extends Evento{
         return this.tipoDeVehiculo;
     } 
      
-     
+     @Override
+    public void mostrarMensaje(){
+
+    System.out.println("Los novios tendrán un 25% de descuento si compran sus tickets de luna de miel en la aerolínea LATAM.");
+    }
 }
