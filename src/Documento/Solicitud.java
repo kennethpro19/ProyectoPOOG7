@@ -21,7 +21,7 @@ public class Solicitud {
     private Planificador planificador;
     private Date fechaRegistro;
     private Evento evento;
-    
+    private EstadoSolicitud estadoSol;
     public void crearCodigo(){
         codigo=codigo+1;
         
@@ -35,6 +35,8 @@ public class Solicitud {
     public int getCod(){
     return this.codigo;
     }
-
+    public void setEstadoSol(EstadoSolicitud estadoSol){
+        this.estadoSol=estadoSol;
+    }
   
 }

@@ -9,6 +9,7 @@ import Evento.*;
 import Usuario.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Date;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -19,6 +20,7 @@ public class OrdenPago {
     private Evento evento;
     private int codigo;
     private int codTrans;
+    private Date fechaReg;
     public OrdenPago(Evento evento,Cliente cliente,EstadoOrdenDePago estado,int codigo, int codTrans){
        this.evento=evento;
        this.cliente=cliente;
@@ -43,6 +45,9 @@ public class OrdenPago {
         }
         public int getCodigo(){
             return this.codigo;
+        }
+        public Date getFechaReg(){
+            return this.fechaReg;
         }
     }
 

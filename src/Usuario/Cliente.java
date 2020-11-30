@@ -17,20 +17,11 @@ public class Cliente extends Usuario{
     private Date fecha;
     private String correo;
     private String telefono;
-     
-    public void realizarSolicitud(Evento evento, Date fecha){
-        System.out.println("/***************Nueva Solicitud****************/\n"
-                          +"/*                                            */\n"
-                          +"/**********************************************/\n"
-        );
-        System.out.println("Bienvenid@ ");
-        System.out.println("TIPO DE EVENTO (Elija)\n"
-                          +"1. Boda\n"
-                          +"2. Fiesta Infantil\n"
-                          +"3. Fiesta Empresarial\n"
-        );
-        System.out.println("Seleccione:");
-        
+    public Cliente(String nombre,String apellido,String usuario,String contraseña,char TipoUsuario,String correo, String telefono){
+       
+        super(nombre,apellido,usuario,contraseña,TipoUsuario);
+        this.correo=correo;
+        this.telefono=telefono;
     }
     
     private void validarTiempo(Evento evento, Date fecha){

@@ -15,7 +15,13 @@ public class Usuario {
     private String usuario;
     private String contrasena;
     private char tipoUsuario;
-    
+    public Usuario(String nombre, String apellido,String usuario,String contrasena,char tipoUsuario){
+        this.nombre=nombre;
+        this.apellido=apellido;
+        this.usuario=usuario;
+        this.contrasena=contrasena;
+        this.tipoUsuario=tipoUsuario;
+    }
     public String getNombre(){
         return this.nombre;
     }

@@ -26,7 +26,7 @@ public class Evento {
     private Planificador planificador;
     private double valorTotal;
     
-    public Evento( ArrayList<Integer> numbers){
+    public void setCodigo(ArrayList<Integer> numbers){
         this.codigo=generarCodigo(numbers);
         
     }
