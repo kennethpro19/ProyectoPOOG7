@@ -21,7 +21,6 @@ public class OrdenPago {
     private Evento evento;
     private int codigo;
     private int codTrans;
-
     private Date fechaReg;
 
     private Calendar fechaRegistro;
@@ -63,8 +62,8 @@ public class OrdenPago {
         this.codigo=codigo;
     }
         
-    public EstadoOrdenDePago getEstadoOrdenDePago(){
-        return this.estado;
+    public String getEstadoOrdenDePago(){
+        return this.estado.name();
     }
     public void setEstadoOrdenDePago(EstadoOrdenDePago estado){
         this.estado=estado;
@@ -90,6 +89,7 @@ public class OrdenPago {
         public Date getFechaReg(){
             return this.fechaReg;
         }
+
     }
 
         

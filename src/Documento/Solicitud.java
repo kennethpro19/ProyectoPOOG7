@@ -20,17 +20,23 @@ public class Solicitud {
     private Cliente cliente;
     private Planificador planificador;
     private Date fechaRegistro;
-    private Evento evento;
+    private Date fechaEvento;
+    private String tipoEvento;
     private EstadoSolicitud estadoSol;
-    public void crearCodigo(){
+    
+    public int crearCodigo(){
         codigo=codigo+1;
+        return codigo;
         
     }
-    public Solicitud(Cliente cliente, Planificador planificador, Date fechaRegistro, Evento evento){
+    public Solicitud(Cliente cliente, Planificador planificador, Date fechaRegistro, Date fechaEvento, String tipoEvento){
         this.cliente=cliente;
         this.planificador=planificador;
-        this.evento=evento;
+        this.tipoEvento=tipoEvento;
         this.fechaRegistro=fechaRegistro;
+        this.fechaEvento=fechaEvento;
+        this.codigo=crearCodigo();
+        this.estadoSol=EstadoSolicitud.PENDIENTE;
     }
     public int getCod(){
     return this.codigo;
@@ -38,5 +44,19 @@ public class Solicitud {
     public void setEstadoSol(EstadoSolicitud estadoSol){
         this.estadoSol=estadoSol;
     }
+    public String getTipoEvento(){
+        return tipoEvento;
+    }
+    
+    public String getEstadoSol(){
+        return this.estadoSol.name();
+    }
+    public Cliente getCliente(){
+        return this.cliente;
+    }
+    public Planificador getPlanificador(){
+        return this.planificador;
+    }
+    
   
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import Evento.*;
 import Main.*;
 
-import Documento.OrdenPago;
+import Documento.*;
 import Evento.Evento;
 
 /**
@@ -17,7 +17,7 @@ import Evento.Evento;
  * @author stefano
  */
 public class Planificador extends Usuario{
-
+    private ArrayList <Solicitud> solicitudesAsignadas= new ArrayList<Solicitud>();
     public Planificador(String nombre, String apellido,String usuario,String contrasena,char tipoUsuario){
         super( nombre, apellido,usuario,contrasena,tipoUsuario);
     }
@@ -27,7 +27,10 @@ public class Planificador extends Usuario{
     public ArrayList <Evento> getEventos(){
         return this.eventos;
     }
-
+   
+   public ArrayList <Solicitud> getSolicitudesAsignadas(){
+       return this.solicitudesAsignadas;
+   }
 
    private static ArrayList<OrdenPago> ordenesPago;
 

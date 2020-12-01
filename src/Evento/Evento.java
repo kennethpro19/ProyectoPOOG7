@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Random;
 import Usuario.Cliente;
 import Usuario.Planificador;
-
+import Main.*;
 /**
  *
  * @author Kenneth
@@ -25,6 +25,18 @@ public class Evento {
     private Cliente cliente;
     private Planificador planificador;
     private double valorTotal;
+    private Date fechaEvento;
+    
+        public Evento(Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,String horaDeSalida,int capacidad){
+        this.codigo = generarCodigo(Sistema.numerosEvento);
+        this.capacidad=capacidad;
+        this.cliente=cliente;
+        this.planificador=planificador;
+        this.horaDeInicio=horaDeInicio;
+        this.horaDeSalida=horaDeSalida;
+        this.valorTotal=calcularCostoTotal();
+        this.fechaEvento=fechaEvento;
+    }
     
 
     public void setCodigo(ArrayList<Integer> numbers){
@@ -32,8 +44,8 @@ public class Evento {
         
     }
 
-    public EstadoEvento getEstadoEvento(){
-        return this.estadoEvento;
+    public String getEstadoEvento(){
+        return this.estadoEvento.name();
     } 
     public void  setEstadoEvento(EstadoEvento estadoEvento){
         this.estadoEvento=estadoEvento;
@@ -98,11 +110,19 @@ public class Evento {
         this.elementosAdicionales.add(elementoAdicional);
    
     }
-   
-    public void calcularCostoTotal(){
-         for(ElementoAdicional elementoAdicional:elementosAdicionales){
-            this.valorTotal+=elementoAdicional.getTotal();
+    
+    public double getValorTotal(){
+        return this.valorTotal;
+    }
+    public void setValorTotal(double valorTotal){
+        this.valorTotal=valorTotal;
+    }
+    public double calcularCostoTotal(){
+        double total=0.0; 
+        for(ElementoAdicional elementoAdicional:elementosAdicionales){
+            total+=elementoAdicional.getTotal();
          }
- 
-    }     
+        return total;
+    }
+
 }

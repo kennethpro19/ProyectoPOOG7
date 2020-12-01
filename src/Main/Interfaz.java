@@ -9,6 +9,8 @@ import java.util.Scanner;
 import Documento.*;
 import Evento.*;
 import Usuario.*;
+import java.util.Random;
+import java.util.Date;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -17,15 +19,21 @@ public class Interfaz {
     Scanner sc= new Scanner(System.in);
     
     //Menú inicio de sesión
-    public ArrayList<String> iniciarSesion(){
-         System.out.println("++++++++++++++++++++++++++++++++\n\n"
+    public ArrayList<String> iniciarSesion(ArrayList<String>lineas){
+        String usuario="";
+        String contraseña="";
+        System.out.println("++++++++++++++++++++++++++++++++\n\n"
                 +          "      BIENVENIDO AL SISTEMA     \n\n"
                 +          "++++++++++++++++++++++++++++++++" );
-        
+       do{
         System.out.print("USUARIO: ");
-        String usuario=sc.nextLine();
+        usuario=sc.nextLine();
         System.out.print("CONTRASEÑA: ");
-        String contraseña=sc.nextLine();
+        contraseña=sc.nextLine();
+        if(!clienteOPlanificador(lineas,usuario,contraseña).equals("C") && !clienteOPlanificador(lineas,usuario,contraseña).equals("P") ){
+            System.out.println("Usuario o contraseña incorrectos. Ingrese nuevamente.");
+        }
+       }while(!clienteOPlanificador(lineas,usuario,contraseña).equals("C") && !clienteOPlanificador(lineas,usuario,contraseña).equals("P") );
         ArrayList <String> info= new ArrayList<String>();
         info.add(usuario);
         info.add(contraseña);
@@ -41,7 +49,7 @@ public class Interfaz {
         System.out.println("Elija una opción:");
         choice= sc.nextLine();
         switch(choice){
-            case "1": solicitarPlanificacion();
+            case "1": solicitarPlanificacion(cliente);
                 break;
             case "2": registrarPagoEvento(cliente);
                 break;
@@ -53,7 +61,7 @@ public class Interfaz {
         }while(!choice.equals("3"));
     }
     //Métdo para solicitar planificacion
-    public void solicitarPlanificacion(){
+    public void solicitarPlanificacion(Cliente c){
         System.out.println("/**************NUEVA SOLICITUD********************/\n"+
                            "/*                                               */\n"+
                            "/*************************************************/");
@@ -67,32 +75,45 @@ public class Interfaz {
         System.out.println("Seleccione:");
         choice=sc.nextLine();
         switch(choice){
-            case "1": eventoBoda();
+            case "1": eventoBoda(c);
                 break;
-            case "2": eventoFiestaInfantil();
+            case "2": eventoFiestaInfantil(c);
                 break;
-            case "3": eventoFiestaEmpresarial();
+            case "3": eventoFiestaEmpresarial(c);
                 break;
             default: System.out.println("Opción inválida!");
         }
             
         }while(!choice.equals("1")||!choice.equals("2")||!choice.equals("3"));
     }
-    public void eventoBoda(){
+    public void eventoBoda(Cliente c){
+        Planificador p=asignarPlanificador();
+        Date fechaRegistro=null;
+        Date fechaEvento=null;
+        Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Boda");
         
-        
-        ArrayList <String> infor=new ArrayList<String>();
-        generarArchivo("Solicitud",infor);
+        p.getSolicitudesAsignadas().add(s);
+        Sistema.solicitudes.add(s);  
     }
-    public void eventoFiestaInfantil(){
+    public void eventoFiestaInfantil(Cliente c){
+        Planificador p=asignarPlanificador();
         
-        ArrayList <String> infor=new ArrayList<String>();
-        generarArchivo("Solicitud",infor);
+        Date fechaRegistro=null;
+        Date fechaEvento=null;
+        
+        Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Infantil");
+        p.getSolicitudesAsignadas().add(s);
+        Sistema.solicitudes.add(s);   
     }
-    public void eventoFiestaEmpresarial(){
+    public void eventoFiestaEmpresarial(Cliente c){
+        Planificador p=asignarPlanificador();
         
-        ArrayList <String> infor=new ArrayList<String>();
-        generarArchivo("Solicitud",infor);
+        Date fechaRegistro=null;
+        Date fechaEvento=null;
+        
+        Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
+        p.getSolicitudesAsignadas().add(s);
+        Sistema.solicitudes.add(s);   
     }
     public void registrarPagoEvento(Cliente cliente){
         System.out.println("/****************REGISTRO PAGO*****************/\n"
@@ -169,7 +190,6 @@ System.out.println("/*********************REGISTRAR EVENTOS*********************
 System.out.print("Ingrese el id de la solicitud: "); 
 int cod=sc.nextInt();
 sc.nextLine();
-Evento evento=null;
 ArrayList <Solicitud> a=solicitudes;
 Solicitud solicitud=null;
 for (int i=0;i<a.size();i++){
@@ -181,13 +201,13 @@ for (int i=0;i<a.size();i++){
 
 System.out.println("/**************REGISTRO DE DATOS DEL EVENTO*************/");
 System.out.println("Hora inicio: ");
-////
+String horaIn=sc.nextLine();
 System.out.println("Hora fin: ");
-/////
+String horaFin=sc.nextLine();
 System.out.println("Capacidad: ");
 int capacidad= sc.nextInt();
 sc.nextLine();
-evento.setCapacidad(capacidad);
+Evento ev=new Boda()
 System.out.println("¿Desea registrar elementos adicionales? (S/N)");
 String choice= sc.nextLine();
 	while (!choice.equals("S") && !choice.equals("N")){
@@ -988,7 +1008,7 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
     }
     }
        public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
-    ArrayList <String []> info= new ArrayList <String[]>();
+    ArrayList <String []> info= new ArrayList <>();
     for(String elemento:clientes){
         
         String [] partes=elemento.split(";");
@@ -1017,6 +1037,7 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
             for(String element:informacion){
             linea=linea+","+element;
             }
+            
             ManejoArchivos.EscribirArchivo("solicitudes.txt", linea);
         }
         if (tipo.equals("OrdenPago")){
@@ -1030,6 +1051,64 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
             ManejoArchivos.EscribirArchivo("evento.txt", linea);
         }
         
+    }
+    public Planificador asignarPlanificador(){
+      int n=Sistema.planificadores.size();
+      Random r=new Random();
+      int index= r.nextInt(n);
+      Planificador p=Sistema.planificadores.get(index);
+     return p;}
+    
+    public void actualizartxt(){
+        ManejoArchivos.EliminarArchivo("solicitudes.txt");
+        ManejoArchivos.EliminarArchivo("ordenPago.txt");
+        ManejoArchivos.EliminarArchivo("evento.txt");
+        ArrayList <String> info=new ArrayList<String>();
+        ///////////////////SOLICITUDES/////////////////////
+        ManejoArchivos.EscribirArchivo("solicitudes.txt","id_solicitud,nombre_cliente,nombre_planificador,fecha_solicitud,fecha_evento,estado");
+        
+        for(Solicitud element:Sistema.solicitudes){
+        info.add(String.valueOf(element.getCod()));
+        info.add(element.getCliente().getNombre());
+        info.add(element.getPlanificador().getNombre());
+        info.add();
+        info.add();
+        info.add(element.getEstadoSol());
+        generarArchivo("solicitudes.txt",info);
+        info.clear();
+        }
+        
+        //////////////////ORDENPAGO///////////////////
+        ManejoArchivos.EscribirArchivo("ordenPago.txt","Código_pago,Código_evento,total_pagar,estado,Código_transacción,fecha_registro");
+        
+        for(OrdenPago element: Sistema.ordenpag){
+            info.add(String.valueOf(element.getCodigo()));
+            info.add(String.valueOf(element.getEvento().getCodigo()));
+            info.add(String.valueOf(element.getEvento().getValorTotal()));
+            info.add(element.getEstadoOrdenDePago());
+            info.add(String.valueOf(element.getCodTrans()));
+            info.add(String.valueOf(element.getEvento().getValorTotal()));
+            generarArchivo("solicitudes.txt",info);        
+            info.clear();
+        }
+        ///////////////EVENTO//////////////////
+         ManejoArchivos.EscribirArchivo("evento.txt","codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado");
+         
+         for(Evento element: Sistema.eventos){
+             info.add(String.valueOf(element.getCodigo()));
+             info.add(element.getCliente().getNombre());
+             info.add();
+             info.add();
+             info.add(element.getHoraDeInicio());
+             info.add(element.getHoraDeSalida());
+             info.add(String.valueOf(element.getCapacidad()));
+             info.add(element.getPlanificador().getNombre());
+             info.add(element.getEstadoEvento());
+             generarArchivo("solicitudes.txt",info);        
+             info.clear();
+         }
+    
+   
     }
     
 }

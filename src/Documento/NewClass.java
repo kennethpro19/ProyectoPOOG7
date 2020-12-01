@@ -16,6 +16,7 @@ public class NewClass {
        System.out.println(i.getInfoCliente(a.clientes).get(1)[1]);
        i.clienteOPlanificador(a.lineas,"randres","Andres123");
        System.out.println(i.clienteOPlanificador(a.lineas,"randres","Andres123"));
+       
     }
     
 }

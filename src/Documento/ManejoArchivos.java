@@ -83,6 +83,31 @@ public class ManejoArchivos {
             }
         }
     }
+    
+    public static void EliminarArchivo(String nombrearchivo){
+           ArrayList<String> lineas = new ArrayList<>();
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
 
+        try {
+            // Apertura del fichero y creacion de BufferedReader para poder
+            // hacer una lectura comoda (disponer del metodo readLine()).
+            archivo = new File(nombrearchivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // En el finally cerramos el fichero, para asegurarnos
+            // que se cierra tanto si todo va bien como si salta 
+            // una excepcion.
+            try {
+                if (null != fr) {
+                    fr.close();
+                }archivo.delete();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
    
 }
