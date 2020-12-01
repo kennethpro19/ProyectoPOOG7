@@ -14,6 +14,9 @@ public class Archivo {
     Interfaz i= new Interfaz();
     public ArrayList<String> lineas= ManejoArchivos.LeeFichero("usuarios.txt");
     public ArrayList<String> clientes= ManejoArchivos.LeeFichero("clientes.txt");
-    public ArrayList<String> solicitudespendientes= ManejoArchivos.LeeFichero("solicitudes.txt");              
+    public ArrayList<String> solicitudes= ManejoArchivos.LeeFichero("solicitudes.txt");     
+    public ArrayList<String> ordenPago=ManejoArchivos.LeeFichero("ordenPago.txt");
+    public ArrayList<String> eventos=ManejoArchivos.LeeFichero("eventos.txt");
+    public ArrayList <String> elementAd=ManejoArchivos.LeeFichero("adicionales.txt");
     }
 

@@ -30,9 +30,18 @@ public class Sistema {
             numerosOrdenpago.add(i);
         }
         Interfaz i= new Interfaz();
+        
         Archivo archivo= new Archivo();
+        
         i.crearUsuarios(archivo.lineas,archivo.clientes);
+        
+        i.archivos(archivo.solicitudes, archivo.ordenPago, archivo.elementAd, archivo.eventos);
+        
+        i.llenarSistema(archivo.solicitudes, archivo.ordenPago, archivo.elementAd, archivo.eventos);
+        
+        
         ArrayList <String> info = i.iniciarSesion(archivo.lineas);
+        
         String cop=i.clienteOPlanificador(archivo.lineas,info.get(0),info.get(1));
         if (cop.equals("C")){
             Cliente c=(Cliente)(i.buscarUsuario(info.get(0),info.get(1)));

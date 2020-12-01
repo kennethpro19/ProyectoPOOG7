@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class Solicitud {
         //EstadoSol estado;
-    static int codigo=1000;
+    static int codigo=0;
     private Cliente cliente;
     private Planificador planificador;
     private Date fechaRegistro;
@@ -35,8 +35,33 @@ public class Solicitud {
         this.tipoEvento=tipoEvento;
         this.fechaRegistro=fechaRegistro;
         this.fechaEvento=fechaEvento;
-        this.codigo=crearCodigo();
+        if(tipoEvento.equals("Boda")){
+            this.codigo=1000+crearCodigo();    
+        }
+        else if(tipoEvento.equals("Fista Empresarial")){
+            this.codigo=2000+crearCodigo();
+        }
+        else if(tipoEvento.equals("Fiesta Infantil")){
+            this.codigo=3000+crearCodigo();
+        }
+        
         this.estadoSol=EstadoSolicitud.PENDIENTE;
+    }
+    public Solicitud(int codigo,Cliente cliente, Planificador planificador, Date fechaRegistro, Date fechaEvento, EstadoSolicitud estadoSol){
+        this.cliente=cliente;
+        this.planificador=planificador;
+        if (codigo>=1000 && codigo <2000){
+            this.tipoEvento="Boda";
+        }
+        else if(codigo>=2000 && codigo < 3000){
+            this.tipoEvento="Fiesta Empresarial";
+        }else if(codigo>=3000 && codigo <4000){
+            this.tipoEvento="Fiesta Infantil";
+        }
+        this.fechaRegistro=fechaRegistro;
+        this.fechaEvento=fechaEvento;
+        this.codigo=crearCodigo();
+        this.estadoSol=estadoSol;
     }
     public int getCod(){
     return this.codigo;

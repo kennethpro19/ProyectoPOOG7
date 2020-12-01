@@ -124,6 +124,10 @@ public class Evento {
          }
      return total;
     }
+    
+    public Date getFechaEvento(){
+        return this.fechaEvento;
+    }
 
     public double getPrecio() {
         return 0;
