@@ -3,12 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Documento/OrdenPago.java</file>
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Usuario/Planificador.java</file>
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Usuario/Usuario.java</file>
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Documento/TestTodo.java</file>
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Usuario/Cliente.java</file>
             <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Main/Interfaz.java</file>
+=======
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/NewClass.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/EstadoSolicitud.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Main/Interfaz.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Main/Sistema.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/Solicitud.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Cliente.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/ManejoArchivos.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/OrdenPago.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/Evento.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Usuario.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Planificador.java</file>
+>>>>>>> a81ca69a7380da4b9252a5662c5ac0c5a6fd3ed0
         </group>
     </open-files>
 </project-private>

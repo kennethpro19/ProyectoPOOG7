@@ -2,6 +2,9 @@ package Evento;
 
 
 import Evento.Evento;
+import Usuario.Cliente;
+import Usuario.Planificador;
+import java.util.Date;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,11 +16,18 @@ import Evento.Evento;
  * @author Kenneth
  */
 public class FiestaEmpresarial extends Evento {
-
+    
     private static double precio = 2000;
     private boolean transporte;
     private int personas;
 
+    public FiestaEmpresarial(boolean transporte,int personas,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
+             String horaDeSalida,int capacidad){
+        super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
+        super.setValorTotal(precio+super.getValorTotal());
+        this.transporte=transporte;
+        this.personas=personas;
+    }
     public void setTransporte(boolean transporte) {
         this.transporte = transporte;
     }

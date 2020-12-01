@@ -10,6 +10,7 @@ import Usuario.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.Date;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -20,10 +21,13 @@ public class OrdenPago {
     private Evento evento;
     private int codigo;
     private int codTrans;
+    private Date fechaReg;
+
     private Calendar fechaRegistro;
     
     
   
+
     public OrdenPago(Evento evento,Cliente cliente,EstadoOrdenDePago estado,int codigo, int codTrans){
        this.evento=evento;
        this.cliente=cliente;
@@ -58,8 +62,8 @@ public class OrdenPago {
         this.codigo=codigo;
     }
         
-    public EstadoOrdenDePago getEstadoOrdenDePago(){
-        return this.estado;
+    public String getEstadoOrdenDePago(){
+        return this.estado.name();
     }
     public void setEstadoOrdenDePago(EstadoOrdenDePago estado){
         this.estado=estado;
@@ -81,8 +85,11 @@ public class OrdenPago {
         this.codigo=numeros.remove(a);
     }
 
-        
-        
+
+        public Date getFechaReg(){
+            return this.fechaReg;
+        }
+
     }
 
         
