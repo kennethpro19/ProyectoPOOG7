@@ -47,6 +47,9 @@ public class Solicitud {
     public String getTipoEvento(){
         return tipoEvento;
     }
+    public Date getFechaEvento(){
+        return this.fechaEvento;
+    }
     
     public String getEstadoSol(){
         return this.estadoSol.name();

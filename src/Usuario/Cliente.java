@@ -24,9 +24,6 @@ public class Cliente extends Usuario{
         this.telefono=telefono;
     }
     
-    private void validarTiempo(Evento evento, Date fecha){
-        
-    }
     
     //Metodos getters y setters
     public Date getFecha(){
