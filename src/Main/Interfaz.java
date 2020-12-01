@@ -85,7 +85,7 @@ public class Interfaz {
             default: System.out.println("Opción inválida!");
         }
             
-        }while(!choice.equals("1")||!choice.equals("2")||!choice.equals("3"));
+        }while(!choice.equals("1")&&!choice.equals("2")&&!choice.equals("3"));
     }
     public void eventoBoda(Cliente c){
         Planificador p=asignarPlanificador();
