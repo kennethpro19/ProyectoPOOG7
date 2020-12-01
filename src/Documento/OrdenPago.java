@@ -23,7 +23,7 @@ public class OrdenPago {
     private int codTrans;
     private Date fechaReg;
 
-    private Calendar fechaRegistro;
+
     
     
   
@@ -69,12 +69,10 @@ public class OrdenPago {
         this.estado=estado;
     }
     
-    public Calendar getFechaRegistro(){
-        return this.fechaRegistro;
+    public Date getFechaRegistro(){
+        return this.fechaReg;
     }
-    public void getFechaRegistro(Calendar fechaRegistro){
-        this.fechaRegistro=fechaRegistro;
-    }
+
     
     public void crearCodigo(ArrayList<Integer> numeros){
         Random r = new Random();

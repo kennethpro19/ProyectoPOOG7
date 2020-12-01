@@ -172,14 +172,14 @@ public class MetodoValidarTiempo {
         // TODO code application logic here
         System.out.println("Hola mundo, soy el primer programa en Java");
         
-        System.out.println("Ingrese la fecha para su evento (Año/Mes/Dia):");
+        //System.out.println("Ingrese la fecha para su evento (Año/Mes/Dia):");
         Scanner sc=new Scanner(System.in);
         String fechaEvento=sc.nextLine();
         
         String tipoEvento="Boda";
         validarTiempo(fechaEvento,tipoEvento);
         
-
+        
 
     }
 }

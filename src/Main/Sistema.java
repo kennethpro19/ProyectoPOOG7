@@ -22,6 +22,7 @@ public class Sistema {
     public static ArrayList <Solicitud> solicitudes = new ArrayList <Solicitud>();
     public static ArrayList <Integer> numerosEvento= new ArrayList <Integer>(9999);
     public static ArrayList <Integer> numerosOrdenpago=new ArrayList <Integer>(9999);
+    
     public static void main(String []args){
        
         for (int i = 1; i < 10000; i++) {

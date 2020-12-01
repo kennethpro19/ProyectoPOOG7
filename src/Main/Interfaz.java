@@ -88,8 +88,8 @@ public class Interfaz {
     }
     public void eventoBoda(Cliente c){
         Planificador p=asignarPlanificador();
-        Date fechaRegistro=null;
-        Date fechaEvento=null;
+        Date fechaRegistro=null; //VALIDARTIEMPO
+        Date fechaEvento=null; //VALIDARTIEMPO
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Boda");
         
         p.getSolicitudesAsignadas().add(s);
@@ -98,8 +98,8 @@ public class Interfaz {
     public void eventoFiestaInfantil(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;
-        Date fechaEvento=null;
+        Date fechaRegistro=null;//VALIDARTIEMPO
+        Date fechaEvento=null;//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Infantil");
         p.getSolicitudesAsignadas().add(s);
@@ -108,8 +108,8 @@ public class Interfaz {
     public void eventoFiestaEmpresarial(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;
-        Date fechaEvento=null;
+        Date fechaRegistro=null;//VALIDARTIEMPO
+        Date fechaEvento=null;//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
         p.getSolicitudesAsignadas().add(s);
@@ -207,7 +207,41 @@ String horaFin=sc.nextLine();
 System.out.println("Capacidad: ");
 int capacidad= sc.nextInt();
 sc.nextLine();
-Evento ev=new Boda()
+Evento ev= null;
+if(solicitud.getTipoEvento().equals("Boda")){
+    System.out.println("Ingrese el tipo de vehículo para el transporte de los novios. En caso de que no se requiera, ingrese NO APLICA");
+    String boleano=sc.nextLine();
+
+    ev=new Boda(boleano,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+}if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
+    System.out.println("Ingrese la cantidad de personajes disfrazados que desea para su evento. \n"
+            + "En caso de que no se requiera, ingrese 0");
+    int cantdis=sc.nextInt();
+    sc.nextLine();
+    System.out.println("Ingrese la cantidad de sorpresas para los niños.");
+    int cantsorp = sc.nextInt();
+    sc.nextLine();
+    System.out.println("¿Desea incluir juegos en el evento? (S/N)");
+    String juegos= sc.nextLine();
+    boolean b=false;
+    if (juegos.equals("S")){
+        b=true;
+    }
+    ev=new FiestaInfantil(cantdis,cantsorp,b,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+} if (solicitud.getTipoEvento().equals("Fiesta Empresarial")){
+    System.out.println("¿Desea transporte para los invitados? (S/N)");
+    String trans=sc.nextLine();
+    boolean z=false;
+    int cantpers=0;
+    if (trans.equals("S")){
+       z=true;
+       System.out.println("Ingrese la cantidad de personas que se transportarían: ");
+       cantpers=sc.nextInt();
+       sc.nextLine();
+    }
+    ev= new FiestaEmpresarial(z,cantpers,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+}
+
 System.out.println("¿Desea registrar elementos adicionales? (S/N)");
 String choice= sc.nextLine();
 	while (!choice.equals("S") && !choice.equals("N")){
@@ -248,7 +282,7 @@ String choice= sc.nextLine();
                 System.out.println("Agregar(S/N):");
                 agg1 = sc.next().charAt(0);
                 if(agg1=='S'){
-                    //listadeEvento.add(comida);
+                    ev.getElementosAdicionales().add(comida);
                     System.out.println("Se ha agregado su elección.");
                 } else {
                     System.out.println("No se ha agregado su elección.");
@@ -271,7 +305,7 @@ String choice= sc.nextLine();
                     System.out.println("Agregar(S/N):");
                     agg = sc.next().charAt(0);
                     if(agg=='S'){
-                        //listadeEvento.add(bocaditos);
+                        ev.getElementosAdicionales().add(bocaditos);
                         System.out.println("Se ha agregado su elección.");
                     } else {
                         System.out.println("No se ha agregado su elección.");
@@ -284,7 +318,7 @@ String choice= sc.nextLine();
                     System.out.println("Agregar(S/N):");
                     agg = sc.next().charAt(0);
                     if(agg=='S'){
-                        //listadeEvento.add(bocaditos);
+                        ev.getElementosAdicionales().add(bocaditos);
                         System.out.println("Se ha agregado su elección.");
                     } else {
                         System.out.println("No se ha agregado su elección.");
@@ -320,7 +354,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg3 = sc.next().charAt(0);
                             if (agg3 == 'S') {
-                                //listadeEvento.add(dj);
+                                ev.getElementosAdicionales().add(dj);
                                 System.out.println("Se ha agregado su elección.");
                                 uno3++;
                             } else {
@@ -342,7 +376,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg3 = sc.next().charAt(0);
                             if (agg3 == 'S') {
-                                //listadeEvento.add(banda);
+                                ev.getElementosAdicionales().add(banda);
                                 System.out.println("Se ha agregado su elección.");
                                 dos3++;
                             } else {
@@ -374,7 +408,7 @@ String choice= sc.nextLine();
                 System.out.println("Agregar(S/N):");
                 agg4 = sc.next().charAt(0);
                 if (agg4 == 'S') {
-                    //listadeEvento.add(fotografia);
+                    ev.getElementosAdicionales().add(fotografia);
                     System.out.println("Se ha agregado su elección.");
                    
                 } else {
@@ -415,7 +449,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               //listadeEvento.add(whisky);
+                               ev.getElementosAdicionales().add(whisky);
                                  System.out.println("Se ha agregado su elección.");
                                  uno++;
                             }else{
@@ -439,7 +473,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               //listadeEvento.add(vodka);
+                               ev.getElementosAdicionales().add(vodka);
                                  System.out.println("Se ha agregado su elección.");
                                  dos++;
                             }else{
@@ -463,7 +497,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               //listadeEvento.add(cerveza);
+                               ev.getElementosAdicionales().add(cerveza);
                                  System.out.println("Se ha agregado su elección.");
                                  tres++;
                             }else{
@@ -488,7 +522,7 @@ String choice= sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               //listadeEvento.add(refrescos);
+                               ev.getElementosAdicionales().add(refrescos);
                                  System.out.println("Se ha agregado su elección.");
                                  cuatro++;
                             }else{
@@ -541,7 +575,7 @@ String choice2= sc.nextLine();
 		choice2 = sc.nextLine();
 		}
 	if (choice2.equals('S')){
-		generarOrdenPago(evento);
+		//generarOrdenPago(evento);
 		
 		} 
 }
@@ -960,16 +994,22 @@ public void consultarEvento(Planificador planificador){
 }
 public String clienteOPlanificador(ArrayList <String> lineas,String nombreusuario,String contraseña){
     String resultado="a";
-        for(String elemento: lineas){
+    for(String elemento: lineas){
         String [] partes=elemento.split(";");
-        for (int i=0;i<partes.length;i++){
-            if ((partes.length>1) && partes[2].equals(nombreusuario)){         
-                if(partes[i].indexOf(",")!= -1){
-                    String [] partes2=partes[i].split(",");
+        for (int i=0;i<partes.length;i++) {
+            if(partes[i].indexOf(",")!=-1){
+                String [] partes2=partes[i].split(",");
+                
+                if((partes.length>1) && partes[2].equals(nombreusuario)&& partes2[0].equals(contraseña)){
                     resultado=partes2[1];
-            }else{int n=partes.length;
-            resultado=partes[n-1];}
+                }    
             }
+            else if ((partes.length>1) && partes[2].equals(nombreusuario)&& partes[3].equals(contraseña)){         
+                if(partes[i].indexOf(",")!= -1){
+                    
+                }else{int n=partes.length;
+                      resultado=partes[n-1];}
+                }
             }      
         }  
    return resultado;
@@ -982,32 +1022,36 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
     for (int i=0;i<partes.length;i++){
         if ((partes.length>1)&&clienteOPlanificador(lineas,partes[2],partes[3]).equals("C")){
             ArrayList <String[]> infoClientes=getInfoCliente(clientes);
-
-            if(partes[i].indexOf(",")!= -1){
-                            for (int j=0;j<(infoClientes.size());j++){
-                   if(infoClientes.size()>1&&infoClientes.get(j)[0].equals(partes[2])){
-                    telefono=infoClientes.get(j)[1];
-                    correo=infoClientes.get(j)[2];}
+            for (int j=0;j<(infoClientes.size());j++){
+                    if(infoClientes.size()>1&&infoClientes.get(j)[0].equals(partes[2])){
+                        telefono=infoClientes.get(j)[1];
+                        correo=infoClientes.get(j)[2];}
             }
-                    String [] partes2=partes[i].split(",");
-             Cliente c=new Cliente(partes[0],partes[1],partes[2],partes2[1],'C',correo,telefono);
-            Sistema.clientes.add(c);}else{
+            if(partes[i].indexOf(",")!= -1){
+               
+            String [] partes2=partes[i].split(",");
+            Cliente c=new Cliente(partes[0],partes[1],partes[2],partes2[1],'C',correo,telefono);
+            Sistema.clientes.add(c);
+            }
+            else{
+            
             Cliente c=new Cliente(partes[0],partes[1],partes[2],partes[3],'C',correo,telefono);
             Sistema.clientes.add(c);}
             }
-         if((partes.length>1)&&clienteOPlanificador(lineas,partes[2],partes[3]).equals("P")){
+        else if((partes.length>1)&&clienteOPlanificador(lineas,partes[2],partes[3]).equals("P")){
             if(partes[i].indexOf(",")!= -1){
-                    String [] partes2=partes[i].split(",");
-            Planificador p= new Planificador(partes[0],partes[1],partes2[0],partes2[1],'P');
-            Sistema.planificadores.add(p);
-            }else{ Planificador p= new Planificador(partes[0],partes[1],partes[2],partes[3],'P');
-            Sistema.planificadores.add(p);
+                String [] partes2=partes[i].split(",");
+                Planificador p= new Planificador(partes[0],partes[1],partes2[0],partes2[1],'P');
+                Sistema.planificadores.add(p);
+            }
+            else{ Planificador p= new Planificador(partes[0],partes[1],partes[2],partes[3],'P');
+                Sistema.planificadores.add(p);
             }
          }
         }
     }
     }
-       public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
+public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     ArrayList <String []> info= new ArrayList <>();
     for(String elemento:clientes){
         
@@ -1071,8 +1115,8 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
         info.add(String.valueOf(element.getCod()));
         info.add(element.getCliente().getNombre());
         info.add(element.getPlanificador().getNombre());
-        info.add();
-        info.add();
+        //info.add();
+       // info.add();
         info.add(element.getEstadoSol());
         generarArchivo("solicitudes.txt",info);
         info.clear();
@@ -1097,8 +1141,8 @@ public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes)
          for(Evento element: Sistema.eventos){
              info.add(String.valueOf(element.getCodigo()));
              info.add(element.getCliente().getNombre());
-             info.add();
-             info.add();
+             //info.add();
+            // info.add();    
              info.add(element.getHoraDeInicio());
              info.add(element.getHoraDeSalida());
              info.add(String.valueOf(element.getCapacidad()));
