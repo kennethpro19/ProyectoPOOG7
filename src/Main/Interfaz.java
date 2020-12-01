@@ -9,6 +9,7 @@ import java.util.Scanner;
 import Documento.*;
 import Evento.*;
 import Usuario.*;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
 /**
@@ -1060,7 +1061,7 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     }
     return info;}
     
-    public Usuario buscarUsuario(String usuario,String contraseña){
+public Usuario buscarUsuario(String usuario,String contraseña){
         Usuario usuari =null;
         for (Cliente element: Sistema.clientes){
             if(element.getUsuario().equals(usuario)&&element.getContrasena().equals(contraseña)){
@@ -1075,7 +1076,7 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         
     return usuari;}
     
-    public void generarArchivo(String tipo, ArrayList<String> informacion){
+public void generarArchivo(String tipo, ArrayList<String> informacion){
         String linea="";
         if (tipo.equals("Solicitud")){
             for(String element:informacion){
@@ -1096,14 +1097,14 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         }
         
     }
-    public Planificador asignarPlanificador(){
+public Planificador asignarPlanificador(){
       int n=Sistema.planificadores.size();
       Random r=new Random();
       int index= r.nextInt(n);
       Planificador p=Sistema.planificadores.get(index);
      return p;}
     
-    public void actualizartxt(){
+public void actualizartxt(){
         ManejoArchivos.EliminarArchivo("solicitudes.txt");
         ManejoArchivos.EliminarArchivo("ordenPago.txt");
         ManejoArchivos.EliminarArchivo("evento.txt");
@@ -1154,7 +1155,10 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     
    
     }
+   
     
+    
+
 }
     
  

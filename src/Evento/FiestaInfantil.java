@@ -29,6 +29,9 @@ public class FiestaInfantil extends Evento{
          this.cantSorp=cantSorp;
          this.incJuego=incJuego;
      }
+     public FiestaInfantil(){
+         
+     }
      public void  setCantPerDis(int cantPerDis){
         this.cantPerDis=cantPerDis;
     }

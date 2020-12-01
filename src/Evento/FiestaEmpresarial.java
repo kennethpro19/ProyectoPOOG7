@@ -28,6 +28,9 @@ public class FiestaEmpresarial extends Evento {
         this.transporte=transporte;
         this.personas=personas;
     }
+    public FiestaEmpresarial(){
+        
+    }
     public void setTransporte(boolean transporte) {
         this.transporte = transporte;
     }

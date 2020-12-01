@@ -125,4 +125,11 @@ public class Evento {
      return total;
     }
 
+    public double getPrecio() {
+        return 0;
+    }
+    public Evento(){
+    
+}
+
 }
