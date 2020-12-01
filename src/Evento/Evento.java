@@ -122,13 +122,7 @@ public class Evento {
         for(ElementoAdicional elementoAdicional:elementosAdicionales){
             total+=elementoAdicional.getTotal();
          }
-<<<<<<< HEAD
-         
- 
-    }     
-=======
-        return total;
+     return total;
     }
 
->>>>>>> a81ca69a7380da4b9252a5662c5ac0c5a6fd3ed0
 }
