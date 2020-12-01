@@ -1,0 +1,1 @@
+codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado

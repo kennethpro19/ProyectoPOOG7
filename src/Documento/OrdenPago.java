@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.Date;
+import Main.*;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -22,9 +23,17 @@ public class OrdenPago {
     private int codigo;
     private int codTrans;
     private Date fechaReg;
+    private double valorTotal;
+    private Date fechaHoy;
 
-
-    
+    public OrdenPago(Evento evento,Cliente cliente){
+        this.evento=evento;
+        this.cliente=cliente;
+        crearCodigo(Sistema.numerosOrdenpago);
+        this.valorTotal=evento.getValorTotal();
+        this.estado=EstadoOrdenDePago.PENDIENTEPAGO;
+        
+    }
     
   
 
@@ -34,6 +43,7 @@ public class OrdenPago {
        this.estado= estado;
        this.codigo=codigo;
        this.codTrans=codTrans;
+       this.valorTotal=evento.getValorTotal();
     }
     
     public void setCodTrans(int codTrans){
@@ -69,11 +79,23 @@ public class OrdenPago {
         this.estado=estado;
     }
     
-    public Date getFechaRegistro(){
+    public Date getFechaReg(){
         return this.fechaReg;
     }
-
     
+    public void setFechaReg(Date fechaRegistro){
+        this.fechaReg=fechaRegistro;
+    }
+    public Date getFechaHoy(){
+        return this.fechaHoy;
+    }
+    public double getValorTotal(){
+        return this.valorTotal;
+    }
+    
+    public void setValorTotal(double valortotal){
+        this.valorTotal=valortotal;
+    }
     public void crearCodigo(ArrayList<Integer> numeros){
         Random r = new Random();
         int b = numeros.size() - 999;
@@ -84,10 +106,7 @@ public class OrdenPago {
     }
 
 
-        public Date getFechaReg(){
-            return this.fechaReg;
-        }
-
+   
     }
 
         

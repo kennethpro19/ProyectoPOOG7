@@ -9,6 +9,7 @@ import java.util.Scanner;
 import Documento.*;
 import Evento.*;
 import Usuario.*;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
 /**
@@ -94,6 +95,17 @@ public class Interfaz {
         
         p.getSolicitudesAsignadas().add(s);
         Sistema.solicitudes.add(s);  
+        ArrayList<String> info=new ArrayList <String>();
+        info.add(String.valueOf(s.getCod()));
+        info.add(c.getNombre());
+        info.add(p.getNombre());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+ 
+        info.add(sdf.format(fechaRegistro));
+        
+        info.add(sdf.format(fechaEvento));
+        info.add(s.getEstadoSol());
+        generarArchivo("Solicitudes",info);
     }
     public void eventoFiestaInfantil(Cliente c){
         Planificador p=asignarPlanificador();
@@ -104,6 +116,18 @@ public class Interfaz {
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Infantil");
         p.getSolicitudesAsignadas().add(s);
         Sistema.solicitudes.add(s);   
+        ArrayList<String> info=new ArrayList <String>();
+        info.add(String.valueOf(s.getCod()));
+        info.add(c.getNombre());
+        info.add(p.getNombre());
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+ 
+        info.add(sdf.format(fechaRegistro));
+        
+        info.add(sdf.format(fechaEvento));
+        info.add(s.getEstadoSol());
+        generarArchivo("Solicitudes",info);
     }
     public void eventoFiestaEmpresarial(Cliente c){
         Planificador p=asignarPlanificador();
@@ -113,7 +137,20 @@ public class Interfaz {
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
         p.getSolicitudesAsignadas().add(s);
-        Sistema.solicitudes.add(s);   
+        Sistema.solicitudes.add(s);
+        
+        
+        ArrayList<String> info=new ArrayList <String>();
+        info.add(String.valueOf(s.getCod()));
+        info.add(c.getNombre());
+        info.add(p.getNombre());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+ 
+        info.add(sdf.format(fechaRegistro));
+        
+        info.add(sdf.format(fechaEvento));
+        info.add(s.getEstadoSol());
+        generarArchivo("Solicitudes",info);
     }
     public void registrarPagoEvento(Cliente cliente){
         System.out.println("/****************REGISTRO PAGO*****************/\n"
@@ -148,7 +185,7 @@ public class Interfaz {
         System.out.println("Seleccione:");
         choice=sc.nextLine();
         switch(choice){
-            case "1": consultarSolicitudesPendientes(a.solicitudespendientes);
+            case "1": consultarSolicitudesPendientes(a.solicitudes);
                 break;
             case "2": registrarEvento(Sistema.solicitudes);
                 break;
@@ -172,7 +209,7 @@ System.out.println("/******************SOLICITUDES PENDIENTES*******************
 	//Leer archivos rey
         
         for(int i=0;i<solicitudespendientes.size()-1;i++){
-            
+            ///////////////////////////////////////////////////////////////////
             String [] partes=solicitudespendientes.get(i+1).split(",");
             if(partes.length>1){
             System.out.println(i+1+".  "+partes[0]+" - "+partes[3]);}
@@ -241,6 +278,20 @@ if(solicitud.getTipoEvento().equals("Boda")){
     }
     ev= new FiestaEmpresarial(z,cantpers,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
 }
+ArrayList <String> informacion=new ArrayList <String>();
+informacion.add(String.valueOf(ev.getCodigo()));
+informacion.add(ev.getCliente().getNombre());
+informacion.add(solicitud.getTipoEvento());
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+ 
+
+informacion.add(sdf.format(ev.getFechaEvento()));
+informacion.add(ev.getHoraDeInicio());
+informacion.add(ev.getHoraDeSalida());
+informacion.add(String.valueOf(ev.getCapacidad()));
+informacion.add(ev.getPlanificador().getNombre());
+informacion.add(ev.getEstadoEvento());
+generarArchivo("Evento",informacion);
 
 System.out.println("¿Desea registrar elementos adicionales? (S/N)");
 String choice= sc.nextLine();
@@ -284,9 +335,18 @@ String choice= sc.nextLine();
                 if(agg1=='S'){
                     ev.getElementosAdicionales().add(comida);
                     System.out.println("Se ha agregado su elección.");
+                    ArrayList <String> info=new ArrayList<String>();
+                    info.add(String.valueOf(ev.getCodigo()));
+                    info.add(TipoElementoAdicional.COMIDA.name());
+                    info.add(String.valueOf(cantidad1));
+                    info.add(String.valueOf(precioComida));
+                    info.add(String.valueOf(total1));
+                    generarArchivo("Adicionales", info);
                 } else {
                     System.out.println("No se ha agregado su elección.");
                         }
+                
+          
                 break;
             case "2":
                 
@@ -323,6 +383,15 @@ String choice= sc.nextLine();
                     } else {
                         System.out.println("No se ha agregado su elección.");
                     }
+                if (agg=='S'){
+                    ArrayList <String> info=new ArrayList<String>();
+                    info.add(String.valueOf(ev.getCodigo()));
+                    info.add(TipoElementoAdicional.BOCADITOS.name());
+                    info.add(String.valueOf(cantidad2));
+                    info.add(String.valueOf(precioBocadito));
+                    info.add(String.valueOf(total2));
+                    generarArchivo("Adicionales", info);
+                }
                 }
                        
                 break;
@@ -348,6 +417,8 @@ String choice= sc.nextLine();
                             dj.setTipoElementoAdicional(TipoElementoAdicional.MUSICA);
                             dj.setPrecio(precioDj);
                             dj.setCantidad(cantidad3);
+ 
+              
                             double total3 = precioDj * cantidad3;
                             System.out.println("Total:" + total3);
                             char agg3 = 'A';
@@ -356,6 +427,13 @@ String choice= sc.nextLine();
                             if (agg3 == 'S') {
                                 ev.getElementosAdicionales().add(dj);
                                 System.out.println("Se ha agregado su elección.");
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.MUSICA.name());
+                                    info.add(String.valueOf(cantidad3));
+                                    info.add(String.valueOf(precioDj));
+                                    info.add(String.valueOf(total3));
+                                    generarArchivo("Adicionales", info);
                                 uno3++;
                             } else {
                             System.out.println("No se ha agregado su elección.");
@@ -379,6 +457,13 @@ String choice= sc.nextLine();
                                 ev.getElementosAdicionales().add(banda);
                                 System.out.println("Se ha agregado su elección.");
                                 dos3++;
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.MUSICA.name());
+                                    info.add(String.valueOf(cantidad3));
+                                    info.add(String.valueOf(precioBanda));
+                                    info.add(String.valueOf(total3));
+                                    generarArchivo("Adicionales", info);
                             } else {
                             System.out.println("No se ha agregado su elección.");
                             }
@@ -386,6 +471,7 @@ String choice= sc.nextLine();
                         } else{
                             System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
                         }
+                        
                         break;
                     
                     default :
@@ -410,7 +496,13 @@ String choice= sc.nextLine();
                 if (agg4 == 'S') {
                     ev.getElementosAdicionales().add(fotografia);
                     System.out.println("Se ha agregado su elección.");
-                   
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.FOTOGRAFIA.name());
+                                    info.add(String.valueOf(cantidad4));
+                                    info.add(String.valueOf(precioFotografia));
+                                    info.add(String.valueOf(total4));
+                                    generarArchivo("Adicionales", info);
                 } else {
                     System.out.println("No se ha agregado su elección.");
                 }
@@ -452,6 +544,13 @@ String choice= sc.nextLine();
                                ev.getElementosAdicionales().add(whisky);
                                  System.out.println("Se ha agregado su elección.");
                                  uno++;
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.BEBIDA.name());
+                                    info.add(String.valueOf(cantidad));
+                                    info.add(String.valueOf(precioWhisky));
+                                    info.add(String.valueOf(total));
+                                    generarArchivo("Adicionales", info);
                             }else{
                                   System.out.println("No se ha agregado su elección.");
                             }
@@ -476,6 +575,14 @@ String choice= sc.nextLine();
                                ev.getElementosAdicionales().add(vodka);
                                  System.out.println("Se ha agregado su elección.");
                                  dos++;
+                                 
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.BEBIDA.name());
+                                    info.add(String.valueOf(cantidad));
+                                    info.add(String.valueOf(precioVodka));
+                                    info.add(String.valueOf(total));
+                                    generarArchivo("Adicionales", info);
                             }else{
                                   System.out.println("No se ha agregado su elección.");
                             }
@@ -500,6 +607,14 @@ String choice= sc.nextLine();
                                ev.getElementosAdicionales().add(cerveza);
                                  System.out.println("Se ha agregado su elección.");
                                  tres++;
+                                 
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.BEBIDA.name());
+                                    info.add(String.valueOf(cantidad));
+                                    info.add(String.valueOf(precioCerveza));
+                                    info.add(String.valueOf(total));
+                                    generarArchivo("Adicionales", info);
                             }else{
                                   System.out.println("No se ha agregado su elección.");
                             }
@@ -525,6 +640,14 @@ String choice= sc.nextLine();
                                ev.getElementosAdicionales().add(refrescos);
                                  System.out.println("Se ha agregado su elección.");
                                  cuatro++;
+                                 
+                                    ArrayList <String> info=new ArrayList<String>();
+                                    info.add(String.valueOf(ev.getCodigo()));
+                                    info.add(TipoElementoAdicional.BEBIDA.name());
+                                    info.add(String.valueOf(cantidad));
+                                    info.add(String.valueOf(precioRefrescos));
+                                    info.add(String.valueOf(total));
+                                    generarArchivo("Adicionales", info);
                             }else{
                                   System.out.println("No se ha agregado su elección.");
                             }
@@ -537,7 +660,7 @@ String choice= sc.nextLine();
                     default :
                              System.out.println("Opcion Inválida.\n");
                              break;
-                
+             
                 }
                 break;
             case "6":
@@ -557,362 +680,45 @@ String choice= sc.nextLine();
         char generarOrden=sc.next().charAt(0);
         if(generarOrden=='S'){
             solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+            OrdenPago op=new OrdenPago(ev, ev.getCliente());
             ArrayList <String> infor= new ArrayList <String>();
+            infor.add(String.valueOf(op.getCodigo()));
+            infor.add(String.valueOf(ev.getCodigo()));
+            infor.add(String.valueOf(ev.getValorTotal()));
+            infor.add(op.getEstadoOrdenDePago());
+            infor.add(String.valueOf(op.getCodTrans()));
+            
+            infor.add(sdf.format(op.getFechaReg()));
             generarArchivo("OrdenPago",infor);
             System.out.println("Se ha generado su orden de pago.");
+            generarOrdenPago(op);
+            
         }else{
             System.out.println("No se ha generado su orden de pago.");
             
         }
-        //crearCodigos
+        
         
     }
 		
-System.out.println("¿Desea generar su orden de pago? (S/N)");
-String choice2= sc.nextLine();
-	while (!choice2.equals("S") && !choice2.equals("N")){
-		System.out.println("Ingrese una opción válida");
-		choice2 = sc.nextLine();
-		}
-	if (choice2.equals('S')){
-		//generarOrdenPago(evento);
-		
-		} 
 }
 
-public void generarOrdenPago(Evento evento){
+public void generarOrdenPago(OrdenPago op){
 	System.out.println("/**************ORDEN DE PAGO***************/\n"
 	+		   "/*                                        */\n"
 	+		   "/******************************************/");
-}
-
-public void registrarElementosAdicionales(){
+System.out.println("CÓDIGO PAGO: "+op.getCodigo()+"\nFECHA: "+op.getFechaHoy()+"\nCLIENTE: "+op.getCliente().getNombre()
++ " "+op.getCliente().getApellido()+"\nEVENTO: "+""+"\nFECHA EVENTO: "+op.getEvento().getFechaEvento());
+System.out.println("\nADICIONALES");
+for (ElementoAdicional element: op.getEvento().getElementosAdicionales()){
+    System.out.println(element.getTipoElementoAdicional());
     
-    
-         
-       
-//REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
-        
-        Scanner sc = new Scanner(System.in);
-        char elementoAd='S';
-        String entrada;
-        do{
-        entrada="";
-        System.out.println("Las opciones son:\n"
-                + "1. Comida\n"
-                + "2. Bocaditos\n"
-                + "3. Música\n"
-                + "4. Fotografía\n"
-                + "5. Bebida\n"
-                + "6. Regresar al menú anterior\n");
-
-        System.out.println("Elija elemento a adicionar:");
-        entrada=sc.next();
-        
-        switch (entrada) {
-
-            case "1":
-                //COMIDA
-                double precioComida=15;
-                System.out.println("Cantidad de platos:");
-                int cantidad1=sc.nextInt();
-                ElementoAdicional comida=new ElementoAdicional();
-                comida.setCantidad(cantidad1);
-                comida.setPrecio(precioComida);
-                comida.setTipoElementoAdicional(TipoElementoAdicional.COMIDA);
-                double total1 = precioComida * cantidad1;
-                System.out.println("Total:" + total1);
-                char agg1 = 'A';
-                System.out.println("Agregar(S/N):");
-                agg1 = sc.next().charAt(0);
-                if(agg1=='S'){
-                    //listadeEvento.add(comida);
-                    System.out.println("Se ha agregado su elección.");
-                } else {
-                    System.out.println("No se ha agregado su elección.");
-                        }
-                break;
-            case "2":
-                
-                //BOCADITOS
-                
-                System.out.println("Cantidad de bocaditos:");
-                int cantidad2=sc.nextInt();
-                ElementoAdicional bocaditos=new ElementoAdicional();
-                bocaditos.setCantidad(cantidad2);
-                bocaditos.setTipoElementoAdicional(TipoElementoAdicional.BOCADITOS);
-                if (cantidad2>150){
-                    double precioBocadito=0.10;
-                    double total2 = precioBocadito * cantidad2;
-                    System.out.println("Total:" + total2);
-                    char agg = 'A';
-                    System.out.println("Agregar(S/N):");
-                    agg = sc.next().charAt(0);
-                    if(agg=='S'){
-                        //listadeEvento.add(bocaditos);
-                        System.out.println("Se ha agregado su elección.");
-                    } else {
-                        System.out.println("No se ha agregado su elección.");
-                    }
-                }else{
-                    double precioBocadito=0.25;
-                    double total2 = precioBocadito * cantidad2;
-                    System.out.println("Total:" + total2);
-                    char agg = 'A';
-                    System.out.println("Agregar(S/N):");
-                    agg = sc.next().charAt(0);
-                    if(agg=='S'){
-                        //listadeEvento.add(bocaditos);
-                        System.out.println("Se ha agregado su elección.");
-                    } else {
-                        System.out.println("No se ha agregado su elección.");
-                    }
-                }
-                       
-                break;
-                
-            case "3":
-                
-                //MUSICA
-                double precioDj=300;
-                double precioBanda=2000;
-                System.out.println("Para la musica se presentan las opciones de:\n"
-                        + "1. Dj($300)\n"
-                        + "2. Banda($2000)\n"
-                        + "¿Qué prefiere?");
-                String opcion3=sc.next();
-                sc.nextLine();
-                int uno3=0;
-                int dos3=0;
-                int cantidad3=1;
-                switch(opcion3){
-                    case "1":
-                        if (uno3==0){
-                            ElementoAdicional dj=new ElementoAdicional();
-                            dj.setTipoElementoAdicional(TipoElementoAdicional.MUSICA);
-                            dj.setPrecio(precioDj);
-                            dj.setCantidad(cantidad3);
-                            double total3 = precioDj * cantidad3;
-                            System.out.println("Total:" + total3);
-                            char agg3 = 'A';
-                            System.out.println("Agregar(S/N):");
-                            agg3 = sc.next().charAt(0);
-                            if (agg3 == 'S') {
-                                //listadeEvento.add(dj);
-                                System.out.println("Se ha agregado su elección.");
-                                uno3++;
-                            } else {
-                            System.out.println("No se ha agregado su elección.");
-                            }
-                        } else{
-                            System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        break;
-                    case "2":
-                        if (dos3==0){
-                            ElementoAdicional banda=new ElementoAdicional();
-                            banda.setTipoElementoAdicional(TipoElementoAdicional.MUSICA);
-                            banda.setPrecio(precioBanda);
-                            banda.setCantidad(cantidad3);
-                            double total3 = precioBanda * cantidad3;
-                            System.out.println("Total:" + total3);
-                            char agg3 = 'A';
-                            System.out.println("Agregar(S/N):");
-                            agg3 = sc.next().charAt(0);
-                            if (agg3 == 'S') {
-                                //listadeEvento.add(banda);
-                                System.out.println("Se ha agregado su elección.");
-                                dos3++;
-                            } else {
-                            System.out.println("No se ha agregado su elección.");
-                            }
-                            
-                        } else{
-                            System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        break;
-                    
-                    default :
-                            System.out.println("Opcion Inválida.\n");
-                            break;
-                }
-                break;
-            case "4":
-                
-                //FOTOGRAFIA
-                int cantidad4=1;
-                double precioFotografia=500;
-                ElementoAdicional fotografia=new ElementoAdicional();
-                fotografia.setTipoElementoAdicional(TipoElementoAdicional.FOTOGRAFIA);
-                fotografia.setCantidad(cantidad4);
-                fotografia.setPrecio(precioFotografia);
-                double total4 = precioFotografia * cantidad4;
-                System.out.println("Total:" + total4);
-                char agg4 = 'A';
-                System.out.println("Agregar(S/N):");
-                agg4 = sc.next().charAt(0);
-                if (agg4 == 'S') {
-                    //listadeEvento.add(fotografia);
-                    System.out.println("Se ha agregado su elección.");
-                   
-                } else {
-                    System.out.println("No se ha agregado su elección.");
-                }
-                
-                break;
-            case "5":
-                //BEBIDA
-                double precioWhisky = 50;
-                double precioVodka = 25;
-                double precioCerveza = 3;
-                double precioRefrescos = 1;
-                System.out.println("Para la bebida se presentan las opciones de:\n"
-                        + "1. Whisky($50 c/u)\n"
-                        + "2. Vodka($25 c/u)\n"
-                        + "3. Cerveza($3 c/u)\n"
-                        + "4. Refrescos($1 c/u)\n"
-                        + "¿Qué prefiere?");
-                String opcion5=sc.next();
-                sc.nextLine();
-                int uno=0;
-                int dos=0;
-                int tres=0;
-                int cuatro=0;
-                switch(opcion5){
-                    case "1":
-                        if (uno==0){
-                            System.out.println("Cantidad de whiskys:");
-                            int cantidad=sc.nextInt();
-                            ElementoAdicional whisky=new ElementoAdicional();
-                            whisky.setCantidad(cantidad);
-                            whisky.setPrecio(precioWhisky);
-                            whisky.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
-                            double total=precioWhisky*cantidad;
-                            System.out.println("Total:"+total);
-                            char agg='A';
-                            System.out.println("Agregar(S/N):");
-                            agg=sc.next().charAt(0);
-                            if(agg=='S'){
-                               //listadeEvento.add(whisky);
-                                 System.out.println("Se ha agregado su elección.");
-                                 uno++;
-                            }else{
-                                  System.out.println("No se ha agregado su elección.");
-                            }
-                        } else {
-                              System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        break;
-                    case "2":
-                        if(dos==0){
-                            System.out.println("Cantidad de vodkas:");
-                            int cantidad=sc.nextInt();
-                            ElementoAdicional vodka=new ElementoAdicional();
-                            vodka.setCantidad(cantidad);
-                            vodka.setPrecio(precioVodka);
-                            vodka.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
-                            double total=precioVodka*cantidad;
-                            System.out.println("Total:"+total);
-                            char agg='A';
-                            System.out.println("Agregar(S/N):");
-                            agg=sc.next().charAt(0);
-                            if(agg=='S'){
-                               //listadeEvento.add(vodka);
-                                 System.out.println("Se ha agregado su elección.");
-                                 dos++;
-                            }else{
-                                  System.out.println("No se ha agregado su elección.");
-                            }
-                        } else {
-                              System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        break;
-                    case "3":
-                        if (tres==0){
-                            System.out.println("Cantidad de cervezas:");
-                            int cantidad=sc.nextInt();
-                            ElementoAdicional cerveza=new ElementoAdicional();
-                            cerveza.setCantidad(cantidad);
-                            cerveza.setPrecio(precioCerveza);
-                            cerveza.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
-                            double total=precioCerveza*cantidad;
-                            System.out.println("Total:"+total);
-                            char agg='A';
-                            System.out.println("Agregar(S/N):");
-                            agg=sc.next().charAt(0);
-                            if(agg=='S'){
-                               //listadeEvento.add(cerveza);
-                                 System.out.println("Se ha agregado su elección.");
-                                 tres++;
-                            }else{
-                                  System.out.println("No se ha agregado su elección.");
-                            }
-                        } else {
-                              System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        break;
-               
-                    case "4":
-                        if (cuatro==0){
-                            System.out.println("Cantidad de refrescos:");
-                            int cantidad=sc.nextInt();
-                            ElementoAdicional refrescos=new ElementoAdicional();
-                            refrescos.setCantidad(cantidad);
-                            refrescos.setPrecio(precioRefrescos);
-                            refrescos.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
-                            double total=precioRefrescos*cantidad;
-                            System.out.println("Total:"+total);
-                            char agg='A';
-                            System.out.println("Agregar(S/N):");
-                            agg=sc.next().charAt(0);
-                            if(agg=='S'){
-                               //listadeEvento.add(refrescos);
-                                 System.out.println("Se ha agregado su elección.");
-                                 cuatro++;
-                            }else{
-                                  System.out.println("No se ha agregado su elección.");
-                            }
-                        } else {
-                              System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
-                        }
-                        
-                        break;
-                    
-                    default :
-                             System.out.println("Opcion Inválida.\n");
-                             break;
-                
-                }
-                break;
-            case "6":
-                break;
-            default :
-                System.out.println("Opcion Inválida.\n"
-                        + "Por favor digite otra opción.");
-                break;
-            }
-        if(!entrada.equals("6")){
-            System.out.println("¿Desea registrar elementos adicionales(S/N)?");
-            elementoAd=sc.next().charAt(0);
-        } else{
-            elementoAd='N';
-        
-        }
-        
-        }while(elementoAd!='N');
-        System.out.println("Ha concluido el ingreso de los datos del evento.");
-        System.out.println("El costo total del evento sera de:"+" dólares.");
-        System.out.println("¿Desea generar orden de pago(S/N)?");
-        char generarOrden=sc.next().charAt(0);
-        if(generarOrden=='S'){
-            //solicitud.setEstadoSol(EstadoSol.APROBADA)
-            System.out.println("Se ha generado su orden de pago.");
-        }else{
-            System.out.println("No se ha generado su orden de pago.");
-            
-        }
 }
+System.out.println("TOTAL A PAGAR: "+op.getValorTotal());
 
+
+        
+}
 
 public void confirmarEvento(){
 	System.out.println("/*************CONFIRMAR EVENTO*************/\n"
@@ -925,8 +731,8 @@ public void confirmarEvento(){
 	for (int i=0;i<listaa.size();i++){
 		if(listaa.get(i).getCodigo()==id){
 
-			if (!listaa.get(i).getFechaRegistro().equals(00/00/00)){
-				System.out.println("El pago de este evento se ha realizado el "+listaa.get(1).getFechaRegistro());
+			if (!listaa.get(i).getFechaReg().equals(00/00/00)){
+				System.out.println("El pago de este evento se ha realizado el "+listaa.get(1).getFechaReg());
 				System.out.println("¿Desea aprobar este pago? (S/N)");
 				String choice= sc.nextLine();
 				while (!choice.equals("S") && !choice.equals("N")){
@@ -1075,6 +881,24 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         
     return usuari;}
     
+    public Usuario buscarUsuario(String nombre,int n){
+     Usuario usuario=null;   
+        if(n==1){
+            for(Cliente element: Sistema.clientes){
+                if(element.getNombre().equals(nombre)){
+                    usuario=element;
+                }
+            }
+        }else if(n==2){
+
+            for(Planificador element: Sistema.planificadores){
+                if(element.getNombre().equals(nombre)){
+                    usuario=element;
+                }
+            }
+        }
+        return usuario;}
+    
     public void generarArchivo(String tipo, ArrayList<String> informacion){
         String linea="";
         if (tipo.equals("Solicitud")){
@@ -1093,6 +917,12 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
                 linea=linea+","+element;
             }
             ManejoArchivos.EscribirArchivo("evento.txt", linea);
+         if (tipo.equals("Adicionales")){
+             for(String element: informacion){
+                 linea=linea+","+element;
+             }
+             ManejoArchivos.EscribirArchivo("adicionales.txt",linea);
+         }
         }
         
     }
@@ -1155,6 +985,132 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
    
     }
     
+    public void llenarSistema(ArrayList <String> info,ArrayList <String> ordenPago,ArrayList <String> elementAd,ArrayList <String> eventos){
+        
+        //////////////LLENADO LISTA SOLICITUDES//////////
+        for (int i=0;i<info.size()-1;i++){
+            String []partes= info.get(i+1).split(",");
+            if(partes.length>1){
+                String cod= partes[0];
+                int codigo=Integer.valueOf(cod);
+                String nomCliente=partes[1];
+                Cliente cliente=(Cliente) buscarUsuario(nomCliente,1);
+                String nomPlanificador=partes[2];
+                Planificador planificador= (Planificador) buscarUsuario(nomPlanificador,2);
+                String fecha_sol=partes[3];
+                Date fecha_solicitud=stringtoDate(fecha_sol);
+                String fecha_ev=partes[4];
+                Date fecha_evento=stringtoDate(fecha_ev);
+                String estado=partes[5];
+                Solicitud soli= new Solicitud(codigo,cliente,planificador,fecha_solicitud,fecha_evento,EstadoSolicitud.valueOf(estado));
+                Sistema.solicitudes.add(soli);
+                }
+            }
+        ////////////LLENADO EVENTOS////////////////////
+        for(int i=0;i<eventos.size()-1;i++){
+            Evento ev=null;
+            String [] partes2=eventos.get(i+1).split(",");
+            if (partes2.length<1){
+                int codigo= Integer.valueOf(partes2[0]);
+                String nombre_Cliente= partes2[1];
+                Cliente cliente= (Cliente) buscarUsuario(nombre_Cliente,1);
+                String tipo= partes2[2];
+                
+                Date fecha= stringtoDate(partes2[3]);
+                String hora_in=partes2[4];
+                String hora_fin=partes2[5];
+                int capacidad= Integer.valueOf(partes2[6]);
+         
+                String nombrePlan= partes2[7];                                             
+                Planificador plan= (Planificador) buscarUsuario(nombrePlan,2);
+                EstadoEvento estado= EstadoEvento.valueOf(partes2[8]);
+                if (tipo.equals("Boda")){
+                    ev = new Boda("",cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                }
+                else if(tipo.equals("Fiesta Emrpesarial")){
+                    ev= new FiestaEmpresarial(false,0,cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                }
+                else if(tipo.equals("Fiesta Infantil")){
+                    ev= new FiestaInfantil(0,0,false,cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                }
+                Sistema.eventos.add(ev);
+            }
+        }
+        ////////////LLENADO LISTA ADICIONALES PARA CADA EVENTO//////
+        for(int i=0;i<elementAd.size()-1;i++){
+            
+            String [] partes=elementAd.get(i+1).split(",");
+            if(partes.length>1){
+                int codEv=Integer.valueOf(partes[0]);
+                for(Evento element: Sistema.eventos){
+                    ElementoAdicional el=new ElementoAdicional();
+                    el.setTipoElementoAdicional(TipoElementoAdicional.valueOf(partes[1]));
+                    el.setCantidad(Integer.valueOf(partes[2]));
+                    el.setPrecio(Double.valueOf(partes[3]));
+                    el.setTotal(Double.valueOf(partes[4]));
+                    if (element.getCodigo()==codEv){
+                        element.getElementosAdicionales().add(el);
+                        element.setValorTotal(element.getValorTotal()+element.calcularCostoTotal());
+                    }
+                }
+            }
+        }
+        ////////////LLENADO LISTA ORDENPAGO////////////
+        for(int i=0;i<ordenPago.size()-1;i++){
+            String []partes2=ordenPago.get(i+1).split(",");
+            if (partes2.length>1){
+                int codigo_pago= Integer.valueOf(partes2[0]);
+                
+                int codigo_evento= Integer.valueOf(partes2[1]);
+                Evento ev=null;
+                for (Evento element: Sistema.eventos){
+                    if(element.getCodigo()==codigo_evento){
+                        ev=element;
+                    }
+                }
+                double total_pagar= Double.valueOf(partes2[2]);
+                
+                EstadoOrdenDePago estado= EstadoOrdenDePago.valueOf(partes2[3]);
+                
+                int codigo_transaccion= Integer.valueOf(partes2[4]);
+                
+                Date fecha_registro=stringtoDate(partes2[5]);
+                
+                
+                OrdenPago op=new OrdenPago(ev,ev.getCliente(),estado,codigo_pago,codigo_transaccion);
+                op.setFechaReg(fecha_registro);
+                op.setValorTotal(total_pagar);
+            }
+        }
+        }
+    
+    
+    public Date stringtoDate(String fecha){        
+            String[] fechaLista=fecha.split("/");
+            int anio=Integer.valueOf(fechaLista[0]);
+            int mes=Integer.valueOf(fechaLista[1]);
+            int dia=Integer.valueOf(fechaLista[2]);
+
+            Date fechaDate= new Date(anio - 1900, mes - 1, dia);
+        return fechaDate;
+    }
+    
+    public void archivos(ArrayList<String> a,ArrayList<String> b,ArrayList<String> c,ArrayList<String> d){
+        if(a.isEmpty()){
+        ManejoArchivos.EscribirArchivo("solicitudes.txt","id_solicitud,nombre_cliente,nombre_planificador,fecha_solicitud,fecha_evento,estado");
+        }
+        if(b.isEmpty()){
+        ManejoArchivos.EscribirArchivo("ordenPago.txt","Código_pago,Código_evento,total_pagar,estado,Código_transacción,fecha_registro");
+            
+        }
+        if(c.isEmpty()){
+        ManejoArchivos.EscribirArchivo("adicionales.txt","Código_evento,tipo,cantidad,precio,total");
+        }    
+        if(d.isEmpty()){
+         ManejoArchivos.EscribirArchivo("eventos.txt","codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado");     
+        }
+        }
+        
 }
     
  

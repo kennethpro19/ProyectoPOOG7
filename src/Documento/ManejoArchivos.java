@@ -56,7 +56,7 @@ public class ManejoArchivos {
         return lineas;
 
     }
-
+   
     public static void EscribirArchivo(String nombreArchivo, String linea) {
 
         FileWriter fichero = null;
