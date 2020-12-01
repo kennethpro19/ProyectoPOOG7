@@ -97,6 +97,7 @@ public class Evento {
          for(ElementoAdicional elementoAdicional:elementosAdicionales){
             this.valorTotal+=elementoAdicional.getTotal();
          }
+         
  
     }     
 }

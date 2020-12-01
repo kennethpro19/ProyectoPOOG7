@@ -21,10 +21,7 @@ import java.util.List;
 public class TestTodo {
 
     public static void main(String args[]) {
-        ArrayList<Integer> numbers=new ArrayList<>(9999);    
-        for (int i = 1; i < 10000; i++) {
-            numbers.add(i);
-        }
+      
         
        
 //REGISTRO DE ELEMENTOS ADICIONALES PARA EL EVENTO
