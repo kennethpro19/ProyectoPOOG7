@@ -48,7 +48,8 @@ public class Interfaz {
                 +          "2. Registrar pago evento\n"+
                            "3. Salir");
         System.out.println("Elija una opción:");
-        choice= sc.nextLine();
+        choice= sc.next();
+        sc.nextLine();
         switch(choice){
             case "1": solicitarPlanificacion(cliente);
                 break;
@@ -61,11 +62,12 @@ public class Interfaz {
         }
         }while(!choice.equals("3"));
     }
+    
     //Métdo para solicitar planificacion
     public void solicitarPlanificacion(Cliente c){
-        System.out.println("/**************NUEVA SOLICITUD********************/\n"+
+        System.out.println("/*****NUEVA SOLICITUD*******/\n"+
                            "/*                                               */\n"+
-                           "/*************************************************/");
+                           "/*****************/");
         System.out.println("Bienvenido\n");
         String choice="";
         do{
@@ -74,7 +76,8 @@ public class Interfaz {
                 +          "2. Fiesta infantil\n"
                 +          "3. Fiesta empresarial");
         System.out.println("Seleccione:");
-        choice=sc.nextLine();
+        choice=sc.next();
+        sc.nextLine();
         switch(choice){
             case "1": eventoBoda(c);
                 break;
@@ -85,12 +88,12 @@ public class Interfaz {
             default: System.out.println("Opción inválida!");
         }
             
-        }while(!choice.equals("1")||!choice.equals("2")||!choice.equals("3"));
+        }while(!choice.equals("1")&&!choice.equals("2")&&!choice.equals("3"));
     }
     public void eventoBoda(Cliente c){
         Planificador p=asignarPlanificador();
-        Date fechaRegistro=null; //VALIDARTIEMPO
-        Date fechaEvento=null; //VALIDARTIEMPO
+        Date fechaRegistro=new Date(); //VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("Boda"); //VALIDARTIEMPO
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Boda");
         
         p.getSolicitudesAsignadas().add(s);
@@ -110,8 +113,8 @@ public class Interfaz {
     public void eventoFiestaInfantil(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;//VALIDARTIEMPO
-        Date fechaEvento=null;//VALIDARTIEMPO
+        Date fechaRegistro=new Date();//VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("FiestaInfantil");//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Infantil");
         p.getSolicitudesAsignadas().add(s);
@@ -132,8 +135,8 @@ public class Interfaz {
     public void eventoFiestaEmpresarial(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;//VALIDARTIEMPO
-        Date fechaEvento=null;//VALIDARTIEMPO
+        Date fechaRegistro=new Date();//VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("FiestaEmpresarial");//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
         p.getSolicitudesAsignadas().add(s);
@@ -152,21 +155,216 @@ public class Interfaz {
         info.add(s.getEstadoSol());
         generarArchivo("Solicitudes",info);
     }
+    
+    
+    public  Date  validarTiempo(String tipoEvento){
+        int fechaValida=0;
+        System.out.println("Ingrese la fecha para su evento (Dia/Mes/Año):");
+        Scanner sc=new Scanner(System.in);
+        String fechaEvento=sc.next();
+        sc.nextLine();
+         while (fechaValida == 0) {
+             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+             Date fechaHoy = new Date();
+             String fechaActual = sdf.format(fechaHoy);
+             String[] fechaLista = fechaEvento.split("/");
+             int anio = Integer.valueOf(fechaLista[2]);
+             int mes = Integer.valueOf(fechaLista[1]);
+             int dia = Integer.valueOf(fechaLista[0]);
+
+             String[] fechaActualLista = fechaActual.split("/");
+             int anioActual = Integer.valueOf(fechaActualLista[2]);
+             int mesActual = Integer.valueOf(fechaActualLista[1]);
+             int diaActual = Integer.valueOf(fechaActualLista[0]);
+             int mesNuevo = 0;
+             int anioNuevo = 0;
+             int diaNuevo = 0;
+
+             if (tipoEvento =="Boda") {
+
+                 mesActual += 10;
+                 if (mesActual > 12) {
+                     mesNuevo = mesActual - 12;
+                     anioNuevo = anioActual + 1;
+                     diaNuevo = diaActual;
+                 } else {
+                     mesNuevo = mesActual;
+                     anioNuevo = anioActual;
+                     diaNuevo = diaActual;
+                 }
+                 Date fecha10Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                 Date fechaBodaIngresada = new Date(anio - 1900, mes - 1, dia);
+                 if (fechaBodaIngresada.after(fecha10Meses)) {
+                     System.out.println("¡Fecha Válida!\n"
+                             + "Ha registrado todos los datos necesarios para la solicitud.");
+                     fechaValida++;
+                     return fechaBodaIngresada;
+
+                 } else {
+                     System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                            + " debemos tener por lo menos 10 meses para planificar.\n"
+                             + "Ingrese nuevamente.");
+                     System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                     String fecha = sc.nextLine();
+                     fechaEvento=fecha;
+                 }
+             } else if (tipoEvento=="FiestaEmpresarial") {
+
+                 mesActual += 2;
+                 if (mesActual > 12) {
+                     mesNuevo = mesActual - 12;
+                     anioNuevo = anioActual + 1;
+                     diaNuevo = diaActual;
+                 }else {
+                     mesNuevo = mesActual;
+                     anioNuevo = anioActual;
+                     diaNuevo = diaActual;
+                 }
+                 Date fecha2Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                 Date fechaEmpresarialIngresada = new Date(anio - 1900, mes - 1, dia);
+                 if (fechaEmpresarialIngresada.after(fecha2Meses)) {
+                     System.out.println("¡Fecha Válida!\n"
+                             + "Ha registrado todos los datos necesarios para la solicitud.");
+                     fechaValida++;
+                     return fechaEmpresarialIngresada;
+
+                 } else {
+                     System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                             + " debemos tener por lo menos 2 meses para planificar.\n"
+                             + "Ingrese nuevamente.");
+                     System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                     String fecha = sc.nextLine();
+                     fechaEvento = fecha;
+
+                 }
+
+             } else if (tipoEvento=="FiestaInfantil") {
+
+                 if (mesActual == 1 || mesActual == 3 || mesActual == 5 || mesActual == 7 || mesActual == 8
+                         || mesActual == 10 || mesActual == 12) {
+                     diaActual += 21;
+                     if (diaActual > 31) {
+                         diaNuevo = diaActual - 31;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas;
+                     fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada;
+                     fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 } else if (mesActual == 4 || mesActual == 6 || mesActual == 9 || mesActual == 11) {
+                     diaActual += 21;
+                     if (diaActual > 30) {
+                         diaNuevo = diaActual - 30;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 } else if (mesActual == 2) {
+                     diaActual += 21;
+                     if (diaActual > 28) {
+                         diaNuevo = diaActual - 28;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 }
+
+             }
+         }
+
+        return null;
+    }
+    
+    
     public void registrarPagoEvento(Cliente cliente){
-        System.out.println("/****************REGISTRO PAGO*****************/\n"
-                +          "/*                                            */\n"
-                +          "/**********************************************/");
+        System.out.println("/**********REGISTRO PAGO***********/\n"
+                +          "/*                                */\n"
+                +          "/**********************************/");
     ArrayList <OrdenPago> a= cliente.getOrden();
     for (OrdenPago element: a){
 	String choice ="";
 	System.out.println("Su orden con código "+ (element.getCodigo()) +" está pendiente de pago.\n"
 		          +"¿Desea registrar pago ahora? (S/N):");
- 	choice= sc.nextLine();
+ 	choice= sc.next();
+        sc.nextLine();
 	while (!choice.equals("N") && !choice.equals("S")){
 		System.out.println("Ingrese una opción válida");
 		choice = sc.nextLine();
 		}
-	if (choice.equals('S')){
+	if (choice.equals("S")){
 		System.out.println("Ingrese el código de la transacción: ");
 		int codtrans= sc.nextInt();
 		element.setCodTrans(codtrans);
@@ -203,9 +401,9 @@ public class Interfaz {
 
 
 public void consultarSolicitudesPendientes(ArrayList <String> solicitudespendientes){
-System.out.println("/******************SOLICITUDES PENDIENTES*******************/\n"
+System.out.println("/*******SOLICITUDES PENDIENTES******/\n"
 +	       "/*                                                         */\n"+
-	       "/***********************************************************/");   		
+	       "/*********************/");   		
 	//Leer archivos rey
         
         for(int i=0;i<solicitudespendientes.size()-1;i++){
@@ -221,9 +419,9 @@ System.out.println("/******************SOLICITUDES PENDIENTES*******************
 
 
 public void registrarEvento(ArrayList <Solicitud> solicitudes){
-System.out.println("/*********************REGISTRAR EVENTOS*********************/\n"
+System.out.println("/********REGISTRAR EVENTOS********/\n"
 +	       "/*                                                         */\n"+
-	       "/***********************************************************/");   		
+	       "/*********************/");   		
 System.out.print("Ingrese el id de la solicitud: "); 
 int cod=sc.nextInt();
 sc.nextLine();
@@ -236,7 +434,7 @@ for (int i=0;i<a.size();i++){
 	}else{System.out.println("No existe una solicitud de evento con el código ingresado");}
 	}
 
-System.out.println("/**************REGISTRO DE DATOS DEL EVENTO*************/");
+System.out.println("/*****REGISTRO DE DATOS DEL EVENTO****/");
 System.out.println("Hora inicio: ");
 String horaIn=sc.nextLine();
 System.out.println("Hora fin: ");
@@ -704,9 +902,9 @@ String choice= sc.nextLine();
 }
 
 public void generarOrdenPago(OrdenPago op){
-	System.out.println("/**************ORDEN DE PAGO***************/\n"
+	System.out.println("/*****ORDEN DE PAGO******/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");
+	+		   "/**************/");
 System.out.println("CÓDIGO PAGO: "+op.getCodigo()+"\nFECHA: "+op.getFechaHoy()+"\nCLIENTE: "+op.getCliente().getNombre()
 + " "+op.getCliente().getApellido()+"\nEVENTO: "+""+"\nFECHA EVENTO: "+op.getEvento().getFechaEvento());
 System.out.println("\nADICIONALES");
@@ -721,9 +919,9 @@ System.out.println("TOTAL A PAGAR: "+op.getValorTotal());
 }
 
 public void confirmarEvento(){
-	System.out.println("/*************CONFIRMAR EVENTO*************/\n"
+	System.out.println("/****CONFIRMAR EVENTO****/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");
+	+		   "/**************/");
 	System.out.println("Ingrese el id de la orden de pago: ");
 	int id=sc.nextInt();
 	sc.nextLine();
@@ -753,9 +951,9 @@ public void confirmarEvento(){
 public void consultarEvento(Planificador planificador){
 	ArrayList <Evento> lista= planificador.getEventos();
 
-	System.out.println("/*************CONSULTAR EVENTO*************/\n"
+	System.out.println("/****CONSULTAR EVENTO****/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");	
+	+		   "/**************/");	
         String choice="";
         do{
         System.out.println("TIPO DE EVENTO (Elija)");
@@ -866,7 +1064,7 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     }
     return info;}
     
-public Usuario buscarUsuario(String usuario,String contraseña){
+    public Usuario buscarUsuario(String usuario,String contraseña){
         Usuario usuari =null;
         for (Cliente element: Sistema.clientes){
             if(element.getUsuario().equals(usuario)&&element.getContrasena().equals(contraseña)){
@@ -881,9 +1079,6 @@ public Usuario buscarUsuario(String usuario,String contraseña){
         
     return usuari;}
     
-<<<<<<< HEAD
-public void generarArchivo(String tipo, ArrayList<String> informacion){
-=======
     public Usuario buscarUsuario(String nombre,int n){
      Usuario usuario=null;   
         if(n==1){
@@ -903,7 +1098,6 @@ public void generarArchivo(String tipo, ArrayList<String> informacion){
         return usuario;}
     
     public void generarArchivo(String tipo, ArrayList<String> informacion){
->>>>>>> 08c97fc8aa1b33b8a2520d44cd4f0640cb733b3b
         String linea="";
         if (tipo.equals("Solicitud")){
             for(String element:informacion){
@@ -930,14 +1124,14 @@ public void generarArchivo(String tipo, ArrayList<String> informacion){
         }
         
     }
-public Planificador asignarPlanificador(){
+    public Planificador asignarPlanificador(){
       int n=Sistema.planificadores.size();
       Random r=new Random();
       int index= r.nextInt(n);
       Planificador p=Sistema.planificadores.get(index);
      return p;}
     
-public void actualizartxt(){
+    public void actualizartxt(){
         ManejoArchivos.EliminarArchivo("solicitudes.txt");
         ManejoArchivos.EliminarArchivo("ordenPago.txt");
         ManejoArchivos.EliminarArchivo("evento.txt");
@@ -988,12 +1182,7 @@ public void actualizartxt(){
     
    
     }
-   
     
-    
-<<<<<<< HEAD
-
-=======
     public void llenarSistema(ArrayList <String> info,ArrayList <String> ordenPago,ArrayList <String> elementAd,ArrayList <String> eventos){
         
         //////////////LLENADO LISTA SOLICITUDES//////////
@@ -1120,11 +1309,4 @@ public void actualizartxt(){
         }
         }
         
->>>>>>> 08c97fc8aa1b33b8a2520d44cd4f0640cb733b3b
 }
-    
- 
-
-
-    
-

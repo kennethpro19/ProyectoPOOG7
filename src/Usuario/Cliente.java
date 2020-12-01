@@ -24,7 +24,6 @@ public class Cliente extends Usuario{
         this.telefono=telefono;
     }
     
-    
     //Metodos getters y setters
     public Date getFecha(){
         return this.fecha;
@@ -52,6 +51,6 @@ public class Cliente extends Usuario{
 
 
     public ArrayList<OrdenPago> getOrden() {
-        return this.orden; //To change body of generated methods, choose Tools | Templates.
+        return this.orden; 
     }
 }
