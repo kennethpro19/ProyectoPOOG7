@@ -1,3 +1,2 @@
 codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado
-6922,Alonso,null,14/07/0018,asda,asdas,12312,Mercedes,PENDIENTE
-2446,Alonso,Fiesta Empresarial,14/07/0018,asdasd,asdasdsad,123123,Mercedes,PENDIENTE
+0,null,null,02/12/2020,null,null,0,null,PENDIENTE

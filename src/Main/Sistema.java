@@ -53,7 +53,7 @@ public class Sistema {
             i.culoabierto(p);
             i.seccionPlanificador(p,archivo);
             
-            System.out.println(p.getSolicitudesAsignadas());
+            
         }
     }   
 }

@@ -27,7 +27,7 @@ public class Solicitud {
     private String tipoEvento;
     private EstadoSolicitud estadoSol;
     
- 
+    
     public Solicitud(Cliente cliente, Planificador planificador, Date fechaRegistro, Date fechaEvento, String tipoEvento){
         this.cliente=cliente;
         this.planificador=planificador;
@@ -61,6 +61,9 @@ public class Solicitud {
         this.fechaEvento=fechaEvento;
         this.codigo=codigo;
         this.estadoSol=estadoSol;
+    }
+    public Solicitud(){
+        
     }
     public int getCod(){
     return this.codigo;

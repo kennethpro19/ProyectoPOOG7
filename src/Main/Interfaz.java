@@ -411,6 +411,8 @@ public class Interfaz {
 		System.out.println("Ingrese el código de la transacción: ");
 		int codtrans= sc.nextInt();
 		element.setCodTrans(codtrans);
+               // SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                element.setFechaReg(new Date());
                 element.setEstadoOrdenDePago(EstadoOrdenDePago.APROBADO);
                 actualizartxt();
 		} 
@@ -455,12 +457,14 @@ System.out.println("/*******SOLICITUDES PENDIENTES******/\n"
 	       "/***************************************/");   		
 	//Leer archivos rey
     if(!solicitudespendientes.isEmpty()){
-        System.out.println("Hola");
+        
         for(int i=0;i<solicitudespendientes.size();i++){
             ///////////////////////////////////////////////////////////////////
+            if(solicitudespendientes.get(i).getEstadoSol().equals("PENDIENTE")){
             SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
             System.out.println((i+1)+". "+solicitudespendientes.get(i).getCod()+" - "+sdf.format(solicitudespendientes.get(i).getFechaEvento()));
-        }
+            }else{System.out.println("No hay solicitudes pendientes");}
+            }
         }
     else{System.out.println("No hay solicitudes pendientes");}
 }
@@ -473,17 +477,20 @@ System.out.println("/********REGISTRAR EVENTOS********/\n"
 +	           "/*                               */\n"+
 	           "/******************************* */");   		
 System.out.print("Ingrese el id de la solicitud: "); 
+SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
 int cod=sc.nextInt();
 sc.nextLine();
 ArrayList <Solicitud> a=solicitudes;
-Solicitud solicitud=null;
+Solicitud solicitud=new Solicitud();
 for (int i=0;i<a.size();i++){
-	if ((a.get(i).getCod())==cod){
+    
+	if ((a.get(i).getCod())==cod ){
+            if(a.get(i).getEstadoSol().equals("PENDIENTE")){
 		 solicitud= a.get(i);
 		System.out.println("DATOS: \nCLIENTES: "+solicitud.getCliente().getNombre()+" "+solicitud.getCliente().getApellido()+"\nPLANIFICADOR"
                         + " ASIGNADO: "+solicitud.getPlanificador().getNombre()+" "+solicitud.getPlanificador().getApellido()+"\n"
-                                + "FECHA DE REGISTRO: "+solicitud.getFechaRegistro()+"TIPO EVENTO: "+solicitud.getTipoEvento()+
-                        "FECHA DEL EVENTO: "+solicitud.getFechaEvento()); //imprime datos
+                                + "\nFECHA DE REGISTRO: "+sdf.format(solicitud.getFechaRegistro())+"\nTIPO EVENTO: "+solicitud.getTipoEvento()+
+                        "\nFECHA DEL EVENTO: "+sdf.format(solicitud.getFechaEvento())); //imprime datos
                if(solicitud.getTipoEvento().equals("Boda"))
                 System.out.println("PRECIO BASE: "+ 3500);
                else if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
@@ -491,10 +498,13 @@ for (int i=0;i<a.size();i++){
                }else if(solicitud.getTipoEvento().equals("Fiesta Empresarial")){
                    System.out.println("PRECIO BASE: "+2000);
                }
-	}else{System.out.println("No existe una solicitud de evento con el código ingresado");}
-	}
-
-System.out.println("/*****REGISTRO DE DATOS DEL EVENTO****/");
+               System.out.println("¿Desea continuar? (S/N)");
+               String elcc=sc.nextLine();
+               while(!elcc.equals("S")&&!elcc.equals("N")){
+                   System.out.println("¿Desea continuar? (S/N)");
+                   elcc=sc.nextLine();
+               }if (elcc.equals("S")){
+                   System.out.println("/*****REGISTRO DE DATOS DEL EVENTO****/");
 System.out.println("Hora inicio: ");
 String horaIn=sc.nextLine();
 System.out.println("Hora fin: ");
@@ -502,14 +512,15 @@ String horaFin=sc.nextLine();
 System.out.println("Capacidad: ");
 int capacidad= sc.nextInt();
 sc.nextLine();
-Evento ev= null;
+Evento ev= new Evento();
 if(solicitud.getTipoEvento().equals("Boda")){
     System.out.println("Ingrese el tipo de vehículo para el transporte de los novios. En caso de que no se requiera, ingrese NO APLICA");
     String boleano=sc.nextLine();
 
     ev=new Boda(boleano,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
     ev.setTipo("Boda");
-}if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
+}
+else if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
     System.out.println("Ingrese la cantidad de personajes disfrazados que desea para su evento. \n"
             + "En caso de que no se requiera, ingrese 0");
     int cantdis=sc.nextInt();
@@ -531,7 +542,8 @@ if(solicitud.getTipoEvento().equals("Boda")){
     
     ev=new FiestaInfantil(cantdis,cantsorp,b,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
     ev.setTipo("Fiesta Infantil");
-} if (solicitud.getTipoEvento().equals("Fiesta Empresarial")){
+} 
+else if (solicitud.getTipoEvento().equals("Fiesta Empresarial")){
     System.out.println("¿Desea transporte para los invitados? (S/N)");
     String trans=sc.nextLine();
     boolean z=false;
@@ -549,7 +561,7 @@ ArrayList <String> informacion=new ArrayList <String>();
 informacion.add(String.valueOf(ev.getCodigo()));
 informacion.add(ev.getCliente().getNombre());
 informacion.add(solicitud.getTipoEvento());
-SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
  
 
 informacion.add(sdf.format(ev.getFechaEvento()));
@@ -558,10 +570,7 @@ informacion.add(ev.getHoraDeSalida());
 informacion.add(String.valueOf(ev.getCapacidad()));
 informacion.add(ev.getPlanificador().getNombre());
 informacion.add(ev.getEstadoEvento());
-Sistema.eventos.add(ev);
-generarArchivo("Evento",informacion);
-solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
-actualizartxt();
+
 System.out.println("¿Desea registrar elementos adicionales? (S/N)");
 String choice= sc.next();
 sc.nextLine();
@@ -579,6 +588,7 @@ sc.nextLine();
         int dos=0;
         int tres=0;
         int cuatro=0;
+        ArrayList <ElementoAdicional> elementos=new ArrayList<>();
         do{
         String entrada="";
         System.out.println("Las opciones son:\n"
@@ -602,6 +612,7 @@ sc.nextLine();
                 ElementoAdicional comida=new ElementoAdicional();
                 comida.setCantidad(cantidad1);
                 comida.setPrecio(precioComida);
+                comida.setTotal(comida.calcularCosto());
                 comida.setTipoElementoAdicional(TipoElementoAdicional.COMIDA);
                 double total1 = precioComida * cantidad1;
                 System.out.println("Total:" + total1);
@@ -609,7 +620,7 @@ sc.nextLine();
                 System.out.println("Agregar(S/N):");
                 agg1 = sc.next().charAt(0);
                 if(agg1=='S'){
-                    ev.getElementosAdicionales().add(comida);
+                    elementos.add(comida);
                     System.out.println("Se ha agregado su elección.");
                     ArrayList <String> info=new ArrayList<String>();
                     info.add(String.valueOf(ev.getCodigo()));
@@ -632,17 +643,26 @@ sc.nextLine();
                 int cantidad2=sc.nextInt();
                 ElementoAdicional bocaditos=new ElementoAdicional();
                 bocaditos.setCantidad(cantidad2);
+                
                 bocaditos.setTipoElementoAdicional(TipoElementoAdicional.BOCADITOS);
                 if (cantidad2>150){
                     double precioBocadito=0.10;
                     double total2 = precioBocadito * cantidad2;
                     System.out.println("Total:" + total2);
+                    bocaditos.setTotal(total2);
                     char agg = 'A';
                     System.out.println("Agregar(S/N):");
                     agg = sc.next().charAt(0);
                     if(agg=='S'){
-                        ev.getElementosAdicionales().add(bocaditos);
+                        elementos.add(bocaditos);
                         System.out.println("Se ha agregado su elección.");
+                        ArrayList <String> info=new ArrayList<String>();
+                        info.add(String.valueOf(ev.getCodigo()));
+                        info.add(TipoElementoAdicional.BOCADITOS.name());
+                        info.add(String.valueOf(cantidad2));
+                        info.add(String.valueOf(precioBocadito));
+                        info.add(String.valueOf(total2));
+                        generarArchivo("Adicionales", info);
                     } else {
                         System.out.println("No se ha agregado su elección.");
                     }
@@ -650,24 +670,24 @@ sc.nextLine();
                     double precioBocadito=0.25;
                     double total2 = precioBocadito * cantidad2;
                     System.out.println("Total:" + total2);
+                    bocaditos.setTotal(total2);
                     char agg = 'A';
                     System.out.println("Agregar(S/N):");
                     agg = sc.next().charAt(0);
                     if(agg=='S'){
-                        ev.getElementosAdicionales().add(bocaditos);
+                        elementos.add(bocaditos);
+                         ArrayList <String> info=new ArrayList<String>();
+                        info.add(String.valueOf(ev.getCodigo()));
+                        info.add(TipoElementoAdicional.BOCADITOS.name());
+                        info.add(String.valueOf(cantidad2));
+                        info.add(String.valueOf(precioBocadito));
+                        info.add(String.valueOf(total2));
+                        generarArchivo("Adicionales", info);
                         System.out.println("Se ha agregado su elección.");
                     } else {
                         System.out.println("No se ha agregado su elección.");
                     }
-                if (agg=='S'){
-                    ArrayList <String> info=new ArrayList<String>();
-                    info.add(String.valueOf(ev.getCodigo()));
-                    info.add(TipoElementoAdicional.BOCADITOS.name());
-                    info.add(String.valueOf(cantidad2));
-                    info.add(String.valueOf(precioBocadito));
-                    info.add(String.valueOf(total2));
-                    generarArchivo("Adicionales", info);
-                }
+               
                 }
                        
                 break;
@@ -692,7 +712,7 @@ sc.nextLine();
                             dj.setTipoElementoAdicional(TipoElementoAdicional.MUSICA);
                             dj.setPrecio(precioDj);
                             dj.setCantidad(cantidad3);
- 
+                            dj.setTotal(dj.calcularCosto());
               
                             double total3 = precioDj * cantidad3;
                             System.out.println("Total:" + total3);
@@ -700,7 +720,7 @@ sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg3 = sc.next().charAt(0);
                             if (agg3 == 'S') {
-                                ev.getElementosAdicionales().add(dj);
+                                elementos.add(dj);
                                 System.out.println("Se ha agregado su elección.");
                                     ArrayList <String> info=new ArrayList<String>();
                                     info.add(String.valueOf(ev.getCodigo()));
@@ -723,13 +743,14 @@ sc.nextLine();
                             banda.setTipoElementoAdicional(TipoElementoAdicional.MUSICA);
                             banda.setPrecio(precioBanda);
                             banda.setCantidad(cantidad3);
+                            banda.setTotal(banda.calcularCosto());
                             double total3 = precioBanda * cantidad3;
                             System.out.println("Total:" + total3);
                             char agg3 = 'A';
                             System.out.println("Agregar(S/N):");
                             agg3 = sc.next().charAt(0);
                             if (agg3 == 'S') {
-                                ev.getElementosAdicionales().add(banda);
+                                elementos.add(banda);
                                 System.out.println("Se ha agregado su elección.");
                                 dos3++;
                                     ArrayList <String> info=new ArrayList<String>();
@@ -763,13 +784,14 @@ sc.nextLine();
                 fotografia.setTipoElementoAdicional(TipoElementoAdicional.FOTOGRAFIA);
                 fotografia.setCantidad(cantidad4);
                 fotografia.setPrecio(precioFotografia);
+                fotografia.setTotal(fotografia.calcularCosto());
                 double total4 = precioFotografia * cantidad4;
                 System.out.println("Total:" + total4);
                 char agg4 = 'A';
                 System.out.println("Agregar(S/N):");
                 agg4 = sc.next().charAt(0);
                 if (agg4 == 'S') {
-                    ev.getElementosAdicionales().add(fotografia);
+                    elementos.add(fotografia);
                     System.out.println("Se ha agregado su elección.");
                                     ArrayList <String> info=new ArrayList<String>();
                                     info.add(String.valueOf(ev.getCodigo()));
@@ -807,13 +829,14 @@ sc.nextLine();
                             whisky.setCantidad(cantidad);
                             whisky.setPrecio(precioWhisky);
                             whisky.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
+                            whisky.setTotal(whisky.calcularCosto());
                             double total=precioWhisky*cantidad;
                             System.out.println("Total:"+total);
                             char agg='A';
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               ev.getElementosAdicionales().add(whisky);
+                               elementos.add(whisky);
                                  System.out.println("Se ha agregado su elección.");
                                  uno++;
                                     ArrayList <String> info=new ArrayList<String>();
@@ -837,6 +860,7 @@ sc.nextLine();
                             ElementoAdicional vodka=new ElementoAdicional();
                             vodka.setCantidad(cantidad);
                             vodka.setPrecio(precioVodka);
+                            vodka.setTotal(vodka.calcularCosto());
                             vodka.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
                             double total=precioVodka*cantidad;
                             System.out.println("Total:"+total);
@@ -844,7 +868,7 @@ sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               ev.getElementosAdicionales().add(vodka);
+                               elementos.add(vodka);
                                  System.out.println("Se ha agregado su elección.");
                                  dos++;
                                  
@@ -869,6 +893,7 @@ sc.nextLine();
                             ElementoAdicional cerveza=new ElementoAdicional();
                             cerveza.setCantidad(cantidad);
                             cerveza.setPrecio(precioCerveza);
+                            cerveza.setTotal(cerveza.calcularCosto());
                             cerveza.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
                             double total=precioCerveza*cantidad;
                             System.out.println("Total:"+total);
@@ -876,7 +901,7 @@ sc.nextLine();
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               ev.getElementosAdicionales().add(cerveza);
+                               elementos.add(cerveza);
                                  System.out.println("Se ha agregado su elección.");
                                  tres++;
                                  
@@ -903,13 +928,14 @@ sc.nextLine();
                             refrescos.setCantidad(cantidad);
                             refrescos.setPrecio(precioRefrescos);
                             refrescos.setTipoElementoAdicional(TipoElementoAdicional.BEBIDA);
+                            refrescos.setTotal(refrescos.calcularCosto());
                             double total=precioRefrescos*cantidad;
                             System.out.println("Total:"+total);
                             char agg='A';
                             System.out.println("Agregar(S/N):");
                             agg=sc.next().charAt(0);
                             if(agg=='S'){
-                               ev.getElementosAdicionales().add(refrescos);
+                               elementos.add(refrescos);
                                  System.out.println("Se ha agregado su elección.");
                                  cuatro++;
                                  
@@ -942,16 +968,28 @@ sc.nextLine();
                 System.out.println("Opcion Inválida.\n"
                         + "Por favor digite otra opción.");
                 break;
-            }
+            } 
+        
         System.out.println("¿Desea registrar elementos adicionales(S/N)?");
         elementoAd=sc.next().charAt(0);
+        
         }while(elementoAd!='N');
+        
         System.out.println("Ha concluido el ingreso de los datos del evento.");
-        System.out.println("El costo total del evento sera de:"+ev.getValorTotal()+"dólares.");
+
+        double g=0.0;
+        for (ElementoAdicional element: ev.getElementosAdicionales()){
+            g=g+element.getTotal();
+        }
+        ev.setValorTotal(ev.getValorTotal()+g);
+        System.out.println("El costo total del evento sera de:"+ev.getValorTotal()+" dólares.");
         System.out.println("¿Desea generar orden de pago(S/N)?");
         char generarOrden=sc.next().charAt(0);
         if(generarOrden=='S'){
+            Sistema.eventos.add(ev);
+            generarArchivo("Evento",informacion);
             solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+            actualizartxt();
             OrdenPago op=new OrdenPago(ev, ev.getCliente());
             ArrayList <String> infor= new ArrayList <String>();
             infor.add(String.valueOf(op.getCodigo()));
@@ -963,7 +1001,7 @@ sc.nextLine();
             infor.add("sf");
             generarArchivo("OrdenPago",infor);
             System.out.println("Se ha generado su orden de pago.");
-            generarOrdenPago(op);
+            generarOrdenPago(op,ev);
             
         }else{
             System.out.println("No se ha generado su orden de pago.");
@@ -975,6 +1013,10 @@ sc.nextLine();
         char generarOrden=sc.next().charAt(0);
         if(generarOrden=='S'){
             solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+            Sistema.eventos.add(ev);
+            generarArchivo("Evento",informacion);
+            solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+            actualizartxt();
             OrdenPago op=new OrdenPago(ev, ev.getCliente());
             ArrayList <String> infor= new ArrayList <String>();
             infor.add(String.valueOf(op.getCodigo()));
@@ -984,10 +1026,9 @@ sc.nextLine();
             infor.add(String.valueOf(op.getCodTrans()));
             
             infor.add("sf");
-            
             generarArchivo("OrdenPago",infor);
             System.out.println("Se ha generado su orden de pago.");
-            generarOrdenPago(op);
+            generarOrdenPago(op,ev);
             
         }else{
             System.out.println("No se ha generado su orden de pago.");
@@ -995,19 +1036,29 @@ sc.nextLine();
         }
             
         }
+               }
+            }else{System.out.println("Esta solicitud ya ha sido aprobada.");}
+	}else{System.out.println("No existe una solicitud de evento con el código ingresado");}
+	}sc.nextLine();
+        //System.out.println("Presione Enter para continuar:");
+
+
 		
 }
-
-public void generarOrdenPago(OrdenPago op){
+ 
+public void generarOrdenPago(OrdenPago op,Evento ev){
 	System.out.println("/*****ORDEN DE PAGO******/\n"
-	+		   "/*                                        */\n"
-	+		   "/**************/");
-System.out.println("CÓDIGO PAGO: "+op.getCodigo()+"\nFECHA: "+op.getFechaHoy()+"\nCLIENTE: "+op.getCliente().getNombre()
-+ " "+op.getCliente().getApellido()+"\nEVENTO: "+""+"\nFECHA EVENTO: "+op.getEvento().getFechaEvento());
+	+		   "/*                      */\n"
+	+		   "/***********************/");
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");        
+System.out.println("CÓDIGO PAGO: "+op.getCodigo()+"\nFECHA: "+sdf.format(op.getFechaHoy())+"\nCLIENTE: "+op.getCliente().getNombre()
++ " "+op.getCliente().getApellido()+"\nEVENTO: "+op.getEvento().getTipo()+"\nFECHA EVENTO: "+sdf.format(op.getEvento().getFechaEvento()));
 System.out.println("\nADICIONALES");
-for (ElementoAdicional element: op.getEvento().getElementosAdicionales()){
+System.out.println(op.getEvento().getElementosAdicionales().size());
+Boda b= (Boda) ev;
+for (ElementoAdicional element: b.getElementosAdicionales()){
     System.out.println(element.getTipoElementoAdicional());
-    
+     
 }
 System.out.println("TOTAL A PAGAR: "+op.getValorTotal());
 
@@ -1020,21 +1071,26 @@ public void confirmarEvento(){
 	+		   "/*                                        */\n"
 	+		   "/**************/");
 	System.out.println("Ingrese el id de la orden de pago: ");
+        
 	int id=sc.nextInt();
-	sc.nextLine();
-	ArrayList <OrdenPago> listaa=Sistema.ordenpag;
+        sc.nextLine();
+	
+        ArrayList <OrdenPago> listaa=Sistema.ordenpag;  
+        
+        int n=0;
 	for (int i=0;i<listaa.size();i++){
 		if(listaa.get(i).getCodigo()==id){
-
+                        n=n+1;
 			if (!listaa.get(i).getFechaReg().equals(stringtoDate("00/00/00"))){
-				System.out.println("El pago de este evento se ha realizado el "+listaa.get(1).getFechaReg());
+                                SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+				System.out.println("El pago de este evento se ha realizado el "+sdf.format(listaa.get(i).getFechaReg()));
 				System.out.println("¿Desea aprobar este pago? (S/N)");
 				String choice= sc.nextLine();
 				while (!choice.equals("S") && !choice.equals("N")){
 				System.out.println("Ingrese una opción válida");
 				choice = sc.nextLine();
 						}
-				if (choice.equals('S')){
+				if (choice.equals("S")){
 					System.out.println("El pago se ha aprobado.\nEl evento se ha confirmado para la fecha establecida");
 					listaa.get(i).getEvento().setEstadoEvento(EstadoEvento.CONFIRMADO);
                                         actualizartxt();
@@ -1042,7 +1098,9 @@ public void confirmarEvento(){
                         }else{System.out.println("El pago aun no ha sido realizado. El evento no puede confirmarse");}
 					
 		}
-	}
+	}if(n==0){
+            System.out.println("No existe una orden de pago con el id ingresado");
+        }
 }
 
 
@@ -1321,11 +1379,15 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
                 String nomPlanificador=partes[2];
                 Planificador planificador= (Planificador) buscarUsuario(nomPlanificador,2);
                 String fecha_sol=partes[3];
+                System.out.println(fecha_sol);
                 Date fecha_solicitud=stringtoDate(fecha_sol);
                 String fecha_ev=partes[4];
+                System.out.println(fecha_ev);
                 Date fecha_evento=stringtoDate(fecha_ev);
                 String estado=partes[5];
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Solicitud soli= new Solicitud(codigo,cliente,planificador,fecha_solicitud,fecha_evento,EstadoSolicitud.valueOf(estado));
+                System.out.println(sdf.format(soli.getFechaRegistro()));
                 Sistema.solicitudes.add(soli);
                 }
             }
@@ -1441,9 +1503,9 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     
     public Date stringtoDate(String fecha){        
             String[] fechaLista=fecha.split("/");
-            int anio=Integer.valueOf(fechaLista[0]);
+            int anio=Integer.valueOf(fechaLista[2]);
             int mes=Integer.valueOf(fechaLista[1]);
-            int dia=Integer.valueOf(fechaLista[2]);
+            int dia=Integer.valueOf(fechaLista[0]);
 
             Date fechaDate= new Date(anio - 1900, mes - 1, dia);
         return fechaDate;

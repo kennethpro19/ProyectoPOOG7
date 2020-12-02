@@ -23,9 +23,9 @@ public class Evento {
     private String horaDeSalida;
     private int codigo;
     private Cliente cliente=new Cliente();
-    private Planificador planificador;
+    private Planificador planificador=new Planificador();
     private double valorTotal;
-    private Date fechaEvento;
+    private Date fechaEvento= new Date();
     private String tipo;
     
         public Evento(Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,String horaDeSalida,int capacidad){
@@ -36,7 +36,7 @@ public class Evento {
         this.planificador=planificador;
         this.horaDeInicio=horaDeInicio;
         this.horaDeSalida=horaDeSalida;
-        this.valorTotal=calcularCostoTotal();
+     
         this.fechaEvento=fechaEvento;
     }
     public Evento(){

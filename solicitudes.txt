@@ -1,3 +1,2 @@
 id_solicitud,nombre_cliente,nombre_planificador,fecha_solicitud,fecha_evento,estado
-1001,Alonso,Diego,11/06/0008,10/07/0018,APROBADO
-2001,Alonso,Mercedes,11/06/0008,14/07/0018,APROBADO
+1001,Alonso,Andres,11/06/2020,15/08/2020,APROBADO

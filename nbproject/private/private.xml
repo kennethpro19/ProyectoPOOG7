@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-<<<<<<< HEAD
-            <url>src/Documento/OrdenPago.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>19</line>
-=======
-            <url>src/Main/Sistema.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>38</line>
->>>>>>> 3bbee77cb60328c73a6c8fa30c6ec73e9daebec7
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Documento/Archivo.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Evento/Evento.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Usuario/Planificador.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Evento/Boda.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Evento/FiestaEmpresarial.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Evento/FiestaInfantil.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Usuario/Cliente.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Main/Interfaz.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Documento/MetodoValidarTiempo.java</file>
-            <file>file:/C:/Users/Kenneth/Documents/NetBeansProjects/Proyecto/src/Main/Sistema.java</file>
-=======
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/NewClass.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/EstadoSolicitud.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/Solicitud.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/TestTodo.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/OrdenPago.java</file>
@@ -39,9 +12,11 @@
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/MetodoValidarTiempo.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Usuario.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Planificador.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/EstadoEvento.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Main/Interfaz.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Main/Sistema.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/Archivo.java</file>
+            <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/EstadoOrdenDePago.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Usuario/Cliente.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Documento/ManejoArchivos.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/Evento.java</file>
@@ -49,7 +24,6 @@
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/FiestaEmpresarial.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/TipoElementoAdicional.java</file>
             <file>file:/C:/Users/DUKO/Documents/NetBeansProjects/proyecto/ProyectoPOOG7/src/Evento/Boda.java</file>
->>>>>>> 08c97fc8aa1b33b8a2520d44cd4f0640cb733b3b
         </group>
     </open-files>
 </project-private>
