@@ -8,10 +8,11 @@ package Documento;
 import Evento.*;
 import Usuario.*;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Random;
 import java.util.Date;
 import Main.*;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author U_DoN_T_KnOw_Me
@@ -29,15 +30,21 @@ public class OrdenPago {
     public OrdenPago(Evento evento,Cliente cliente){
         this.evento=evento;
         this.cliente=cliente;
-        crearCodigo(Sistema.numerosOrdenpago);
+        Interfaz i=new Interfaz();
+        this.codigo=i.crearCodigos();
         this.valorTotal=evento.getValorTotal();
         this.estado=EstadoOrdenDePago.PENDIENTEPAGO;
-        
-    }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+             Date fechaHoy = new Date();
     
+        this.fechaHoy=fechaHoy;
+    }
+  
   
 
     public OrdenPago(Evento evento,Cliente cliente,EstadoOrdenDePago estado,int codigo, int codTrans){
+        Interfaz i=new Interfaz();
+        
        this.evento=evento;
        this.cliente=cliente;
        this.estado= estado;
@@ -96,14 +103,7 @@ public class OrdenPago {
     public void setValorTotal(double valortotal){
         this.valorTotal=valortotal;
     }
-    public void crearCodigo(ArrayList<Integer> numeros){
-        Random r = new Random();
-        int b = numeros.size() - 999;
 
-        int a = r.nextInt(b) + 999;
-
-        this.codigo=numeros.remove(a);
-    }
 
 
    

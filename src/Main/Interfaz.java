@@ -48,7 +48,8 @@ public class Interfaz {
                 +          "2. Registrar pago evento\n"+
                            "3. Salir");
         System.out.println("Elija una opción:");
-        choice= sc.nextLine();
+        choice= sc.next();
+        sc.nextLine();
         switch(choice){
             case "1": solicitarPlanificacion(cliente);
                 break;
@@ -61,11 +62,12 @@ public class Interfaz {
         }
         }while(!choice.equals("3"));
     }
+    
     //Métdo para solicitar planificacion
     public void solicitarPlanificacion(Cliente c){
-        System.out.println("/**************NUEVA SOLICITUD********************/\n"+
+        System.out.println("/*****NUEVA SOLICITUD*******/\n"+
                            "/*                                               */\n"+
-                           "/*************************************************/");
+                           "/*****************/");
         System.out.println("Bienvenido\n");
         String choice="";
         do{
@@ -74,7 +76,8 @@ public class Interfaz {
                 +          "2. Fiesta infantil\n"
                 +          "3. Fiesta empresarial");
         System.out.println("Seleccione:");
-        choice=sc.nextLine();
+        choice=sc.next();
+        sc.nextLine();
         switch(choice){
             case "1": eventoBoda(c);
                 break;
@@ -89,9 +92,14 @@ public class Interfaz {
     }
     public void eventoBoda(Cliente c){
         Planificador p=asignarPlanificador();
-        Date fechaRegistro=null; //VALIDARTIEMPO
-        Date fechaEvento=null; //VALIDARTIEMPO
+        Date fechaRegistro=new Date(); //VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("Boda"); //VALIDARTIEMPO
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Boda");
+        
+        System.out.println("¿Desea registrar su solicitud? (S/N) ");
+        char choice=sc.next().charAt(0);
+        if(choice=='S'){
+            
         
         p.getSolicitudesAsignadas().add(s);
         Sistema.solicitudes.add(s);  
@@ -105,41 +113,68 @@ public class Interfaz {
         
         info.add(sdf.format(fechaEvento));
         info.add(s.getEstadoSol());
-        generarArchivo("Solicitudes",info);
+        generarArchivo("Solicitud",info);
+         System.out.println("Se ha registrado la solicitud.");
+            
+        }else if(choice=='N'){
+            System.out.println("No se ha registrado la solicitud.");
+            
+        }else{
+            System.out.println("!Opción Inválida!\n"
+                    + "Intentelo de nuevo.");
+        }
+        
+        
     }
     public void eventoFiestaInfantil(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;//VALIDARTIEMPO
-        Date fechaEvento=null;//VALIDARTIEMPO
+        Date fechaRegistro=new Date();//VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("FiestaInfantil");//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Infantil");
+    System.out.println("¿Desea registrar su solicitud? (S/N) ");
+        char choice=sc.next().charAt(0);
+        if(choice=='S'){
+            
+        
         p.getSolicitudesAsignadas().add(s);
-        Sistema.solicitudes.add(s);   
+        Sistema.solicitudes.add(s);  
         ArrayList<String> info=new ArrayList <String>();
         info.add(String.valueOf(s.getCod()));
         info.add(c.getNombre());
         info.add(p.getNombre());
-        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
  
         info.add(sdf.format(fechaRegistro));
         
         info.add(sdf.format(fechaEvento));
         info.add(s.getEstadoSol());
-        generarArchivo("Solicitudes",info);
+        generarArchivo("Solicitud",info);
+         System.out.println("Se ha registrado la solicitud.");
+            
+        }else if(choice=='N'){
+            System.out.println("No se ha registrado la solicitud.");
+            
+        }else{
+            System.out.println("!Opción Inválida!\n"
+                    + "Intentelo de nuevo.");
+        }
     }
     public void eventoFiestaEmpresarial(Cliente c){
         Planificador p=asignarPlanificador();
         
-        Date fechaRegistro=null;//VALIDARTIEMPO
-        Date fechaEvento=null;//VALIDARTIEMPO
+        Date fechaRegistro=new Date();//VALIDARTIEMPO
+        Date fechaEvento=validarTiempo("FiestaEmpresarial");//VALIDARTIEMPO
         
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
+ System.out.println("¿Desea registrar su solicitud? (S/N) ");
+        char choice=sc.next().charAt(0);
+        if(choice=='S'){
+            
+        
         p.getSolicitudesAsignadas().add(s);
-        Sistema.solicitudes.add(s);
-        
-        
+        Sistema.solicitudes.add(s);  
         ArrayList<String> info=new ArrayList <String>();
         info.add(String.valueOf(s.getCod()));
         info.add(c.getNombre());
@@ -150,28 +185,240 @@ public class Interfaz {
         
         info.add(sdf.format(fechaEvento));
         info.add(s.getEstadoSol());
-        generarArchivo("Solicitudes",info);
+        generarArchivo("Solicitud",info);
+         System.out.println("Se ha registrado la solicitud.");
+            
+        }else if(choice=='N'){
+            System.out.println("No se ha registrado la solicitud.");
+            
+        }else{
+            System.out.println("!Opción Inválida!\n"
+                    + "Intentelo de nuevo.");
+        }
     }
+    
+    
+    public  Date  validarTiempo(String tipoEvento){
+        int fechaValida=0;
+        System.out.println("Ingrese la fecha para su evento (Dia/Mes/Año):");
+        Scanner sc=new Scanner(System.in);
+        String fechaEvento=sc.next();
+        sc.nextLine();
+         while (fechaValida == 0) {
+             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+             Date fechaHoy = new Date();
+             String fechaActual = sdf.format(fechaHoy);
+             String[] fechaLista = fechaEvento.split("/");
+             int anio = Integer.valueOf(fechaLista[2]);
+             int mes = Integer.valueOf(fechaLista[1]);
+             int dia = Integer.valueOf(fechaLista[0]);
+
+             String[] fechaActualLista = fechaActual.split("/");
+             int anioActual = Integer.valueOf(fechaActualLista[2]);
+             int mesActual = Integer.valueOf(fechaActualLista[1]);
+             int diaActual = Integer.valueOf(fechaActualLista[0]);
+             int mesNuevo = 0;
+             int anioNuevo = 0;
+             int diaNuevo = 0;
+
+             if (tipoEvento =="Boda") {
+
+                 mesActual += 10;
+                 if (mesActual > 12) {
+                     mesNuevo = mesActual - 12;
+                     anioNuevo = anioActual + 1;
+                     diaNuevo = diaActual;
+                 } else {
+                     mesNuevo = mesActual;
+                     anioNuevo = anioActual;
+                     diaNuevo = diaActual;
+                 }
+                 Date fecha10Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                 Date fechaBodaIngresada = new Date(anio - 1900, mes - 1, dia);
+                 if (fechaBodaIngresada.after(fecha10Meses)) {
+                     System.out.println("¡Fecha Válida!\n"
+                             + "Ha registrado todos los datos necesarios para la solicitud.");
+                     fechaValida++;
+                     return fechaBodaIngresada;
+
+                 } else {
+                     System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                            + " debemos tener por lo menos 10 meses para planificar.\n"
+                             + "Ingrese nuevamente.");
+                     System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                     String fecha = sc.nextLine();
+                     fechaEvento=fecha;
+                 }
+             } else if (tipoEvento=="FiestaEmpresarial") {
+
+                 mesActual += 2;
+                 if (mesActual > 12) {
+                     mesNuevo = mesActual - 12;
+                     anioNuevo = anioActual + 1;
+                     diaNuevo = diaActual;
+                 }else {
+                     mesNuevo = mesActual;
+                     anioNuevo = anioActual;
+                     diaNuevo = diaActual;
+                 }
+                 Date fecha2Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                 Date fechaEmpresarialIngresada = new Date(anio - 1900, mes - 1, dia);
+                 if (fechaEmpresarialIngresada.after(fecha2Meses)) {
+                     System.out.println("¡Fecha Válida!\n"
+                             + "Ha registrado todos los datos necesarios para la solicitud.");
+                     fechaValida++;
+                     return fechaEmpresarialIngresada;
+
+                 } else {
+                     System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                             + " debemos tener por lo menos 2 meses para planificar.\n"
+                             + "Ingrese nuevamente.");
+                     System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                     String fecha = sc.nextLine();
+                     fechaEvento = fecha;
+
+                 }
+
+             } else if (tipoEvento=="FiestaInfantil") {
+
+                 if (mesActual == 1 || mesActual == 3 || mesActual == 5 || mesActual == 7 || mesActual == 8
+                         || mesActual == 10 || mesActual == 12) {
+                     diaActual += 21;
+                     if (diaActual > 31) {
+                         diaNuevo = diaActual - 31;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas;
+                     fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada;
+                     fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 } else if (mesActual == 4 || mesActual == 6 || mesActual == 9 || mesActual == 11) {
+                     diaActual += 21;
+                     if (diaActual > 30) {
+                         diaNuevo = diaActual - 30;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 } else if (mesActual == 2) {
+                     diaActual += 21;
+                     if (diaActual > 28) {
+                         diaNuevo = diaActual - 28;
+                         mesNuevo = mesActual + 1;
+                         anioNuevo = anioActual;
+                         if (mesActual > 12) {
+                             mesNuevo = 1;
+                             anioNuevo = anioActual + 1;
+                         }
+                     }else{
+                         diaNuevo=diaActual;
+                         mesNuevo=mesActual;
+                         anioNuevo=anioActual;
+                     }
+                     Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
+                     Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
+                     if (fechaInfantilIngresada.after(fecha3Semanas)) {
+                         System.out.println("¡Fecha Válida!\n"
+                                 + "Ha registrado todos los datos necesarios para la solicitud.");
+
+                         fechaValida++;
+                         return fechaInfantilIngresada;
+
+                     } else {
+                         System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
+                                 + " debemos tener por lo menos 3 semanas para planificar.\n"
+                                 + "Ingrese nuevamente.");
+                         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Anio):");
+                         String fecha = sc.nextLine();
+                         fechaEvento = fecha;
+                     }
+
+                 }
+
+             }
+         }
+
+        return null;
+    }
+    
+    
     public void registrarPagoEvento(Cliente cliente){
-        System.out.println("/****************REGISTRO PAGO*****************/\n"
-                +          "/*                                            */\n"
-                +          "/**********************************************/");
+        System.out.println("/**********REGISTRO PAGO***********/\n"
+                +          "/*                                */\n"
+                +          "/**********************************/");
     ArrayList <OrdenPago> a= cliente.getOrden();
-    for (OrdenPago element: a){
+    if(!a.isEmpty()){
+    for (OrdenPago element:a){
+        if(element.getEstadoOrdenDePago().equals("PENDIENTEPAGO")){
 	String choice ="";
 	System.out.println("Su orden con código "+ (element.getCodigo()) +" está pendiente de pago.\n"
 		          +"¿Desea registrar pago ahora? (S/N):");
- 	choice= sc.nextLine();
+ 	choice= sc.next();
+        sc.nextLine();
 	while (!choice.equals("N") && !choice.equals("S")){
 		System.out.println("Ingrese una opción válida");
 		choice = sc.nextLine();
 		}
-	if (choice.equals('S')){
+	if (choice.equals("S")){
 		System.out.println("Ingrese el código de la transacción: ");
 		int codtrans= sc.nextInt();
 		element.setCodTrans(codtrans);
+                element.setEstadoOrdenDePago(EstadoOrdenDePago.APROBADO);
+                actualizartxt();
 		} 
-	}            
+	}
+    }
+    
+    }
+    else{System.out.println("No tiene ordenes de pago pendientes.");}
     }
     public void seccionPlanificador(Planificador planificador,Archivo a){
 	System.out.println("Bienvenid@");
@@ -185,7 +432,7 @@ public class Interfaz {
         System.out.println("Seleccione:");
         choice=sc.nextLine();
         switch(choice){
-            case "1": consultarSolicitudesPendientes(a.solicitudes);
+            case "1": consultarSolicitudesPendientes(planificador.getSolicitudesAsignadas());
                 break;
             case "2": registrarEvento(Sistema.solicitudes);
                 break;
@@ -202,28 +449,29 @@ public class Interfaz {
 }
 
 
-public void consultarSolicitudesPendientes(ArrayList <String> solicitudespendientes){
-System.out.println("/******************SOLICITUDES PENDIENTES*******************/\n"
-+	       "/*                                                         */\n"+
-	       "/***********************************************************/");   		
+public void consultarSolicitudesPendientes(ArrayList <Solicitud> solicitudespendientes){
+System.out.println("/*******SOLICITUDES PENDIENTES******/\n"
++	       "/*                                     */\n"+
+	       "/***************************************/");   		
 	//Leer archivos rey
-        
-        for(int i=0;i<solicitudespendientes.size()-1;i++){
+    if(!solicitudespendientes.isEmpty()){
+        System.out.println("Hola");
+        for(int i=0;i<solicitudespendientes.size();i++){
             ///////////////////////////////////////////////////////////////////
-            String [] partes=solicitudespendientes.get(i+1).split(",");
-            if(partes.length>1){
-            System.out.println(i+1+".  "+partes[0]+" - "+partes[3]);}
-            else{System.out.println("No hay solicitudes pendientes");}
- }
+            SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println((i+1)+". "+solicitudespendientes.get(i).getCod()+" - "+sdf.format(solicitudespendientes.get(i).getFechaEvento()));
+        }
+        }
+    else{System.out.println("No hay solicitudes pendientes");}
 }
 
 
 
 
 public void registrarEvento(ArrayList <Solicitud> solicitudes){
-System.out.println("/*********************REGISTRAR EVENTOS*********************/\n"
-+	       "/*                                                         */\n"+
-	       "/***********************************************************/");   		
+System.out.println("/********REGISTRAR EVENTOS********/\n"
++	           "/*                               */\n"+
+	           "/******************************* */");   		
 System.out.print("Ingrese el id de la solicitud: "); 
 int cod=sc.nextInt();
 sc.nextLine();
@@ -232,11 +480,21 @@ Solicitud solicitud=null;
 for (int i=0;i<a.size();i++){
 	if ((a.get(i).getCod())==cod){
 		 solicitud= a.get(i);
-		System.out.println("asdsa"); //imprime datos
+		System.out.println("DATOS: \nCLIENTES: "+solicitud.getCliente().getNombre()+" "+solicitud.getCliente().getApellido()+"\nPLANIFICADOR"
+                        + " ASIGNADO: "+solicitud.getPlanificador().getNombre()+" "+solicitud.getPlanificador().getApellido()+"\n"
+                                + "FECHA DE REGISTRO: "+solicitud.getFechaRegistro()+"TIPO EVENTO: "+solicitud.getTipoEvento()+
+                        "FECHA DEL EVENTO: "+solicitud.getFechaEvento()); //imprime datos
+               if(solicitud.getTipoEvento().equals("Boda"))
+                System.out.println("PRECIO BASE: "+ 3500);
+               else if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
+                   System.out.println("PRECIO BASE: "+ 300);
+               }else if(solicitud.getTipoEvento().equals("Fiesta Empresarial")){
+                   System.out.println("PRECIO BASE: "+2000);
+               }
 	}else{System.out.println("No existe una solicitud de evento con el código ingresado");}
 	}
 
-System.out.println("/**************REGISTRO DE DATOS DEL EVENTO*************/");
+System.out.println("/*****REGISTRO DE DATOS DEL EVENTO****/");
 System.out.println("Hora inicio: ");
 String horaIn=sc.nextLine();
 System.out.println("Hora fin: ");
@@ -250,6 +508,7 @@ if(solicitud.getTipoEvento().equals("Boda")){
     String boleano=sc.nextLine();
 
     ev=new Boda(boleano,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+    ev.setTipo("Boda");
 }if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
     System.out.println("Ingrese la cantidad de personajes disfrazados que desea para su evento. \n"
             + "En caso de que no se requiera, ingrese 0");
@@ -258,13 +517,20 @@ if(solicitud.getTipoEvento().equals("Boda")){
     System.out.println("Ingrese la cantidad de sorpresas para los niños.");
     int cantsorp = sc.nextInt();
     sc.nextLine();
-    System.out.println("¿Desea incluir juegos en el evento? (S/N)");
-    String juegos= sc.nextLine();
+    String juegos="";
     boolean b=false;
+    do{
+    System.out.println("¿Desea incluir juegos en el evento? (S/N)");
+    juegos= sc.nextLine();
+    b=false;
+    
     if (juegos.equals("S")){
         b=true;
-    }
+    }else{b=false;}
+    }while(!juegos.equals("S")&&!juegos.equals("N"));
+    
     ev=new FiestaInfantil(cantdis,cantsorp,b,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+    ev.setTipo("Fiesta Infantil");
 } if (solicitud.getTipoEvento().equals("Fiesta Empresarial")){
     System.out.println("¿Desea transporte para los invitados? (S/N)");
     String trans=sc.nextLine();
@@ -277,6 +543,7 @@ if(solicitud.getTipoEvento().equals("Boda")){
        sc.nextLine();
     }
     ev= new FiestaEmpresarial(z,cantpers,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
+    ev.setTipo("Fiesta Empresarial");
 }
 ArrayList <String> informacion=new ArrayList <String>();
 informacion.add(String.valueOf(ev.getCodigo()));
@@ -291,18 +558,27 @@ informacion.add(ev.getHoraDeSalida());
 informacion.add(String.valueOf(ev.getCapacidad()));
 informacion.add(ev.getPlanificador().getNombre());
 informacion.add(ev.getEstadoEvento());
+Sistema.eventos.add(ev);
 generarArchivo("Evento",informacion);
-
+solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+actualizartxt();
 System.out.println("¿Desea registrar elementos adicionales? (S/N)");
-String choice= sc.nextLine();
+String choice= sc.next();
+sc.nextLine();
 	while (!choice.equals("S") && !choice.equals("N")){
 		System.out.println("Ingrese una opción válida");
 		choice= sc.nextLine();
 		}
-	if (choice.equals('S')){
+	if (choice.equals("S")){
 		 Scanner sc = new Scanner(System.in);
         char elementoAd='S';
 
+        int uno3=0;
+        int dos3=0;
+        int uno=0;
+        int dos=0;
+        int tres=0;
+        int cuatro=0;
         do{
         String entrada="";
         System.out.println("Las opciones son:\n"
@@ -407,8 +683,7 @@ String choice= sc.nextLine();
                         + "¿Qué prefiere?");
                 String opcion3=sc.next();
                 sc.nextLine();
-                int uno3=0;
-                int dos3=0;
+               
                 int cantidad3=1;
                 switch(opcion3){
                     case "1":
@@ -522,10 +797,7 @@ String choice= sc.nextLine();
                         + "¿Qué prefiere?");
                 String opcion5=sc.next();
                 sc.nextLine();
-                int uno=0;
-                int dos=0;
-                int tres=0;
-                int cuatro=0;
+        
                 switch(opcion5){
                     case "1":
                         if (uno==0){
@@ -675,7 +947,7 @@ String choice= sc.nextLine();
         elementoAd=sc.next().charAt(0);
         }while(elementoAd!='N');
         System.out.println("Ha concluido el ingreso de los datos del evento.");
-        System.out.println("El costo total del evento sera de:"+"dólares.");
+        System.out.println("El costo total del evento sera de:"+ev.getValorTotal()+"dólares.");
         System.out.println("¿Desea generar orden de pago(S/N)?");
         char generarOrden=sc.next().charAt(0);
         if(generarOrden=='S'){
@@ -688,7 +960,7 @@ String choice= sc.nextLine();
             infor.add(op.getEstadoOrdenDePago());
             infor.add(String.valueOf(op.getCodTrans()));
             
-            infor.add(sdf.format(op.getFechaReg()));
+            infor.add("sf");
             generarArchivo("OrdenPago",infor);
             System.out.println("Se ha generado su orden de pago.");
             generarOrdenPago(op);
@@ -699,14 +971,37 @@ String choice= sc.nextLine();
         }
         
         
-    }
+    }else{System.out.println("¿Desea generar orden de pago(S/N)?");
+        char generarOrden=sc.next().charAt(0);
+        if(generarOrden=='S'){
+            solicitud.setEstadoSol(EstadoSolicitud.APROBADO);
+            OrdenPago op=new OrdenPago(ev, ev.getCliente());
+            ArrayList <String> infor= new ArrayList <String>();
+            infor.add(String.valueOf(op.getCodigo()));
+            infor.add(String.valueOf(ev.getCodigo()));
+            infor.add(String.valueOf(ev.getValorTotal()));
+            infor.add(op.getEstadoOrdenDePago());
+            infor.add(String.valueOf(op.getCodTrans()));
+            
+            infor.add("sf");
+            
+            generarArchivo("OrdenPago",infor);
+            System.out.println("Se ha generado su orden de pago.");
+            generarOrdenPago(op);
+            
+        }else{
+            System.out.println("No se ha generado su orden de pago.");
+            
+        }
+            
+        }
 		
 }
 
 public void generarOrdenPago(OrdenPago op){
-	System.out.println("/**************ORDEN DE PAGO***************/\n"
+	System.out.println("/*****ORDEN DE PAGO******/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");
+	+		   "/**************/");
 System.out.println("CÓDIGO PAGO: "+op.getCodigo()+"\nFECHA: "+op.getFechaHoy()+"\nCLIENTE: "+op.getCliente().getNombre()
 + " "+op.getCliente().getApellido()+"\nEVENTO: "+""+"\nFECHA EVENTO: "+op.getEvento().getFechaEvento());
 System.out.println("\nADICIONALES");
@@ -721,9 +1016,9 @@ System.out.println("TOTAL A PAGAR: "+op.getValorTotal());
 }
 
 public void confirmarEvento(){
-	System.out.println("/*************CONFIRMAR EVENTO*************/\n"
+	System.out.println("/****CONFIRMAR EVENTO****/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");
+	+		   "/**************/");
 	System.out.println("Ingrese el id de la orden de pago: ");
 	int id=sc.nextInt();
 	sc.nextLine();
@@ -731,7 +1026,7 @@ public void confirmarEvento(){
 	for (int i=0;i<listaa.size();i++){
 		if(listaa.get(i).getCodigo()==id){
 
-			if (!listaa.get(i).getFechaReg().equals(00/00/00)){
+			if (!listaa.get(i).getFechaReg().equals(stringtoDate("00/00/00"))){
 				System.out.println("El pago de este evento se ha realizado el "+listaa.get(1).getFechaReg());
 				System.out.println("¿Desea aprobar este pago? (S/N)");
 				String choice= sc.nextLine();
@@ -741,7 +1036,8 @@ public void confirmarEvento(){
 						}
 				if (choice.equals('S')){
 					System.out.println("El pago se ha aprobado.\nEl evento se ha confirmado para la fecha establecida");
-					listaa.get(i).getEvento().setEstadoEvento(EstadoEvento.CONFIRMADO);	
+					listaa.get(i).getEvento().setEstadoEvento(EstadoEvento.CONFIRMADO);
+                                        actualizartxt();
 				}else{System.out.println("El pago no se ha aprobado. El evento está a espera para su confirmacion");}
                         }else{System.out.println("El pago aun no ha sido realizado. El evento no puede confirmarse");}
 					
@@ -753,9 +1049,9 @@ public void confirmarEvento(){
 public void consultarEvento(Planificador planificador){
 	ArrayList <Evento> lista= planificador.getEventos();
 
-	System.out.println("/*************CONSULTAR EVENTO*************/\n"
+	System.out.println("/****CONSULTAR EVENTO****/\n"
 	+		   "/*                                        */\n"
-	+		   "/******************************************/");	
+	+		   "/**************/");	
         String choice="";
         do{
         System.out.println("TIPO DE EVENTO (Elija)");
@@ -820,43 +1116,50 @@ public String clienteOPlanificador(ArrayList <String> lineas,String nombreusuari
         }  
    return resultado;
 }
-public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes){
+
+   public void crearUsuarios(ArrayList <String> lineas,ArrayList <String> clientes){
     String correo="";
     String telefono="";
-    for(int k=0;k<lineas.size()-1;k++){
-    String [] partes=lineas.get(k+1).split(";");
-    for (int i=0;i<partes.length;i++){
-        if ((partes.length>1)&&clienteOPlanificador(lineas,partes[2],partes[3]).equals("C")){
-            ArrayList <String[]> infoClientes=getInfoCliente(clientes);
-            for (int j=0;j<(infoClientes.size());j++){
-                    if(infoClientes.size()>1&&infoClientes.get(j)[0].equals(partes[2])){
-                        telefono=infoClientes.get(j)[1];
-                        correo=infoClientes.get(j)[2];}
-            }
-            if(partes[i].indexOf(",")!= -1){
-               
-            String [] partes2=partes[i].split(",");
-            Cliente c=new Cliente(partes[0],partes[1],partes[2],partes2[1],'C',correo,telefono);
-            Sistema.clientes.add(c);
-            }
-            else{
-            
-            Cliente c=new Cliente(partes[0],partes[1],partes[2],partes[3],'C',correo,telefono);
-            Sistema.clientes.add(c);}
-            }
-        else if((partes.length>1)&&clienteOPlanificador(lineas,partes[2],partes[3]).equals("P")){
-            if(partes[i].indexOf(",")!= -1){
-                String [] partes2=partes[i].split(",");
-                Planificador p= new Planificador(partes[0],partes[1],partes2[0],partes2[1],'P');
+    for(int i=0;i<lineas.size()-1;i++){
+        String [] partes=lineas.get(i+1).split(";");
+        ArrayList <String[]> infoClientes=getInfoCliente(clientes);
+        if(partes[partes.length-1].indexOf(",")!=-1){
+            String [] partes2=partes[partes.length-1].split(",");
+            if(partes2[1].equals("C")){
+                    for(String [] element:infoClientes){
+                        if(partes[2].equals(element[0])){
+                            correo=element[2];
+                            telefono=element[1];
+                            Cliente c= new Cliente(partes[0],partes[1],partes[2],partes2[0],'C',correo,telefono);
+                            Sistema.clientes.add(c);               
+                        }
+                        
+                    }
+                
+            }else if(partes2[1].equals("P")){
+                Planificador p= new Planificador(partes[0],partes[1],partes[2],partes2[0],'P');
                 Sistema.planificadores.add(p);
             }
-            else{ Planificador p= new Planificador(partes[0],partes[1],partes[2],partes[3],'P');
+        }else{
+            if(partes[partes.length-1].equals("C")){
+                for(String [] element:infoClientes){
+                        if(partes[2].equals(element[0])){
+                            correo=element[2];
+                            telefono=element[1];
+                            Cliente c= new Cliente(partes[0],partes[1],partes[2],partes[3],'C',correo,telefono);
+                            Sistema.clientes.add(c);     
+                        }
+                }
+            }else if(partes[partes.length-1].equals("P")){
+                Planificador p= new Planificador(partes[0],partes[1],partes[2],partes[3],'P');
                 Sistema.planificadores.add(p);
             }
-         }
         }
     }
-    }
+}
+    
+    
+    
 public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
     ArrayList <String []> info= new ArrayList <>();
     for(String elemento:clientes){
@@ -903,29 +1206,47 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         String linea="";
         if (tipo.equals("Solicitud")){
             for(String element:informacion){
-            linea=linea+","+element;
+            if(linea.equals("")){
+                linea=element;
+            }else{linea=linea+","+element;}
             }
             
             ManejoArchivos.EscribirArchivo("solicitudes.txt", linea);
         }
         if (tipo.equals("OrdenPago")){
+        
+        for(String element:informacion){
+            if(linea.equals("")){
+                linea=element;
+            }else{linea=linea+","+element;}
+            
+            
+            }
+            ManejoArchivos.EscribirArchivo("ordenPago.txt", linea);
+        }
+            
+            if (tipo.equals("Evento")){
             for(String element:informacion){
-                linea=linea+","+element;
-            }ManejoArchivos.EscribirArchivo("ordenPago.txt", linea);
-        }if (tipo.equals("Evento")){
-            for(String element:informacion){
-                linea=linea+","+element;
+            if(linea.equals("")){
+                linea=element;
+            }else{linea=linea+","+element;}
+            
             }
             ManejoArchivos.EscribirArchivo("evento.txt", linea);
+            }
          if (tipo.equals("Adicionales")){
-             for(String element: informacion){
-                 linea=linea+","+element;
+             for(String element:informacion){
+            if(linea.equals("")){
+                linea=element;
+            }else{linea=linea+","+element;}
+            
              }
              ManejoArchivos.EscribirArchivo("adicionales.txt",linea);
-         }
-        }
+            }
+            }
         
-    }
+        
+    
     public Planificador asignarPlanificador(){
       int n=Sistema.planificadores.size();
       Random r=new Random();
@@ -938,6 +1259,7 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         ManejoArchivos.EliminarArchivo("ordenPago.txt");
         ManejoArchivos.EliminarArchivo("evento.txt");
         ArrayList <String> info=new ArrayList<String>();
+         SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
         ///////////////////SOLICITUDES/////////////////////
         ManejoArchivos.EscribirArchivo("solicitudes.txt","id_solicitud,nombre_cliente,nombre_planificador,fecha_solicitud,fecha_evento,estado");
         
@@ -945,10 +1267,11 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         info.add(String.valueOf(element.getCod()));
         info.add(element.getCliente().getNombre());
         info.add(element.getPlanificador().getNombre());
-        //info.add();
-       // info.add();
+       
+        info.add(sdf.format(element.getFechaRegistro()));
+        info.add(sdf.format(element.getFechaEvento()));
         info.add(element.getEstadoSol());
-        generarArchivo("solicitudes.txt",info);
+        generarArchivo("Solicitud",info);
         info.clear();
         }
         
@@ -961,8 +1284,8 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
             info.add(String.valueOf(element.getEvento().getValorTotal()));
             info.add(element.getEstadoOrdenDePago());
             info.add(String.valueOf(element.getCodTrans()));
-            info.add(String.valueOf(element.getEvento().getValorTotal()));
-            generarArchivo("solicitudes.txt",info);        
+            info.add(sdf.format(element.getFechaReg())  );
+            generarArchivo("OrdenPago",info);        
             info.clear();
         }
         ///////////////EVENTO//////////////////
@@ -971,14 +1294,14 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
          for(Evento element: Sistema.eventos){
              info.add(String.valueOf(element.getCodigo()));
              info.add(element.getCliente().getNombre());
-             //info.add();
-            // info.add();    
+             info.add(element.getTipo());
+             info.add(sdf.format(element.getFechaEvento()));    
              info.add(element.getHoraDeInicio());
              info.add(element.getHoraDeSalida());
              info.add(String.valueOf(element.getCapacidad()));
              info.add(element.getPlanificador().getNombre());
              info.add(element.getEstadoEvento());
-             generarArchivo("solicitudes.txt",info);        
+             generarArchivo("Evento",info);        
              info.clear();
          }
     
@@ -990,7 +1313,7 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         //////////////LLENADO LISTA SOLICITUDES//////////
         for (int i=0;i<info.size()-1;i++){
             String []partes= info.get(i+1).split(",");
-            if(partes.length>1){
+            if(partes.length>=1){
                 String cod= partes[0];
                 int codigo=Integer.valueOf(cod);
                 String nomCliente=partes[1];
@@ -1008,9 +1331,9 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
             }
         ////////////LLENADO EVENTOS////////////////////
         for(int i=0;i<eventos.size()-1;i++){
-            Evento ev=null;
+            Evento ev= new Evento();
             String [] partes2=eventos.get(i+1).split(",");
-            if (partes2.length<1){
+            if (partes2.length>=1){
                 int codigo= Integer.valueOf(partes2[0]);
                 String nombre_Cliente= partes2[1];
                 Cliente cliente= (Cliente) buscarUsuario(nombre_Cliente,1);
@@ -1026,21 +1349,31 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
                 EstadoEvento estado= EstadoEvento.valueOf(partes2[8]);
                 if (tipo.equals("Boda")){
                     ev = new Boda("",cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                    ev.setCodigo(codigo);
+                    ev.setEstadoEvento(estado);
+                    
                 }
-                else if(tipo.equals("Fiesta Emrpesarial")){
+                else if(tipo.equals("Fiesta Empresarial")){
                     ev= new FiestaEmpresarial(false,0,cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                    ev.setCodigo(codigo);
+                    ev.setEstadoEvento(estado);
+                    
                 }
                 else if(tipo.equals("Fiesta Infantil")){
                     ev= new FiestaInfantil(0,0,false,cliente,plan,fecha,hora_in,hora_fin,capacidad);
+                    ev.setCodigo(codigo);
+                    ev.setEstadoEvento(estado);
+                    
                 }
-                Sistema.eventos.add(ev);
+                
             }
+            Sistema.eventos.add(ev);
         }
         ////////////LLENADO LISTA ADICIONALES PARA CADA EVENTO//////
         for(int i=0;i<elementAd.size()-1;i++){
             
             String [] partes=elementAd.get(i+1).split(",");
-            if(partes.length>1){
+            if(partes.length>=1){
                 int codEv=Integer.valueOf(partes[0]);
                 for(Evento element: Sistema.eventos){
                     ElementoAdicional el=new ElementoAdicional();
@@ -1058,12 +1391,13 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         ////////////LLENADO LISTA ORDENPAGO////////////
         for(int i=0;i<ordenPago.size()-1;i++){
             String []partes2=ordenPago.get(i+1).split(",");
-            if (partes2.length>1){
+            if (partes2.length>=1){
                 int codigo_pago= Integer.valueOf(partes2[0]);
                 
                 int codigo_evento= Integer.valueOf(partes2[1]);
-                Evento ev=null;
+                Evento ev= new Evento();
                 for (Evento element: Sistema.eventos){
+               
                     if(element.getCodigo()==codigo_evento){
                         ev=element;
                     }
@@ -1073,14 +1407,34 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
                 EstadoOrdenDePago estado= EstadoOrdenDePago.valueOf(partes2[3]);
                 
                 int codigo_transaccion= Integer.valueOf(partes2[4]);
+                Date fecha_registro=null;
+                if(partes2[5].equals("sf")){
+                    fecha_registro=stringtoDate("00/00/0000");    
+                }else{fecha_registro=stringtoDate(partes2[5]);}
                 
-                Date fecha_registro=stringtoDate(partes2[5]);
+                Cliente c= ev.getCliente();
                 
-                
-                OrdenPago op=new OrdenPago(ev,ev.getCliente(),estado,codigo_pago,codigo_transaccion);
+                OrdenPago op=new OrdenPago(ev,c,estado,codigo_pago,codigo_transaccion);
                 op.setFechaReg(fecha_registro);
                 op.setValorTotal(total_pagar);
+                Sistema.ordenpag.add(op);
+                
+            }   
+        }
+        /////////////CLIENTES ORDENPAGO//////
+        
+        for(OrdenPago element:Sistema.ordenpag){
+            
+            for(Cliente elemento: Sistema.clientes){
+            
+                //System.out.println(elemento.getNombre());
+                if(element.getCliente().equals(elemento)){
+                    elemento.getOrden().add(element);
+                    System.out.println("asd");
+                    System.out.println(elemento.getOrden());
+                }
             }
+            
         }
         }
     
@@ -1107,14 +1461,32 @@ public ArrayList <String []> getInfoCliente(ArrayList <String> clientes){
         ManejoArchivos.EscribirArchivo("adicionales.txt","Código_evento,tipo,cantidad,precio,total");
         }    
         if(d.isEmpty()){
-         ManejoArchivos.EscribirArchivo("eventos.txt","codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado");     
+         ManejoArchivos.EscribirArchivo("evento.txt","codigo,nombre_cliente,tipo,fecha,hora_inicio,hora_fin,capacidad,planificador,estado");     
         }
+        }
+    public void culoabierto(Planificador planificador){
+        for(Solicitud element: Sistema.solicitudes){
+            if(element.getPlanificador().getNombre().equals(planificador.getNombre())){
+                planificador.getSolicitudesAsignadas().add(element);
+            }
+        }
+    }
+    
+    public int crearCodigos(){
+        ////Para Evento
+      
+        for(Evento element: Sistema.eventos){
+            Sistema.numerosEvento.add(element.getCodigo());
+        }
+        Random rd=new Random();
+        int numA=rd.nextInt(9000);
+        int numero=1000+numA;
+        while(Sistema.numerosEvento.contains(numero)){
+            numero=0;
+            numA=rd.nextInt(9000);
+            numero=1000+numA;
         }
         
+        
+    return numero;}
 }
-    
- 
-
-
-    
-

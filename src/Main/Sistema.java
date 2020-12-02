@@ -20,25 +20,26 @@ public class Sistema {
     public static ArrayList <Cliente> clientes= new ArrayList <Cliente>();
     public static ArrayList <Planificador> planificadores= new ArrayList <Planificador>();
     public static ArrayList <Solicitud> solicitudes = new ArrayList <Solicitud>();
-    public static ArrayList <Integer> numerosEvento= new ArrayList <Integer>(9999);
-    public static ArrayList <Integer> numerosOrdenpago=new ArrayList <Integer>(9999);
+    public static ArrayList <Integer> numerosEvento= new ArrayList <Integer>();
+    public static ArrayList <Integer> numerosOrdenpago=new ArrayList <Integer>();
     
     public static void main(String []args){
        
-        for (int i = 1; i < 10000; i++) {
-            numerosEvento.add(i);
-            numerosOrdenpago.add(i);
-        }
+  
         Interfaz i= new Interfaz();
         
         Archivo archivo= new Archivo();
         
         i.crearUsuarios(archivo.lineas,archivo.clientes);
+    
+        
+            
         
         i.archivos(archivo.solicitudes, archivo.ordenPago, archivo.elementAd, archivo.eventos);
-        
+            
         i.llenarSistema(archivo.solicitudes, archivo.ordenPago, archivo.elementAd, archivo.eventos);
-        
+        System.out.println(ordenpag.size());
+        System.out.println(eventos.size());
         
         ArrayList <String> info = i.iniciarSesion(archivo.lineas);
         
@@ -49,7 +50,11 @@ public class Sistema {
         }
         if (cop.equals("P")){
             Planificador p=(Planificador)(i.buscarUsuario(info.get(0),info.get(1)));
+            i.culoabierto(p);
             i.seccionPlanificador(p,archivo);
+            
+            System.out.println(p.getSolicitudesAsignadas());
         }
     }   
 }
+

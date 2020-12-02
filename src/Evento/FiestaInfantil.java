@@ -22,12 +22,15 @@ public class FiestaInfantil extends Evento{
      private boolean incJuego;
      
      public FiestaInfantil(int cantPerDis,int cantSorp,boolean incJuego,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
-             String horaDeSalida,int capacidad){
+         String horaDeSalida,int capacidad){
          super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-         super.setValorTotal(precio+super.getValorTotal());
+         super.setValorTotal(precio+super.calcularCostoTotal());
          this.cantPerDis=cantPerDis;
          this.cantSorp=cantSorp;
          this.incJuego=incJuego;
+     }
+     public FiestaInfantil(){
+         
      }
      public void  setCantPerDis(int cantPerDis){
         this.cantPerDis=cantPerDis;

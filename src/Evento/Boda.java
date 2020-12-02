@@ -22,7 +22,7 @@ public class Boda extends Evento{
      public Boda(String tipoDeVehiculo,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
              String horaDeSalida,int capacidad){
          super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-         super.setValorTotal(precio+super.getValorTotal());
+         super.setValorTotal(precio+super.calcularCostoTotal());
          this.tipoDeVehiculo=tipoDeVehiculo;
          
 
@@ -34,9 +34,19 @@ public class Boda extends Evento{
         return this.tipoDeVehiculo;
     } 
      
+     
+    @Override
+    public double getPrecio(){
+        return precio;
+    }
+     
      @Override
     public void mostrarMensaje(){
 
     System.out.println("Los novios tendrán un 25% de descuento si compran sus tickets de luna de miel en la aerolínea LATAM.");
+    }
+    
+    public Boda(){
+        
     }
 }

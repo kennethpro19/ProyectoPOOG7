@@ -24,9 +24,12 @@ public class FiestaEmpresarial extends Evento {
     public FiestaEmpresarial(boolean transporte,int personas,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
              String horaDeSalida,int capacidad){
         super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-        super.setValorTotal(precio+super.getValorTotal());
+        super.setValorTotal(precio+super.calcularCostoTotal());
         this.transporte=transporte;
         this.personas=personas;
+    }
+    public FiestaEmpresarial(){
+        
     }
     public void setTransporte(boolean transporte) {
         this.transporte = transporte;

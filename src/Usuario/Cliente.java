@@ -4,27 +4,43 @@
  * and open the template in the editor.
  */
 package Usuario;
-import java.util.Date;
+import java.util.*;
 import Evento.*;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import Documento.*;
 /**
  *
  * @author stefano
  */
 public class Cliente extends Usuario{
-    private ArrayList<OrdenPago> orden;
+    private ArrayList<OrdenPago> orden=new ArrayList<OrdenPago>();
     private Date fecha;
     private String correo;
     private String telefono;
+   
     public Cliente(String nombre,String apellido,String usuario,String contraseña,char TipoUsuario,String correo, String telefono){
        
         super(nombre,apellido,usuario,contraseña,TipoUsuario);
         this.correo=correo;
         this.telefono=telefono;
     }
-    
-    
+    public Cliente(){
+        
+    }
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof Cliente){
+            Cliente cliente=(Cliente) o;
+            return super.getNombre()==cliente.getNombre();
+        }
+        else{
+            return false;
+        }
+    }
+
+   
+
     //Metodos getters y setters
     public Date getFecha(){
         return this.fecha;
@@ -52,6 +68,6 @@ public class Cliente extends Usuario{
 
 
     public ArrayList<OrdenPago> getOrden() {
-        return this.orden; //To change body of generated methods, choose Tools | Templates.
+        return this.orden; 
     }
 }

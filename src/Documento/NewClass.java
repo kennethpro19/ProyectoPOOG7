@@ -17,6 +17,7 @@ public class NewClass {
        i.clienteOPlanificador(a.lineas,"randres","Andres123");
        System.out.println(i.clienteOPlanificador(a.lineas,"randres","Andres123"));
        
+
     }
     
 }
