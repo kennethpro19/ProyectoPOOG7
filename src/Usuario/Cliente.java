@@ -14,190 +14,33 @@ import Documento.*;
  * @author stefano
  */
 public class Cliente extends Usuario{
-    private ArrayList<OrdenPago> orden;
+    private ArrayList<OrdenPago> orden=new ArrayList<OrdenPago>();
     private Date fecha;
     private String correo;
     private String telefono;
-    
+   
     public Cliente(String nombre,String apellido,String usuario,String contraseña,char TipoUsuario,String correo, String telefono){
        
         super(nombre,apellido,usuario,contraseña,TipoUsuario);
         this.correo=correo;
         this.telefono=telefono;
     }
-    
-<<<<<<< HEAD
-=======
-    private void validarTiempo(String tipoEvento){
-        int ciclo = 0;
-        while (ciclo == 0) {
-            System.out.println("Ingrese la fecha para su evento (Día/Mes/Año):");
-            Scanner sc = new Scanner(System.in);
-            String fechaEvento = sc.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaHoy = new Date();
-            String fechaActual = sdf.format(fechaHoy);
-            String[] fechaLista = fechaEvento.split("/");
-            int dia = Integer.valueOf(fechaLista[0]);
-            int mes = Integer.valueOf(fechaLista[1]);
-            int anio = Integer.valueOf(fechaLista[2]);
-
-            String[] fechaActualLista = fechaActual.split("/");
-            int diaActual = Integer.valueOf(fechaActualLista[0]);
-            int mesActual = Integer.valueOf(fechaActualLista[1]);
-            int anioActual = Integer.valueOf(fechaActualLista[2]);
-            int mesNuevo = 0;
-            int anioNuevo = 0;
-            int diaNuevo = 0;
-
-            if (tipoEvento == "Boda") {
-
-                mesActual += 10;
-                if (mesActual > 12) {
-                    mesNuevo = mesActual - 12;
-                    anioNuevo = anioActual + 1;
-                    diaNuevo = diaActual;
-                }
-                Date fecha10Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
-                Date fechaBodaIngresada = new Date(anio - 1900, mes - 1, dia);
-
-                if (fechaBodaIngresada.after(fecha10Meses)) {
-                    System.out.println("¡Fecha Válida!\n"
-                            + "Ha registrado todos los datos necesarios para la solicitud.");
-                    //AGREGAR LA FECHA DE REGISTRO A LA SOLICITUD
-                    ciclo = 1;
-
-                } else {
-                    System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
-                            + " debemos tener por lo menos 10 meses para planificar "
-                            + "ingrese nuevamente.");
-
-                }
-            } else if (tipoEvento == "FiestaEmpresarial") {
-
-                mesActual += 2;
-                if (mesActual > 12) {
-                    mesNuevo = mesActual - 12;
-                    anioNuevo = anioActual + 1;
-                    diaNuevo = diaActual;
-                }
-                Date fecha2Meses = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
-                Date fechaEmpresarialIngresada = new Date(anio - 1900, mes - 1, dia);
-                if (fechaEmpresarialIngresada.after(fecha2Meses)) {
-                    System.out.println("¡Fecha Válida!\n"
-                            + "Ha registrado todos los datos necesarios para la solicitud.");
-                    //AGREGAR LA FECHA DE REGISTRO A LA SOLICITUD
-                    ciclo = 1;
-
-                } else {
-                    System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
-                            + " debemos tener por lo menos 2 meses para planificar.\n"
-                            + "Ingrese nuevamente.");
-
-                }
-
-            } else if (tipoEvento == "FiestaInfantil") {
-
-                if (mesActual == 1 || mesActual == 3 || mesActual == 5 || mesActual == 7 || mesActual == 8
-                        || mesActual == 10 || mesActual == 12) {
-                    diaActual += 21;
-                    if (diaActual > 31) {
-                        diaNuevo = diaActual - 31;
-                        mesNuevo = mesActual + 1;
-                        anioNuevo = anioActual;
-                        if (mesActual > 12) {
-                            mesNuevo = 1;
-                            anioNuevo = anioActual + 1;
-                        }
-                    }else{
-                        diaNuevo = diaActual;
-                        mesNuevo = mesActual;
-                        anioNuevo = anioActual;
-                    }
-                    Date fecha3Semanas;
-                    fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
-                    Date fechaInfantilIngresada;
-                    fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
-                    if (fechaInfantilIngresada.after(fecha3Semanas)) {
-                        System.out.println("¡Fecha Válida!\n"
-                                + "Ha registrado todos los datos necesarios para la solicitud.");
-                        //AGREGAR LA FECHA DE REGISTRO A LA SOLICITUD
-                        ciclo = 1;
-
-                    } else {
-                        System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
-                                + " debemos tener por lo menos 3 semanas para planificar.\n"
-                                + "Ingrese nuevamente.");
-
-                    }
-
-                } else if (mesActual == 4 || mesActual == 6 || mesActual == 9 || mesActual == 11) {
-                    diaActual += 21;
-                    if (diaActual > 30) {
-                        diaNuevo = diaActual - 30;
-                        mesNuevo = mesActual + 1;
-                        anioNuevo = anioActual;
-                        if (mesActual > 12) {
-                            mesNuevo = 1;
-                            anioNuevo = anioActual + 1;
-                        }
-                    }else{
-                        diaNuevo = diaActual;
-                        mesNuevo = mesActual;
-                        anioNuevo = anioActual;
-                    }
-                    Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
-                    Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
-                    if (fechaInfantilIngresada.after(fecha3Semanas)) {
-                        System.out.println("¡Fecha Válida!\n"
-                                + "Ha registrado todos los datos necesarios para la solicitud.");
-                        //AGREGAR LA FECHA DE REGISTRO A LA SOLICITUD    
-                        ciclo = 1;
-
-                    } else {
-                        System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
-                                + " debemos tener por lo menos 3 semanas para planificar.\n"
-                                + "Ingrese nuevamente.");
-
-                    }
-
-                } else if (mesActual == 2) {
-                    diaActual += 21;
-                    if (diaActual > 28) {
-                        diaNuevo = diaActual - 28;
-                        mesNuevo = mesActual + 1;
-                        anioNuevo = anioActual;
-                        if (mesActual > 12) {
-                            mesNuevo = 1;
-                            anioNuevo = anioActual + 1;
-                        }
-                    }else{
-                        diaNuevo = diaActual;
-                        mesNuevo = mesActual;
-                        anioNuevo = anioActual;
-                    }
-                    Date fecha3Semanas = new Date(anioNuevo - 1900, mesNuevo - 1, diaNuevo);
-                    Date fechaInfantilIngresada = new Date(anio - 1900, mes - 1, dia);
-                    if (fechaInfantilIngresada.after(fecha3Semanas)) {
-                        System.out.println("¡Fecha Válida!\n"
-                                + "Ha registrado todos los datos necesarios para la solicitud.");
-                        //AGREGAR LA FECHA DE REGISTRO A LA SOLICITUD
-                        ciclo = 1;
-
-                    } else {
-                        System.out.println("**La fecha es muy proxima.Para este tipo de eventos"
-                                + " debemos tener por lo menos 3 semanas para planificar.\n"
-                                + "Ingrese nuevamente.");
-
-                    }
-
-                }
-            }
-        }
-
+    public Cliente(){
+        
     }
-    
->>>>>>> 5bf5f738a23cffdcbe8fdd7096ccd770a258faea
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof Cliente){
+            Cliente cliente=(Cliente) o;
+            return super.getNombre()==cliente.getNombre();
+        }
+        else{
+            return false;
+        }
+    }
+
+   
+
     //Metodos getters y setters
     public Date getFecha(){
         return this.fecha;

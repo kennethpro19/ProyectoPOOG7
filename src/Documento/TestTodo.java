@@ -30,6 +30,12 @@ public class TestTodo {
         Scanner sc = new Scanner(System.in);
         char elementoAd='S';
         String entrada;
+        int uno3=0;
+        int dos3=0;
+        int uno=0;
+        int dos=0;
+        int tres=0;
+        int cuatro=0;
         do{
         entrada="";
         System.out.println("Las opciones son:\n"
@@ -116,8 +122,6 @@ public class TestTodo {
                         + "¿Qué prefiere?");
                 String opcion3=sc.next();
                 sc.nextLine();
-                int uno3=0;
-                int dos3=0;
                 int cantidad3=1;
                 switch(opcion3){
                     case "1":
@@ -208,10 +212,7 @@ public class TestTodo {
                         + "¿Qué prefiere?");
                 String opcion5=sc.next();
                 sc.nextLine();
-                int uno=0;
-                int dos=0;
-                int tres=0;
-                int cuatro=0;
+                
                 switch(opcion5){
                     case "1":
                         if (uno==0){

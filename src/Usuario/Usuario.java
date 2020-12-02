@@ -22,6 +22,9 @@ public class Usuario {
         this.contrasena=contrasena;
         this.tipoUsuario=tipoUsuario;
     }
+    public Usuario(){
+        
+    }
     public String getNombre(){
         return this.nombre;
     }
@@ -62,4 +65,3 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 }
-    

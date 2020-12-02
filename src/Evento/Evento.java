@@ -17,18 +17,19 @@ import Main.*;
  */
 public class Evento {
     private EstadoEvento estadoEvento=EstadoEvento.PENDIENTE;
-    private ArrayList<ElementoAdicional> elementosAdicionales;
+    private ArrayList<ElementoAdicional> elementosAdicionales=new ArrayList <ElementoAdicional>();
     private int capacidad;
     private String horaDeInicio;
     private String horaDeSalida;
     private int codigo;
-    private Cliente cliente;
+    private Cliente cliente=new Cliente();
     private Planificador planificador;
     private double valorTotal;
     private Date fechaEvento;
-    
+        
         public Evento(Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,String horaDeSalida,int capacidad){
-        this.codigo = generarCodigo(Sistema.numerosEvento);
+        Interfaz i=new Interfaz();
+        this.codigo = i.crearCodigos();
         this.capacidad=capacidad;
         this.cliente=cliente;
         this.planificador=planificador;
@@ -39,8 +40,8 @@ public class Evento {
     }
     
 
-    public void setCodigo(ArrayList<Integer> numbers){
-        this.codigo=generarCodigo(numbers);
+    public void setCodigo(int codigo){
+        this.codigo=codigo ;
         
     }
 
@@ -134,6 +135,6 @@ public class Evento {
     }
     public Evento(){
     
-}
+    }
 
 }
