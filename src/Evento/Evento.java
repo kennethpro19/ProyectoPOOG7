@@ -23,10 +23,11 @@ public class Evento {
     private String horaDeSalida;
     private int codigo;
     private Cliente cliente=new Cliente();
-    private Planificador planificador;
+    private Planificador planificador=new Planificador();
     private double valorTotal;
-    private Date fechaEvento;
-        
+    private Date fechaEvento= new Date();
+    private String tipo;
+    
         public Evento(Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,String horaDeSalida,int capacidad){
         Interfaz i=new Interfaz();
         this.codigo = i.crearCodigos();
@@ -35,15 +36,18 @@ public class Evento {
         this.planificador=planificador;
         this.horaDeInicio=horaDeInicio;
         this.horaDeSalida=horaDeSalida;
-        this.valorTotal=calcularCostoTotal();
+     
         this.fechaEvento=fechaEvento;
     }
-    
+    public Evento(){
+        
+    }
 
     public void setCodigo(int codigo){
         this.codigo=codigo ;
         
     }
+    
 
     public String getEstadoEvento(){
         return this.estadoEvento.name();
@@ -133,8 +137,12 @@ public class Evento {
     public double getPrecio() {
         return 0;
     }
-    public Evento(){
     
+    public String getTipo(){
+       return this.tipo;
     }
-
+    
+    public void setTipo(String tipo){
+        this.tipo=tipo;
+    }
 }

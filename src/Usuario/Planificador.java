@@ -18,12 +18,14 @@ import Evento.Evento;
  */
 public class Planificador extends Usuario{
     private ArrayList <Solicitud> solicitudesAsignadas= new ArrayList<Solicitud>();
+    private ArrayList <Evento> eventos= Sistema.eventos;
+
+    
     public Planificador(String nombre, String apellido,String usuario,String contrasena,char tipoUsuario){
         super( nombre, apellido,usuario,contrasena,tipoUsuario);
     }
-    ArrayList <Evento> eventos= Sistema.eventos;
-    //public Solicitud solicitud;
-    //public ArrayList<Evento> evento;
+   
+    
     public ArrayList <Evento> getEventos(){
         return this.eventos;
     }
@@ -37,6 +39,9 @@ public class Planificador extends Usuario{
 
    public static ArrayList<OrdenPago> getOrdenesPago() {
        return ordenesPago;
+   }
+   public Planificador(){
+       
    }
 }
 

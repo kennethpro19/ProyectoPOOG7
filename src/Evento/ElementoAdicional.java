@@ -44,13 +44,8 @@ public class ElementoAdicional {
    public TipoElementoAdicional getTipoElementoAdicional(){
         return this.tipoElementoAdicional;
     } 
-    public void  setTipoElementoAdicional(TipoElementoAdicional tipoElementoAdicio){
+    public void  setTipoElementoAdicional(TipoElementoAdicional tipoElementoAdicional){
         this.tipoElementoAdicional=tipoElementoAdicional;
-    }
-    
-    public void calcularCosto(){
-    this.total=precio*cantidad;
-	
     }
     
 }

@@ -15,6 +15,7 @@ import java.util.Date;
  *
  * @author Kenneth
  */
+//Herencia
 public class FiestaEmpresarial extends Evento {
     
     private static double precio = 2000;
@@ -24,7 +25,7 @@ public class FiestaEmpresarial extends Evento {
     public FiestaEmpresarial(boolean transporte,int personas,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
              String horaDeSalida,int capacidad){
         super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-        super.setValorTotal(precio+super.getValorTotal());
+        super.setValorTotal(precio+super.calcularCostoTotal());
         this.transporte=transporte;
         this.personas=personas;
     }
@@ -51,6 +52,10 @@ public class FiestaEmpresarial extends Evento {
 
     System.out.println("El transporte al lugar del evento es gratuito en un próximo evento, si lo organizan con el mismo planificador.");
     }
-    
+     
+    @Override
+    public double getPrecio(){
+        return precio;
+    }
     
 }

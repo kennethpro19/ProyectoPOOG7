@@ -18,5 +18,7 @@ public class Archivo {
     public ArrayList<String> ordenPago=ManejoArchivos.LeeFichero("ordenPago.txt");
     public ArrayList<String> eventos=ManejoArchivos.LeeFichero("evento.txt");
     public ArrayList <String> elementAd=ManejoArchivos.LeeFichero("adicionales.txt");
-    }
+
+    
+}
 

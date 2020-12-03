@@ -11,5 +11,5 @@ package Documento;
  * @author Kenneth
  */
 public enum EstadoOrdenDePago {
-   PENDIENTEPAGO,PAGO
+   PENDIENTEPAGO,APROBADO
 }

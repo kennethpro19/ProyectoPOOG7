@@ -15,6 +15,7 @@ import java.util.Date;
  *
  * @author Kenneth
  */
+//Herencia
 public class Boda extends Evento{
      private static double precio=3500;
      private String tipoDeVehiculo;
@@ -22,7 +23,7 @@ public class Boda extends Evento{
      public Boda(String tipoDeVehiculo,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
              String horaDeSalida,int capacidad){
          super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-         super.setValorTotal(precio+super.getValorTotal());
+         super.setValorTotal(precio+super.calcularCostoTotal());
          this.tipoDeVehiculo=tipoDeVehiculo;
          
 

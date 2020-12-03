@@ -15,6 +15,7 @@ import java.util.Date;
  *
  * @author Kenneth
  */
+//Herencia
 public class FiestaInfantil extends Evento{
      private static double precio=300;
      private int cantPerDis;
@@ -22,9 +23,9 @@ public class FiestaInfantil extends Evento{
      private boolean incJuego;
      
      public FiestaInfantil(int cantPerDis,int cantSorp,boolean incJuego,Cliente cliente,Planificador planificador,Date fechaEvento,String horaDeInicio,
-             String horaDeSalida,int capacidad){
+         String horaDeSalida,int capacidad){
          super(cliente,planificador,fechaEvento,horaDeInicio, horaDeSalida, capacidad);
-         super.setValorTotal(precio+super.getValorTotal());
+         super.setValorTotal(precio+super.calcularCostoTotal());
          this.cantPerDis=cantPerDis;
          this.cantSorp=cantSorp;
          this.incJuego=incJuego;
@@ -56,5 +57,10 @@ public class FiestaInfantil extends Evento{
     public void mostrarMensaje(){
 
     System.out.println("Si realizan un próximo evento en las mismas instalaciones en un plazo de 6 meses se les otorgará en servicio de música gratuito.");
+    }
+     
+    @Override
+    public double getPrecio(){
+        return precio;
     }
 }
