@@ -179,7 +179,6 @@ public class Interfaz {
     */
     public void eventoFiestaEmpresarial(Cliente c){
         Planificador p=asignarPlanificador();
-        
         Date fechaRegistro=new Date();
         Date fechaEvento=validarTiempo("FiestaEmpresarial");
         Solicitud s= new Solicitud(c,p,fechaRegistro,fechaEvento,"Fiesta Empresarial");
@@ -217,8 +216,7 @@ public class Interfaz {
         int fechaValida=0;
         System.out.println("Ingrese la fecha para su evento (Dia/Mes/Año):");
         Scanner sc=new Scanner(System.in);
-        String fechaEvento=sc.next();
-        sc.nextLine();
+        String fechaEvento=validarFecha();
         while (fechaValida == 0) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date fechaHoy = new Date();
@@ -411,13 +409,15 @@ public class Interfaz {
                         System.out.println("Ingrese una opción válida");
                         choice = sc.nextLine();
                     }
-                if (choice.equals("S")){
-                    System.out.println("Ingrese el código de la transacción: ");
-                    int codtrans= sc.nextInt();
-                    element.setCodTrans(codtrans);
-                    element.setFechaReg(new Date());
-                    element.setEstadoOrdenDePago(EstadoOrdenDePago.APROBADO);
-                    actualizartxt();
+                    if (choice.equals("S")){
+                        System.out.println("Ingrese el código de la transacción: ");
+                        int codtrans= validarInt();
+                        element.setCodTrans(codtrans);
+                        element.setFechaReg(new Date());
+                        element.setEstadoOrdenDePago(EstadoOrdenDePago.APROBADO);
+                        actualizartxt();
+                        System.out.println("Listo, se ha registrado el pago. "
+                            + "Cuando el planificador valide el pago se pondrá en contacto con usted");
                     } 
                 }
             }
@@ -441,7 +441,8 @@ public class Interfaz {
                     +          "4. Consultar Evento\n"
                     +         "5. Salir");
             System.out.println("Seleccione:");
-            choice=sc.nextLine();
+            choice=sc.next();
+            sc.nextLine();
             switch(choice){
                 case "1": consultarSolicitudesPendientes(planificador.getSolicitudesAsignadas());
                     break;
@@ -500,8 +501,7 @@ public class Interfaz {
 	        +          "/*********************************************/");   		
         System.out.print("Ingrese el id de la solicitud: "); 
         SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-        int cod=sc.nextInt();
-        sc.nextLine();
+        int cod=validarInt();
         ArrayList <Solicitud> a=solicitudes;
         Solicitud solicitud=new Solicitud();
         int h=0;
@@ -512,7 +512,7 @@ public class Interfaz {
                 if(a.get(i).getEstadoSol().equals("PENDIENTE")){
                     solicitud= a.get(i);
                     System.out.println("DATOS: \nCLIENTES: "+solicitud.getCliente().getNombre()+" "+solicitud.getCliente().getApellido()+"\nPLANIFICADOR"
-                                + " ASIGNADO: "+solicitud.getPlanificador().getNombre()+" "+solicitud.getPlanificador().getApellido()+"\n"
+                                + " ASIGNADO: "+solicitud.getPlanificador().getNombre()+" "+solicitud.getPlanificador().getApellido()
                                 + "\nFECHA DE REGISTRO: "+sdf.format(solicitud.getFechaRegistro())+"\nTIPO EVENTO: "+solicitud.getTipoEvento()
                                 +"\nFECHA DEL EVENTO: "+sdf.format(solicitud.getFechaEvento()));
                     if(solicitud.getTipoEvento().equals("Boda")){
@@ -523,19 +523,19 @@ public class Interfaz {
                         System.out.println("PRECIO BASE: "+2000);
                     }
                     System.out.println("¿Desea continuar? (S/N)");
-                    String elcc=sc.nextLine();
+                    String elcc=sc.next();
+                    sc.nextLine();
                     while(!elcc.equals("S")&&!elcc.equals("N")){
-                        System.out.println("¿Desea continuar? (S/N)");
+                        System.out.println("¡Ingrese una opción válida (S/N)!");
                         elcc=sc.nextLine();
                     }if (elcc.equals("S")){
                         System.out.println("/*********REGISTRO DE DATOS DEL EVENTO*********/");
                         System.out.println("Hora inicio (hh:mm): ");
-                        String horaIn=sc.nextLine();
+                        String horaIn=validarHora();
                         System.out.println("Hora fin (hh:mm): ");
-                        String horaFin=sc.nextLine();
+                        String horaFin=validarHora();
                         System.out.println("Capacidad: ");
-                        int capacidad= sc.nextInt();
-                        sc.nextLine();
+                        int capacidad=validarInt();
                         //Polimorfismo metodo RegistrarEvento
                         Evento ev= new Evento();
                         if(solicitud.getTipoEvento().equals("Boda")){
@@ -547,23 +547,23 @@ public class Interfaz {
                         else if(solicitud.getTipoEvento().equals("Fiesta Infantil")){
                             System.out.println("Ingrese la cantidad de personajes disfrazados que desea para su evento. \n"
                                             + "En caso de que no se requiera, ingrese 0");
-                            int cantdis=sc.nextInt();
-                            sc.nextLine();
+                            int cantdis=validarInt();                 
                             System.out.println("Ingrese la cantidad de sorpresas para los niños.");
-                            int cantsorp = sc.nextInt();
-                            sc.nextLine();
+                            int cantsorp =validarInt();
                             String juegos="";
                             boolean b=false;
-                            do{
-                                System.out.println("¿Desea incluir juegos en el evento? (S/N)");
+                            System.out.println("¿Desea incluir juegos en el evento? (S/N)");
+                            juegos= sc.nextLine();
+                            while(!juegos.equals("S")&&!juegos.equals("N")){
+                                System.out.println("!Ingrese una opción válida (S/N)!");
                                 juegos= sc.nextLine();
+                            }
+                            b=false;
+                            if (juegos.equals("S")){
+                                b=true;
+                            }else{
                                 b=false;
-                                if (juegos.equals("S")){
-                                    b=true;
-                                }else{
-                                    b=false;
-                                }
-                            }while(!juegos.equals("S")&&!juegos.equals("N"));
+                            }
                             ev=new FiestaInfantil(cantdis,cantsorp,b,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
                             ev.setTipo("Fiesta Infantil");
                         } 
@@ -572,11 +572,14 @@ public class Interfaz {
                             String trans=sc.nextLine();
                             boolean z=false;
                             int cantpers=0;
+                            while(!trans.equals("S")&&!trans.equals("N")){
+                                System.out.println("¡Ingrese una opción válida (S/N)!");
+                                trans=sc.nextLine();
+                            }
                             if (trans.equals("S")){
                                 z=true;
                                 System.out.println("Ingrese la cantidad de personas que se transportarían: ");
-                                cantpers=sc.nextInt();
-                                sc.nextLine();
+                                cantpers=validarInt();
                             }
                             ev= new FiestaEmpresarial(z,cantpers,solicitud.getCliente(),solicitud.getPlanificador(),solicitud.getFechaEvento(),horaIn,horaFin,capacidad);
                             ev.setTipo("Fiesta Empresarial");
@@ -595,7 +598,7 @@ public class Interfaz {
                         String choice= sc.next();
                         sc.nextLine();
                         while (!choice.equals("S") && !choice.equals("N")){
-                            System.out.println("Ingrese una opción válida");
+                            System.out.println("¡Ingrese una opción válida (S/N)!");
                             choice= sc.nextLine();
                         }
                         if (choice.equals("S")){
@@ -607,6 +610,7 @@ public class Interfaz {
                             int dos=0;
                             int tres=0;
                             int cuatro=0;
+                            int foto=0;
                             do{
                                 String entrada="";
                                 System.out.println("Las opciones son:\n"
@@ -623,7 +627,7 @@ public class Interfaz {
                                     //COMIDA
                                     double precioComida=15;
                                     System.out.println("Cantidad de platos:");
-                                    int cantidad1=sc.nextInt();
+                                    int cantidad1=validarInt();
                                     ElementoAdicional comida=new ElementoAdicional();
                                     comida.setCantidad(cantidad1);
                                     comida.setPrecio(precioComida);
@@ -651,7 +655,7 @@ public class Interfaz {
                                 case "2":
                                     //BOCADITOS
                                     System.out.println("Cantidad de bocaditos:");
-                                    int cantidad2=sc.nextInt();
+                                    int cantidad2=validarInt();
                                     ElementoAdicional bocaditos=new ElementoAdicional();
                                     bocaditos.setCantidad(cantidad2);
                                     bocaditos.setTipoElementoAdicional(TipoElementoAdicional.BOCADITOS);
@@ -779,34 +783,39 @@ public class Interfaz {
                                             break;
                                     }
                                     break;
-                                case "4":               
-                                    //FOTOGRAFIA
-                                    int cantidad4=1;
-                                    double precioFotografia=500;
-                                    ElementoAdicional fotografia=new ElementoAdicional();
-                                    fotografia.setTipoElementoAdicional(TipoElementoAdicional.FOTOGRAFIA);
-                                    fotografia.setCantidad(cantidad4);
-                                    fotografia.setPrecio(precioFotografia);
-                                    double total4 = precioFotografia * cantidad4;
-                                    fotografia.setTotal(total4);
-                                    System.out.println("Total:" + total4);
-                                    char agg4 = 'A';
-                                    System.out.println("Agregar(S/N):");
-                                    agg4 = sc.next().charAt(0);
-                                    if (agg4 == 'S') {
-                                        ev.agregarElementoAdicional(fotografia);
-                                        System.out.println("Se ha agregado su elección.");
-                                        ArrayList <String> info=new ArrayList<String>();
-                                        info.add(String.valueOf(ev.getCodigo()));
-                                        info.add(TipoElementoAdicional.FOTOGRAFIA.name());
-                                        info.add(String.valueOf(cantidad4));
-                                        info.add(String.valueOf(precioFotografia));
-                                        info.add(String.valueOf(total4));
-                                        generarArchivo("Adicionales", info);
+                                case "4":  
+                                    if(foto==0){
+                                        //FOTOGRAFIA
+                                        int cantidad4=1;
+                                        double precioFotografia=500;
+                                        ElementoAdicional fotografia=new ElementoAdicional();
+                                        fotografia.setTipoElementoAdicional(TipoElementoAdicional.FOTOGRAFIA);
+                                        fotografia.setCantidad(cantidad4);
+                                        fotografia.setPrecio(precioFotografia);
+                                        double total4 = precioFotografia * cantidad4;
+                                        fotografia.setTotal(total4);
+                                        System.out.println("Total:" + total4);
+                                        char agg4 = 'A';
+                                        System.out.println("Agregar(S/N):");
+                                        agg4 = sc.next().charAt(0);
+                                        if (agg4 == 'S') {
+                                            ev.agregarElementoAdicional(fotografia);
+                                            System.out.println("Se ha agregado su elección.");
+                                            ArrayList <String> info=new ArrayList<String>();
+                                            info.add(String.valueOf(ev.getCodigo()));
+                                            info.add(TipoElementoAdicional.FOTOGRAFIA.name());
+                                            info.add(String.valueOf(cantidad4));
+                                            info.add(String.valueOf(precioFotografia));
+                                            info.add(String.valueOf(total4));
+                                            generarArchivo("Adicionales", info);
+                                            foto++;
+                                        } else {
+                                            System.out.println("No se ha agregado su elección.");
+                                        }
+                                        break;
                                     } else {
-                                    System.out.println("No se ha agregado su elección.");
+                                        System.out.println("YA HA AGREGADO ESTE ELEMENTO A SU LISTA ELIJA OTRO.");
                                     }
-                                    break;
                                 case "5":
                                     //BEBIDA
                                     double precioWhisky = 50;
@@ -825,7 +834,7 @@ public class Interfaz {
                                     case "1":
                                         if (uno==0){
                                             System.out.println("Cantidad de botellas de whisky:");
-                                            int cantidad=sc.nextInt();
+                                            int cantidad=validarInt();
                                             ElementoAdicional whisky=new ElementoAdicional();
                                             whisky.setCantidad(cantidad);
                                             whisky.setPrecio(precioWhisky);
@@ -857,7 +866,7 @@ public class Interfaz {
                                     case "2":
                                         if(dos==0){
                                             System.out.println("Cantidad de botellas de vodka:");
-                                            int cantidad=sc.nextInt();
+                                            int cantidad=validarInt();
                                             ElementoAdicional vodka=new ElementoAdicional();
                                             vodka.setCantidad(cantidad);
                                             vodka.setPrecio(precioVodka);
@@ -889,7 +898,7 @@ public class Interfaz {
                                     case "3":
                                         if (tres==0){
                                             System.out.println("Cantidad de botellas de cerveza:");
-                                            int cantidad=sc.nextInt();
+                                            int cantidad=validarInt();
                                             ElementoAdicional cerveza=new ElementoAdicional();
                                             cerveza.setCantidad(cantidad);
                                             cerveza.setPrecio(precioCerveza);
@@ -921,7 +930,7 @@ public class Interfaz {
                                     case "4":
                                         if (cuatro==0){
                                             System.out.println("Cantidad de refrescos:");
-                                            int cantidad=sc.nextInt();
+                                            int cantidad=validarInt();
                                             ElementoAdicional refrescos=new ElementoAdicional();
                                             refrescos.setCantidad(cantidad);
                                             refrescos.setPrecio(precioRefrescos);
@@ -1018,12 +1027,14 @@ public class Interfaz {
                             System.out.println("No se ha generado su orden de pago.");    
                             }
                         }               
+                    }else if(elcc.equals("N")){
+                         System.out.println("No se ha registrado el evento.");  
                     }
                 }
                 else{
                     System.out.println("Esta solicitud ya ha sido aprobada.");}
                 }
-        }sc.nextLine();
+        }
         if(h==0){
             System.out.println("No existe una solicitud de evento con el código ingresado");
         }	
@@ -1075,8 +1086,7 @@ public class Interfaz {
 	+		   "/*                                      */\n"
 	+		   "/****************************************/");
 	System.out.println("Ingrese el id de la orden de pago: ");
-	int id=sc.nextInt();
-        sc.nextLine();
+	int id=validarInt();
         ArrayList <OrdenPago> listaa=Sistema.ordenpag;  
         int n=0;
 	for (int i=0;i<listaa.size();i++){
@@ -1436,12 +1446,10 @@ public class Interfaz {
                 String nombre_Cliente= partes2[1];
                 Cliente cliente= (Cliente) buscarUsuario(nombre_Cliente,1);
                 String tipo= partes2[2];
-                
                 Date fecha= stringtoDate(partes2[3]);
                 String hora_in=partes2[4];
                 String hora_fin=partes2[5];
                 int capacidad= Integer.valueOf(partes2[6]);
-         
                 String nombrePlan= partes2[7];                                             
                 Planificador plan= (Planificador) buscarUsuario(nombrePlan,2);
                 EstadoEvento estado= EstadoEvento.valueOf(partes2[8]);
@@ -1518,8 +1526,6 @@ public class Interfaz {
             for(Cliente elemento: Sistema.clientes){
                 if(element.getCliente().equals(elemento)){
                     elemento.getOrden().add(element);
-                    System.out.println("asd");
-                    System.out.println(elemento.getOrden());
                 }
             }
         }
@@ -1588,4 +1594,80 @@ public class Interfaz {
         }
     return numero;
     }
+    
+
+    /*Metodos de ValidarInt
+    Pide y verifica si el valor que ha ingresado es un tipo de dato Int
+    Devuelve un numero entero 
+     */
+    public  int validarInt(){
+        boolean cond=true;
+        Scanner sc=new Scanner(System.in);
+        int entrada=0;
+        do {
+            cond=true;
+            try{
+                entrada=Integer.parseInt(sc.nextLine());
+                
+            
+            }catch(Exception e){
+                System.out.println("¡Por favor ingrese un numero entero!");
+                cond=false;
+            }
+        }while(cond!=true);
+        
+        return entrada;
+    }
+    
+    
+    /*Metodo ValidarHora
+    Pide y verifica si el valor que ha ingresado es un tipo de dato Int de la forma (Valorint:Valorint)
+    */
+    public  String validarHora(){
+        boolean cond=true;
+        String entrada="";
+        do{
+            Scanner sc=new Scanner(System.in);
+            entrada=sc.nextLine();
+            String[] partes=entrada.split(":");
+            cond=true;
+            try{
+                int hora1=Integer.parseInt(partes[0]);
+                int hora2=Integer.parseInt(partes[1]);
+            }catch(Exception e){
+                System.out.println("¡Por favor ingrese una hora adecuada!(hh:mm)");
+                cond=false;
+            }
+        }while(cond!=true);
+        
+        
+        
+        return entrada;
+    }
+    
+    
+    /*Metodo ValidarHora
+    Pide y verifica si el valor que ha ingresado es un tipo de dato Int de la forma (Valorint/Valorint/Valorint)
+    */
+    public  String validarFecha(){
+        boolean cond=true;
+        String entrada="";
+        do{
+            Scanner sc=new Scanner(System.in);
+            entrada=sc.nextLine();
+            String[] partes=entrada.split("/");
+            cond=true;
+            try{
+                int dia=Integer.parseInt(partes[0]);
+                int mes=Integer.parseInt(partes[1]);
+                int anio=Integer.parseInt(partes[2]);
+            
+            }catch(Exception e){
+                System.out.println("¡Por favor ingrese una fecha adecuada!(dd/MM/yyyy)");
+                cond=false;
+            }
+        }while(cond!=true);
+        return entrada;
+    }
+    
 }

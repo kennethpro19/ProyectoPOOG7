@@ -106,7 +106,7 @@ public class Solicitud {
                 cod=1000+Sistema.solicitudes.size();
             }else if (tipo.equals("Fiesta Infantil")){
                 cod=2000+Sistema.solicitudes.size();
-            }else if (tipo.equals("Fieste Empresarial")){
+            }else if (tipo.equals("Fiesta Empresarial")){
                 cod=3000+Sistema.solicitudes.size();
             }
             
